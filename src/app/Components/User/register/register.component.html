@@ -1,0 +1,62 @@
+<div class="container">
+    <div class="form-container">
+        <form action="" [formGroup]="registerForm">
+
+            <div class="input-field">
+                <input type="text" formControlName="username" placeholder="Nombre">
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+            <div class="error-container">
+                <div class="text-danger" *ngIf="registerForm.controls['username'].invalid && (registerForm.controls['username'].touched || registerForm.controls['username'].dirty)">
+                  <span *ngIf="registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched">
+                    Missing username
+                  </span>
+                </div>
+            </div>
+
+            <div class="input-field">
+                <input type="text" formControlName="mail" placeholder="Mail">
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+            <div class="error-container">
+                <div class="text-danger" *ngIf="registerForm.controls['mail'].invalid && (registerForm.controls['mail'].touched || registerForm.controls['mail'].dirty)">
+                  <span *ngIf="registerForm.get('mail')?.hasError('required') && registerForm.get('mail')?.touched">
+                   Missin Email
+                  </span>
+                  <span *ngIf="registerForm.get('mail')?.hasError('mail') && registerForm.get('mail')?.touched">
+                   Use a valid Email!
+                  </span>
+                </div>
+            </div>
+
+            <div class="input-field">
+                <input type="{{ showPassword ? 'text' : 'password' }}" placeholder=" Ingrese su Contraseña" formControlName="password">
+                <i class="fa-solid fa-eye-slash showHidePw" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility('password')"></i>
+              </div>
+              <div class="error-container">
+                <div class="text-danger" *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].touched || registerForm.controls['password'].dirty)">
+                  <span *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
+                    Missing Password.
+                  </span>
+                  <span *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched || 
+                    registerForm.get('password')?.hasError('maxlength') && registerForm.get('password')?.touched">
+                    Utiliza entre 8 y 20 caracteres.
+                  </span> 
+                </div>
+              </div>
+
+              <div class="input-field">
+                <input type="{{ showConfirmPassword ? 'text' : 'password' }}" placeholder="Confirmar Contraseña" formControlName="confirmPassword">
+                <i class="fa-solid fa-eye-slash showHidePw" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility('confirmPassword')"></i>
+              </div>
+              <div class="error-container">
+                <div class="text-danger">
+                  <span *ngIf="registerForm?.errors?.['mismatch'] && registerForm?.touched && (registerForm.controls['confirmPassword'].touched || registerForm.controls['confirmPassword'].dirty)">
+                    Passwords don't match.
+                  </span>
+                </div> 
+              </div>
+            <button (click)="onSubmit()">Registrar</button>
+        </form>
+    </div>
+</div>

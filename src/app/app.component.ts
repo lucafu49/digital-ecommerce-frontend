@@ -11,23 +11,7 @@ import { Category } from './Interfaces/category';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
-  title = 'digital-ecommerce-frontend';
+export class AppComponent{
+  title = 'Digital Ecommerce';
 
-  public categories: any;
-
-  constructor(private dataS: DataService){
-
-  }
-
-  ngOnInit(): void {
-    this.categories = this.dataS.getCategories().subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.error('Error fetching products', error);
-      }
-    );
-  }
 }
