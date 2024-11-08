@@ -21,7 +21,7 @@
             <div class="error-container">
                 <div class="text-danger" *ngIf="registerForm.controls['mail'].invalid && (registerForm.controls['mail'].touched || registerForm.controls['mail'].dirty)">
                   <span *ngIf="registerForm.get('mail')?.hasError('required') && registerForm.get('mail')?.touched">
-                   Missin Email
+                   Missing Email
                   </span>
                   <span *ngIf="registerForm.get('mail')?.hasError('mail') && registerForm.get('mail')?.touched">
                    Use a valid Email!

@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClientService } from '../../../Services/client.service';
-import { Client } from '../../../Interfaces/client';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { RegisterRequest } from '../../../Interfaces/register-request';
 
 @Component({
   selector: 'app-register',
@@ -17,6 +17,7 @@ export class RegisterComponent {
   registerForm : FormGroup;
   showPassword:any;
   showConfirmPassword:any;
+  message : string = '';
 
 
   constructor(private cService: ClientService,private formBuilder:FormBuilder,private route:Router){
@@ -32,14 +33,13 @@ export class RegisterComponent {
 
   onSubmit(){
 
-    if(this.registerForm.valid){
-
+    if(this.registerForm.valid){ 
       const newClient = {
-        id : 0,
         email : this.registerForm.value.mail,
         username : this.registerForm.value.username,
         password : this.registerForm.value.password,
-        confirmPassword : this.registerForm.value.confirmPassword
+        confirmPassword : this.registerForm.value.confirmPassword,
+        emailValidated : false
       }
 
       this.registerClient(newClient);
@@ -47,16 +47,22 @@ export class RegisterComponent {
 
   }
 
-  registerClient(client : any){
+  registerClient(client : RegisterRequest){
 
     this.cService.registerClient(client).subscribe({
       next: (data) => {
         console.log(data);
+
+        localStorage.setItem('token',data.token)
+        localStorage.getItem('token');
       },
       error: (error) => {
-        console.error("Error: ", error );
+        this.message = error.message;
+        const statusCode = error.status;
+  
+        console.error("Status:", statusCode, "message:", this.message);
       }
-    })
+    });
   }
 
 

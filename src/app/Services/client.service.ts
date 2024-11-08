@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Client } from '../Interfaces/client';
+import { RegisterRequest } from '../Interfaces/register-request';
 import { Observable } from 'rxjs';
+import { LoginRequest } from '../Interfaces/login-request';
+import { RegisterResponse } from '../Interfaces/Responses/login-register';
+import { LoginResponse } from '../Interfaces/Responses/login-register';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,10 @@ export class ClientService {
 
   constructor(private http: HttpClient) { }
 
-  registerClient(request:any):Observable<Client>{
-    return this.http.post<Client>(`${this.url}auth/register`, request);
+  registerClient(request:RegisterRequest):Observable<RegisterResponse>{
+    return this.http.post<RegisterResponse>(`${this.url}auth/register`, request);
+  }
+  loginClient(request:LoginRequest):Observable<LoginResponse>{
+    return this.http.post<LoginResponse>(`${this.url}auth/login`, request);
   }
 }

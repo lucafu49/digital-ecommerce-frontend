@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="form-container">
+        <form action="" [formGroup]="loginForm">
+
+            <div class="input-field">
+                <input type="text" formControlName="email" placeholder="Mail">
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+            <div class="error-container">
+                <div class="text-danger" *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].touched || loginForm.controls['email'].dirty)">
+                  <span *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
+                   Missing Email
+                  </span>
+                  <span *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched">
+                   Use a valid Email!
+                  </span>
+                </div>
+            </div>
+
+            <div class="input-field">
+                <input type="{{ showPassword ? 'text' : 'password' }}" placeholder=" Ingrese su Contraseña" formControlName="password">
+                <i class="fa-solid fa-eye-slash showHidePw" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility('password')"></i>
+              </div>
+              <div class="error-container">
+                <div class="text-danger" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)">
+                  <span *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+                    Missing Password.
+                  </span>
+                  <span *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched || 
+                  loginForm.get('password')?.hasError('maxlength') && loginForm.get('password')?.touched">
+                    Utiliza entre 8 y 20 caracteres.
+                  </span> 
+                </div>
+              </div>
+
+            <button (click)="onSubmit()">Login</button>
+        </form>
+    </div>
+</div>
