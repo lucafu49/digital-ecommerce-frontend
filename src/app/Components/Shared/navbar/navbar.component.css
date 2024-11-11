@@ -1,0 +1,47 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #333;
+    color: #fff;
+    z-index: 10;
+  
+    .navbar-hamburger {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  }
+  
+  /* Menú de pantalla completa */
+  .fullscreen-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  
+    &.open {
+      transform: translateX(0);
+    }
+  
+    .menu-content {
+      text-align: center;
+  
+      /* Estilo del contenido de menú */
+      p {
+        font-size: 2rem;
+        margin: 0;
+      }
+    }
+  }

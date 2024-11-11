@@ -7,8 +7,12 @@
     font-family: 'Poppins', sans-serif;
     transition: .2s;
 }
-:root{
-    --primary-color: #1E2022;
-    --second-color: #F0F5F9;
-    --hover-primary-color: #3d3d3d;
-}
+:root {
+    --background-color: #121212;
+    --primary-color: #bb86fc;
+    --secondary-color: #3700b3;
+    --text-color: #e0e0e0;
+    --accent-color: #03dac6;
+    --button-color: #292929;
+    --button-text-color: #bb86fc;
+  }

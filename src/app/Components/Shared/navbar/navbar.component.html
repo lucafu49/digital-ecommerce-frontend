@@ -1,0 +1,14 @@
+<div class="navbar">
+    <div class="navbar-hamburger" (click)="toggleMenu()">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+  </div>
+  
+  <div class="fullscreen-menu" [class.open]="isOpen">
+    <div class="menu-content">
+        <section class="user-menu">
+            <a routerLink="/login">Login</a>
+            <a routerLink="/cart">Cart</a>
+        </section>
+    </div>
+  </div>

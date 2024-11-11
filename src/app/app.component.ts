@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DataService } from './Services/data.service';
-import { Observable } from 'rxjs';
-import { Category } from './Interfaces/category';
+import { NavbarComponent } from './Components/Shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

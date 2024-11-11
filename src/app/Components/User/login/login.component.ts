@@ -5,6 +5,7 @@ import { ClientService } from '../../../Services/client.service';
 import { LoginRequest } from '../../../Interfaces/login-request';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +38,8 @@ export class LoginComponent {
       this.loginClient(newClient);
     }
 
+    
+
   }
 
   loginClient(client: LoginRequest){
@@ -45,10 +48,6 @@ export class LoginComponent {
         console.log(data);
 
         localStorage.setItem('token', data.user.token);
-        const token = localStorage.getItem('token');
-        console.log("Token:", token);
-
-        console.log("Token");
       },
       error: (error) => {
         this.message = error.message;
@@ -57,6 +56,7 @@ export class LoginComponent {
         console.error("Status:", statusCode, "message:", this.message);
       }
     });
+    
   }
 
   togglePasswordVisibility(field: string) {
@@ -64,4 +64,5 @@ export class LoginComponent {
         this.showPassword = !this.showPassword;
     }
   }
+
 }
