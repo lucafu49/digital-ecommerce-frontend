@@ -1,0 +1,26 @@
+.category-grid table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .category-grid th, .category-grid td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .category-grid th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .category-grid button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .category-grid button:hover {
+    background-color: #ddd;
+  }

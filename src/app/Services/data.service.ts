@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from '../Interfaces/category';
 import { SourceFile } from '../Interfaces/source-file';
+import { GetCategoriesResponse } from '../Interfaces/Responses/categories';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class DataService {
 
   constructor(private http:HttpClient) { }
 
-  getCategories(): Observable<Category>{
-    return this.http.get<Category>(`${this.url}category`)
+  getCategories(): Observable<GetCategoriesResponse>{
+    return this.http.get<GetCategoriesResponse>(`${this.url}category`)
   }
   getSourceFiles():Observable<SourceFile>{
     return this.http.get<Category>(`${this.url}source-file`)
