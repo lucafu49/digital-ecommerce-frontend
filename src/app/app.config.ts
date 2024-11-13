@@ -6,8 +6,9 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors, withFetch } from '@angular/common/http';
 import { errorHandlerInterceptor } from './Interceptors/error-handler.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { requestInterceptor } from './Interceptors/request.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(), provideHttpClient(withFetch(),withInterceptors
-    ([errorHandlerInterceptor])), provideAnimationsAsync()]
+    ([errorHandlerInterceptor, requestInterceptor])), provideAnimationsAsync()]
 };

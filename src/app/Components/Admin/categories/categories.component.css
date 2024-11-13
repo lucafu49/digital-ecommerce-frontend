@@ -24,3 +24,16 @@
   .category-grid button:hover {
     background-color: #ddd;
   }
+
+  .create-form {
+    margin-top: 10px;
+  }
+  
+  .create-form input {
+    margin-right: 10px;
+    padding: 5px;
+  }
+  
+  .create-form button {
+    padding: 5px 10px;
+  }

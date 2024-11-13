@@ -12,10 +12,10 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  updateCategory(request:Category):Observable<Category>{
+  updateCategory(request:any):Observable<Category>{
     return this.http.put<Category>(`${this.url}category`, request);
   }
-  deleteCategory(request: number):Observable<Category>{
+  deleteCategory(request: any):Observable<Category>{
     return this.http.delete<Category>(`${this.url}category`, {body:request});
   }
   createCategory(request:Category):Observable<Category>{

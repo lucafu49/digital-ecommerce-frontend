@@ -1,24 +1,54 @@
 <div class="category-grid">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let category of listCategories">
-          <td>{{ category.id }}</td>
-          <td>{{ category.name }}</td>
-          <td>
-            <button (click)="updateCategory({category.id}, {category.name})">Editar</button>
-            <button (click)="deleteCategory({category.id})">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of listCategories">
+        <td>{{ category.id }}</td>
+        
+        <!-- Conditionally display input field if category is in edit mode -->
+        <td>
+          <ng-container *ngIf="category.isEditing; else displayMode">
+            <input [(ngModel)]="category.name" placeholder="Edit name" />
+          </ng-container>
+          <ng-template #displayMode>{{ category.name }}</ng-template>
+        </td>
 
-    <!--BOTON DE CREAR-->
+        <!-- Action buttons for edit and delete -->
+        <td>
+          <ng-container *ngIf="!category.isEditing">
+            <button (click)="enableEditCategory(category)">Editar</button>
+            <button (click)="deleteCategory(category.id)">Eliminar</button>
+          </ng-container>
+          <ng-container *ngIf="category.isEditing">
+            <button (click)="saveCategoryUpdate(category)">Guardar</button>
+            <button (click)="cancelEditCategory(category)">Cancelar</button>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="toggleCreateCategoryForm()">Crear Categoría</button>
+
+  <!-- Category creation form -->
+  <div *ngIf="showCreateForm" class="create-form">
+    <form [formGroup]="createForm">
+      <input formControlName="name" placeholder="Category name" />
+      <div class="error-container">
+        <div class="text-danger" *ngIf="createForm.controls['name'].invalid && (createForm.controls['name'].touched || createForm.controls['name'].dirty)">
+          <span *ngIf="createForm.get('name')?.hasError('required') && createForm.get('name')?.touched">
+            Missing name
+          </span>
+        </div>
+      </div>
+      <button type="button" (click)="createCategory()">Guardar</button>
+      <button type="button" (click)="toggleCreateCategoryForm()">Cancelar</button>
+    </form>
+  </div>
 </div>
-  
