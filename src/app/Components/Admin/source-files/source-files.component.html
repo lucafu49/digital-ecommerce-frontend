@@ -1,0 +1,63 @@
+<div class="sourcefile-grid">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Link</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sourceFile of listSourceFiles">
+          <td>{{ sourceFile.id }}</td>
+          
+          <!-- Conditionally display input fields if sourceFile is in edit mode -->
+          <td>
+            <ng-container *ngIf="sourceFile.isEditing; else displayName">
+              <input [(ngModel)]="sourceFile.name" placeholder="Edit name" />
+            </ng-container>
+            <ng-template #displayName>{{ sourceFile.name }}</ng-template>
+          </td>
+  
+          <td>
+            <ng-container *ngIf="sourceFile.isEditing; else displayLink">
+              <input [(ngModel)]="sourceFile.link" placeholder="Edit link" />
+            </ng-container>
+            <ng-template #displayLink>{{ sourceFile.link }}</ng-template>
+          </td>
+  
+          <td>
+            <ng-container *ngIf="!sourceFile.isEditing">
+              <button (click)="enableEditSourceFile(sourceFile)">Editar</button>
+              <button (click)="deleteSourceFile(sourceFile.id)">Eliminar</button>
+            </ng-container>
+            <ng-container *ngIf="sourceFile.isEditing">
+              <button (click)="saveSourceFileUpdate(sourceFile)">Guardar</button>
+              <button (click)="cancelEditSourceFile(sourceFile)">Cancelar</button>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <button (click)="toggleCreateSourceFileForm()">Crear Archivo Fuente</button>
+  
+    <!-- SourceFile creation form -->
+    <div *ngIf="showCreateForm" class="create-form">
+      <form [formGroup]="createForm">
+        <input formControlName="name" placeholder="SourceFile name" />
+        <input formControlName="link" placeholder="SourceFile link" />
+        <div class="error-container">
+          <div *ngIf="createForm.controls['name'].invalid && createForm.controls['name'].touched">
+            <span class="text-danger">Missing name</span>
+          </div>
+          <div *ngIf="createForm.controls['link'].invalid && createForm.controls['link'].touched">
+            <span class="text-danger">Missing link</span>
+          </div>
+        </div>
+        <button type="button" (click)="createSourceFile()">Guardar</button>
+        <button type="button" (click)="toggleCreateSourceFileForm()">Cancelar</button>
+      </form>
+    </div>
+  </div>

@@ -4,6 +4,7 @@ import { DataService } from '../../../Services/data.service';
 import { AdminService } from '../../../Services/admin.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DeleteCatRequest } from '../../../Interfaces/delete-cat-request';
 
 @Component({
   selector: 'app-categories',
@@ -118,29 +119,9 @@ export class CategoriesComponent implements OnInit{
     this.getCategories(); // Reload categories to revert changes
   }
 
-  updateCategory(idCategory: number, nameCat : string){
+  deleteCategory(id : any){
 
-    const request = {
-      id : idCategory,
-      name : nameCat
-    }
-
-    this.aService.updateCategory(request).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: (error) => {
-        this.message = error.message;
-        const statusCode = error.status;
-
-        console.error("Status:", statusCode, "message: ", this.message);
-      }
-    })
-  }
-
-  deleteCategory(id : string){
-
-    const request = {
+    const request : DeleteCatRequest = {
       categoryId : id
     }
 
