@@ -6,7 +6,8 @@ import { authGuard } from './Guards/auth.guard';
 import { CartComponent } from './Components/User/cart/cart.component';
 import { adminGuard } from './Guards/admin.guard';
 import { CategoriesComponent } from './Components/Admin/categories/categories.component';
-import { SourceFilesComponent } from './Components/Admin/source-files/source-files.component';
+import { SourceFilesComponent } from './Components/Admin/source-files-crud/source-files.component';
+import { PackagesComponent } from './Components/Shared/packages/packages.component';
 
 export const routes: Routes = [
     {path: 'register', component: RegisterComponent },
@@ -14,4 +15,5 @@ export const routes: Routes = [
     {path: 'cart', component: CartComponent, canActivate:[authGuard,adminGuard]},
     {path: 'category', component: CategoriesComponent, canActivate:[authGuard]},
     {path: 'source-file', component: SourceFilesComponent, canActivate:[authGuard]},
+    {path: 'packages', component: PackagesComponent, canActivate:[authGuard]}
 ];

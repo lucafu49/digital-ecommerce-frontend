@@ -29,12 +29,11 @@ export class AdminService {
     return this.http.post<SourceFile>(`${this.url}source-file`, request);
   }
   updateSourceFile(request: SourceFile): Observable<SourceFile> {
-    console.log("Servicio");
-    console.log(request);
     return this.http.put<SourceFile>(`${this.url}source-file`, request);
   }
   deleteSourceFile(request: DeleteSourcefRequest):Observable<SourceFile>{
     return this.http.delete<SourceFile>(`${this.url}source-file`, {body:request});
   }
+
   
 }
