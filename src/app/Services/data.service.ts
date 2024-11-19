@@ -24,4 +24,8 @@ export class DataService {
   getPackages(page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<Packages>{
     return this.http.get<Packages>(`${this.url}package?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
   }
+
+  getPackagesByCategory(categoryId : string, page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<Packages>{
+    return this.http.get<Packages>(`${this.url}package/category/${categoryId}/?limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
+  }
 }

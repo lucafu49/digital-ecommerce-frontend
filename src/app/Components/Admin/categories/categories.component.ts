@@ -57,7 +57,7 @@ export class CategoriesComponent implements OnInit{
     }
 
     const newCategory: Category = { 
-      categoryId: 0, 
+      id: "0", 
       name: this.createForm.get('name')?.value // Get the name from the form control
     };
 
@@ -94,7 +94,7 @@ export class CategoriesComponent implements OnInit{
       return;
     }
 
-    const updatedCategory: Category = {
+    const updatedCategory = {
       categoryId: category.id,
       name: category.name
     };

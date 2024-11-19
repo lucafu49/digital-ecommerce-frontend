@@ -15,8 +15,8 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  updateCategory(request:Category):Observable<Category>{
-    return this.http.put<Category>(`${this.url}category`, request);
+  updateCategory(request:any):Observable<any>{
+    return this.http.put<any>(`${this.url}category`, request);
   }
   deleteCategory(request: DeleteCatRequest):Observable<Category>{
     return this.http.delete<Category>(`${this.url}category`, {body:request});
