@@ -26,6 +26,10 @@ export class DataService {
   }
 
   getPackagesByCategory(categoryId : string, page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<Packages>{
-    return this.http.get<Packages>(`${this.url}package/category/${categoryId}/?limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
+    return this.http.get<Packages>(`${this.url}package/category/${categoryId}/?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
+  }
+
+  getPackageByWord(word : string ,page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string){
+    return this.http.get<Packages>(`${this.url}package/word/${word}?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
   }
 }

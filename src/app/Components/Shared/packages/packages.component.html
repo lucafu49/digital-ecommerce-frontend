@@ -1,31 +1,45 @@
 <div class="package-container">
-    <!-- Filter Button -->
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input 
+      type="text" 
+      [(ngModel)]="searchWord" 
+      placeholder="Buscar por palabra..."
+      class="search-input" />
+      <button 
+      class="search-button" 
+      (click)="getPackagesByWord()" 
+      [disabled]="!searchWord.trim()">
+      Buscar
+    </button>
+  </div>
+
+  <!-- Filter Button -->
+  <button class="filter-button" (click)="toggleFilterMenu()">Filtros</button>
+  
+  <!-- Filter Menu -->
+  <div class="filter-menu" [class.open]="showFilterMenu">
     <button class="filter-button" (click)="toggleFilterMenu()">Filtros</button>
-  
-    <!-- Filter Menu -->
-    <div class="filter-menu" [class.open]="showFilterMenu">
-      <button class="filter-button" (click)="toggleFilterMenu()">Filtros</button>
-      <!-- Placeholder for filter content -->
-      <div class="menu-content" *ngFor="let category of categories">
-        
-        <button (click)="getPackagesByCategory(category.id)">{{category.id}}</button>
-      </div>
+    <!-- Placeholder for filter content -->
+    <div class="menu-content" *ngFor="let category of categories">
+      <button (click)="getPackagesByCategory(category.id)">{{ category.name }}</button>
     </div>
-  
-    <!-- Product Cards -->
-    <div class="product-grid">
-        <div class="product-card" *ngFor="let package of packages.packages">
-          <img [src]="package.previewImage" alt="{{ package.name }}" class="product-image" />
-          <h4 class="product-name">{{ package.name }}</h4>
-          <p class="product-description">{{ package.description }}</p>
-          <p class="product-price">{{ package.price | currency }}</p>
-        </div>
-      </div>
-  
-    <!-- Pagination -->
-    <div class="pagination-controls">
-        <button class="prev-button" (click)="prevPage()" [disabled]="!packages.prev">Anterior</button>
-        <button class="next-button" (click)="nextPage()" [disabled]="!packages?.next">Siguiente</button>
-      </div>
+    <button class="filter-button" (click)="getPackages()">Quitar Filtros</button>
   </div>
   
+  <!-- Product Cards -->
+  <div class="product-grid">
+    <div class="product-card" *ngFor="let package of packages.packages">
+      <img [src]="package.previewImage" alt="{{ package.name }}" class="product-image" />
+      <h4 class="product-name">{{ package.name }}</h4>
+      <p class="product-description">{{ package.description }}</p>
+      <p class="product-price">{{ package.price | currency }}</p>
+    </div>
+  </div>
+  
+  <!-- Pagination -->
+  <div class="pagination-controls">
+    <button class="prev-button" (click)="prevPage()" [disabled]="!packages.prev">Anterior</button>
+    <button class="next-button" (click)="nextPage()" [disabled]="!packages?.next">Siguiente</button>
+  </div>
+</div>

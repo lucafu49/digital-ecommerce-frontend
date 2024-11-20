@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../Services/data.service';
 import { CommonModule } from '@angular/common';
-import { Packages } from '../../../Interfaces/Responses/packages';
-import { error } from 'node:console';
 import { Category } from '../../../Interfaces/category';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-packages',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './packages.component.html',
   styleUrl: './packages.component.css'
 })
@@ -21,7 +20,18 @@ export class PackagesComponent implements OnInit {
   minPrice : string = "0";
   orderBy : string = "price";
   lir : string = "asc";
-  page : number = 2;
+  page : number = 1;
+
+  searchWord: string = "";
+
+
+  filters = {
+    categoryId : "",
+    isActiveCat : false,
+    isActiveWord : false
+  }
+
+
 
 
   constructor(private dService : DataService) {}
@@ -33,6 +43,13 @@ export class PackagesComponent implements OnInit {
 
 
   getPackages(){
+
+    if(this.filters.isActiveCat === true || this.filters.isActiveWord === true){ //Si esta activado la busqueda con filtro, la desactiva y vuelve "al inicio"
+      this.page = 1;
+      this.filters.isActiveCat = false;
+      this.filters.isActiveWord = false;
+    }
+
     this.dService.getPackages(this.page.toString(),this.orderBy,this.lir,this.maxPrice,this.minPrice).subscribe({
       next : (data) => {
         console.log(data);
@@ -44,8 +61,17 @@ export class PackagesComponent implements OnInit {
     })
   }
 
-  getPackagesByCategory(categoryId: string){
-    this.dService.getPackagesByCategory(categoryId,this.page.toString(),this.orderBy,this.lir,this.maxPrice,this.minPrice).subscribe({
+  getPackagesByCategory(pickedCat: string){
+
+    if(this.filters.isActiveCat === false){ //Si ya estaba en otra pagina en el inicio, setea la paginba en uno asi empieza desde el principio y no desde la ultima pagina del inicio
+      this.page = 1;
+      this.filters.isActiveCat = true;
+      this.filters.isActiveWord = false;
+    }
+    
+    this.filters.categoryId = pickedCat;
+
+    this.dService.getPackagesByCategory(this.filters.categoryId,this.page.toString(),this.orderBy,this.lir,this.maxPrice,this.minPrice).subscribe({
       next : (data) =>{
         console.log(data);
         this.packages = data.packages;
@@ -55,6 +81,35 @@ export class PackagesComponent implements OnInit {
       }
     })
   }
+
+  getPackagesByWord(): void {
+    if (!this.searchWord.trim()) {
+      this.message = "Por favor ingresa una palabra para buscar.";
+      return;
+    }
+
+    this.filters.isActiveWord = true;
+    this.filters.isActiveCat = false;
+    
+    this.dService.getPackageByWord(
+      this.searchWord,
+      this.page.toString(),
+      this.orderBy,
+      this.lir,
+      this.maxPrice,
+      this.minPrice
+    ).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.packages = data.packages;
+        this.filters.isActiveCat = false; // Desactiva otros filtros
+      },
+      error: (error) => {
+        this.message = error.message;
+      }
+    });
+  }
+  
 
   getCategories(){
     this.dService.getCategories().subscribe({
@@ -76,15 +131,25 @@ export class PackagesComponent implements OnInit {
   }
   
   prevPage(): void {
-    if (this.page > 1) {  // Verifica que no estés en la primera página
+    if (this.page > 1) {
       this.page--;
-      this.getPackages();
+      this.fetchPackages(); // Método centralizado
     }
   }
   
   nextPage(): void {
-    if (this.packages?.next) {  // Verifica si hay una siguiente página
+    if (this.packages?.next) {
       this.page++;
+      this.fetchPackages(); // Método centralizado
+    }
+  }
+  
+  fetchPackages(): void {
+    if (this.filters.isActiveWord) {
+      this.getPackagesByWord();
+    } else if (this.filters.isActiveCat) {
+      this.getPackagesByCategory(this.filters.categoryId);
+    } else {
       this.getPackages();
     }
   }
