@@ -1,0 +1,36 @@
+.cart-grid table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .cart-grid th, .cart-grid td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .cart-grid th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .cart-grid button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .cart-grid button:hover {
+    background-color: #0056b3;
+  }
+  
+  .empty-cart {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+  }
+  

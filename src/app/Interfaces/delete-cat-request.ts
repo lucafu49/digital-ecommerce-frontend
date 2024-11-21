@@ -1,3 +1,3 @@
 export interface DeleteCatRequest {
-    categoryId : string
+    id : string
 }

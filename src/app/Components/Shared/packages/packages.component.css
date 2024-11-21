@@ -10,6 +10,8 @@
   color: white;
   border: none;
   cursor: pointer;
+  width: 100px;
+  height: 100px;
 }
 
 .filter-button:hover {
@@ -18,6 +20,7 @@
 
 /* Filter Menu */
 .filter-menu {
+  display: flex;
   position: fixed;
   top: 0;
   left: -100%;
@@ -32,7 +35,40 @@
   left: 0;
 }
 
+.filter-input {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.apply-filters-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.apply-filters-button:hover {
+  background-color: #218838;
+}
+
+
 .menu-content {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
 }
 
@@ -76,6 +112,21 @@
   font-weight: bold;
   color: #007bff;
 }
+
+.add-to-cart-button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-to-cart-button:hover {
+  background-color: #218838;
+}
+
 
 /* Pagination Controls */
 .pagination-controls {
@@ -131,4 +182,9 @@
 
 .search-button:hover {
   background-color: #0056b3;
+}
+
+.active {
+  background-color: #007bff;
+  color: white;
 }

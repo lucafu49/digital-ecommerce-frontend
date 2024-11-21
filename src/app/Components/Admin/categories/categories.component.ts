@@ -94,8 +94,8 @@ export class CategoriesComponent implements OnInit{
       return;
     }
 
-    const updatedCategory = {
-      categoryId: category.id,
+    const updatedCategory : Category = {
+      id: category.id,
       name: category.name
     };
 
@@ -119,16 +119,16 @@ export class CategoriesComponent implements OnInit{
     this.getCategories(); // Reload categories to revert changes
   }
 
-  deleteCategory(id : any){
+  deleteCategory(idRequest : any){
 
     const request : DeleteCatRequest = {
-      categoryId : id
+      id : idRequest
     }
 
     this.aService.deleteCategory(request).subscribe({
       next: () => {
-        console.log("Category deleted:", id);
-        this.listCategories = this.listCategories.filter(category => category.id !== id);
+        console.log("Category deleted:", idRequest);
+        this.listCategories = this.listCategories.filter(category => category.id !== idRequest);
       },
       error: (error) => {
         this.message = error.message;

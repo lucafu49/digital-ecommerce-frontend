@@ -18,14 +18,68 @@
   <button class="filter-button" (click)="toggleFilterMenu()">Filtros</button>
   
   <!-- Filter Menu -->
-  <div class="filter-menu" [class.open]="showFilterMenu">
-    <button class="filter-button" (click)="toggleFilterMenu()">Filtros</button>
-    <!-- Placeholder for filter content -->
-    <div class="menu-content" *ngFor="let category of categories">
-      <button (click)="getPackagesByCategory(category.id)">{{ category.name }}</button>
-    </div>
-    <button class="filter-button" (click)="getPackages()">Quitar Filtros</button>
+<!-- Filter Menu -->
+<div class="filter-menu" [class.open]="showFilterMenu">
+  <button class="filter-button" (click)="toggleFilterMenu()">Cerrar</button>
+
+  <!-- Categorías -->
+  <div class="menu-content" *ngFor="let category of categories">
+    <button 
+      (click)="getPackagesByCategory(category.id)" 
+      [class.active]="filters.categoryId === category.id">
+      {{ category.name }}
+    </button>
   </div>
+
+  <!-- Filtros adicionales -->
+  <div class="menu-content">
+    <!-- Precio mínimo -->
+    <label for="minPrice">Precio Mínimo:</label>
+    <input 
+      type="number" 
+      [(ngModel)]="minPrice" 
+      id="minPrice" 
+      class="filter-input" />
+
+    <!-- Precio máximo -->
+    <label for="maxPrice">Precio Máximo:</label>
+    <input 
+      type="number" 
+      [(ngModel)]="maxPrice" 
+      id="maxPrice" 
+      class="filter-input" />
+
+    <!-- Ordenar por -->
+    <label for="orderBy">Ordenar por:</label>
+    <select 
+      [(ngModel)]="orderBy" 
+      id="orderBy" 
+      class="filter-select">
+      <option value="price">Precio</option>
+      <option value="name">Nombre</option>
+    </select>
+
+    <!-- Orden ascendente/descendente -->
+    <label for="lir">Orden:</label>
+    <select 
+      [(ngModel)]="lir" 
+      id="lir" 
+      class="filter-select">
+      <option value="asc">Ascendente</option>
+      <option value="desc">Descendente</option>
+    </select>
+
+    <!-- Botón Aplicar Filtros -->
+    <button 
+      class="apply-filters-button" 
+      (click)="applyFilters()">
+      Aplicar Filtros
+    </button>
+  </div>
+
+  <!-- Botón Quitar Filtros -->
+  <button class="filter-button" (click)="quitFilters()">Quitar Filtros</button>
+</div>
   
   <!-- Product Cards -->
   <div class="product-grid">
@@ -34,6 +88,9 @@
       <h4 class="product-name">{{ package.name }}</h4>
       <p class="product-description">{{ package.description }}</p>
       <p class="product-price">{{ package.price | currency }}</p>
+      <button class="add-to-cart-button" (click)="addToCart(package.id)">
+        Agregar al carrito
+      </button>
     </div>
   </div>
   

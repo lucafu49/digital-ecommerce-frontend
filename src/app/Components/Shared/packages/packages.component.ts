@@ -3,6 +3,8 @@ import { DataService } from '../../../Services/data.service';
 import { CommonModule } from '@angular/common';
 import { Category } from '../../../Interfaces/category';
 import { FormsModule } from '@angular/forms';
+import { ClientService } from '../../../Services/client.service';
+import { AddCartRequest } from '../../../Interfaces/add-cart-request';
 
 @Component({
   selector: 'app-packages',
@@ -34,7 +36,7 @@ export class PackagesComponent implements OnInit {
 
 
 
-  constructor(private dService : DataService) {}
+  constructor(private dService : DataService, private cService : ClientService) {}
 
   ngOnInit(): void {
     this.getPackages();
@@ -122,8 +124,25 @@ export class PackagesComponent implements OnInit {
       }
     })
   }
-  
 
+
+  addToCart(requestId: string): void {
+
+    const request : AddCartRequest = {
+      packageId : requestId
+    }
+
+    this.cService.addItemtoCart(request).subscribe({
+      next: (response) => {
+        console.log(`Paquete ${request} agregado al carrito.`, response);
+        alert('Paquete agregado al carrito con éxito.');
+      },
+      error: (error) => {
+        console.error(`Error al agregar el paquete ${request} al carrito:`, error);
+        alert('No se pudo agregar el paquete al carrito. Inténtalo de nuevo.');
+      }
+    });
+  }
 
   // Abre o cierra el menú de filtros
   toggleFilterMenu(): void {
@@ -152,5 +171,19 @@ export class PackagesComponent implements OnInit {
     } else {
       this.getPackages();
     }
+  }
+
+  applyFilters(): void {
+    this.fetchPackages(); // Usa la lógica centralizada para aplicar los filtros
+    this.showFilterMenu = false; // Cierra el menú de filtros
+  }
+  
+  quitFilters():void{
+    this.orderBy = 'name';
+    this.lir = 'asc';
+    this.minPrice = '0';
+    this.maxPrice = '5000';
+    this.showFilterMenu = false;
+    this.fetchPackages();
   }
 }
