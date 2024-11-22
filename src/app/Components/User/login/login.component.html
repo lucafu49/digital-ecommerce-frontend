@@ -1,39 +1,51 @@
 <div class="container">
-    <div class="form-container">
-        <form action="" [formGroup]="loginForm">
+<div class="login-container">
+  <div class="login-card">
+    <h1 class="title">Iniciar Sesión</h1>
+    <form [formGroup]="loginForm">
+      <div class="input-group">
+        <input
+          type="text"
+          formControlName="email"
+          placeholder="Correo electrónico"
+          class="form-input"
+        />
+        <i class="fa-regular fa-envelope icon"></i>
+      </div>
+      <div class="error-message" *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].touched || loginForm.controls['email'].dirty)">
+        <span *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
+          Debes ingresar un correo.
+        </span>
+        <span *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched">
+          Ingresa un correo válido.
+        </span>
+      </div>
 
-            <div class="input-field">
-                <input type="text" formControlName="email" placeholder="Mail">
-                <i class="fa-regular fa-envelope"></i>
-            </div>
-            <div class="error-container">
-                <div class="text-danger" *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].touched || loginForm.controls['email'].dirty)">
-                  <span *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
-                   Missing Email
-                  </span>
-                  <span *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched">
-                   Use a valid Email!
-                  </span>
-                </div>
-            </div>
+      <div class="input-group">
+        <input
+          type="{{ showPassword ? 'text' : 'password' }}"
+          placeholder="Contraseña"
+          formControlName="password"
+          class="form-input"
+        />
+        <i
+          class="fa-solid fa-eye-slash icon toggle-password"
+          [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+          (click)="togglePasswordVisibility('password')"
+        ></i>
+      </div>
+      <div class="error-message" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)">
+        <span *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+          Debes ingresar una contraseña.
+        </span>
+        <span *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched || 
+        loginForm.get('password')?.hasError('maxlength') && loginForm.get('password')?.touched">
+          Utiliza entre 8 y 20 caracteres.
+        </span>
+      </div>
 
-            <div class="input-field">
-                <input type="{{ showPassword ? 'text' : 'password' }}" placeholder=" Ingrese su Contraseña" formControlName="password">
-                <i class="fa-solid fa-eye-slash showHidePw" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility('password')"></i>
-              </div>
-              <div class="error-container">
-                <div class="text-danger" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)">
-                  <span *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
-                    Missing Password.
-                  </span>
-                  <span *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched || 
-                  loginForm.get('password')?.hasError('maxlength') && loginForm.get('password')?.touched">
-                    Utiliza entre 8 y 20 caracteres.
-                  </span> 
-                </div>
-              </div>
-
-            <button (click)="onSubmit()">Login</button>
-        </form>
-    </div>
+      <button type="button" class="submit-button" (click)="onSubmit()">Iniciar Sesión</button>
+    </form>
+  </div>
+</div>
 </div>

@@ -1,39 +1,120 @@
 .category-grid table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .category-grid th, .category-grid td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .category-grid th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
-  .category-grid button {
-    margin-right: 5px;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .category-grid button:hover {
-    background-color: #ddd;
-  }
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  .create-form {
-    margin-top: 10px;
-  }
-  
-  .create-form input {
-    margin-right: 10px;
-    padding: 5px;
-  }
-  
-  .create-form button {
-    padding: 5px 10px;
-  }
+.category-grid th,
+.category-grid td {
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  text-align: left;
+  color: var(--text-color);
+}
+
+.category-grid th {
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-weight: bold;
+}
+
+/* Campo editable */
+.edit-input {
+  width: 100%; /* Tamaño fijo, similar al texto original */
+  padding: 6px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Estilo para que no cambie el tamaño */
+.edit-input:focus {
+  outline: 2px solid var(--primary-color);
+}
+
+/* Botones */
+.action-button {
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.action-button.edit {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.action-button.delete {
+  background-color: var(--error-color);
+  color: var(--white);
+}
+
+.action-button.save {
+  background-color: var(--primary-color-hover);
+  color: var(--white);
+}
+
+.action-button.cancel {
+  background-color: var(--border-color);
+  color: var(--text-muted);
+}
+
+.action-button:hover {
+  opacity: 0.9;
+}
+
+/* Botón para creación */
+.create-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.create-button:hover {
+  background-color: var(--primary-color-hover);
+}
+
+/* Formulario de creación */
+.create-form {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.create-form input {
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--secondary-color);
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.error-container {
+  margin-top: 5px;
+  color: var(--error-color);
+  font-size: 0.85rem;
+}
+
+.text-danger {
+  color: var(--error-color);
+  font-size: 0.85rem;
+}

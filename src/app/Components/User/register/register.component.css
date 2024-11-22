@@ -1,0 +1,135 @@
+/* Contenedor principal */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    background-color: var(--bg-color);
+  }
+  
+  .register-card {
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    padding: 30px 20px;
+    overflow-y: auto; /* Permite scroll si el contenido es largo */
+    max-height: 90vh; /* Asegura que la tarjeta nunca sea más alta que la pantalla */
+  }
+  
+  /* Título */
+  .title {
+    font-size: 1.8rem;
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 20px;
+  }
+  
+  /* Grupo de Entrada */
+  .input-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--secondary-color);
+  }
+  
+  .form-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    background-color: var(--white);
+  }
+  
+  /* Íconos */
+  .icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+  
+  .toggle-password {
+    color: var(--text-color);
+  }
+  
+  /* Mensajes de Error */
+  .error-message {
+    color: var(--error-color);
+    font-size: 0.9rem;
+    margin-top: -15px;
+    margin-bottom: 10px;
+  }
+  
+  /* Botón */
+  .submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: var(--primary-color-hover);
+  }
+  
+  /* === Responsividad === */
+  @media (max-width: 480px) {
+    .register-card {
+      padding: 20px 15px;
+    }
+  
+    .title {
+      font-size: 1.5rem;
+    }
+  
+    .form-input {
+      font-size: 0.9rem;
+      padding: 8px 35px 8px 10px;
+    }
+  
+    .icon {
+      right: 10px;
+    }
+  
+    .submit-button {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  }
+  
+  @media (min-width: 1440px) {
+    .register-card {
+      max-width: 500px;
+      padding: 50px 40px;
+    }
+  
+    .title {
+      font-size: 2.2rem;
+    }
+  
+    .form-input {
+      font-size: 1.2rem;
+      padding: 14px 60px 14px 20px;
+    }
+  
+    .submit-button {
+      font-size: 1.2rem;
+      padding: 15px;
+    }
+  }
+  

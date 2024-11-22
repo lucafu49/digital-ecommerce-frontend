@@ -8,13 +8,14 @@
     transition: .2s;
 }
 :root {
-    --background-color: #121212;
-    --primary-color: #bb86fc;
-    --secondary-color: #3700b3;
-    --text-color: #e0e0e0;
-    --accent-color: #03dac6;
-    --button-color: #292929;
-    --button-text-color: #bb86fc;
-  }
+  --primary-color: #4E4E4E; /* Azul principal */
+  --primary-color-hover: #C280A2; /* Azul más oscuro para hover */
+  --secondary-color: #526776; /* Fondo de inputs */
+  --secondary-color-hover: #97A7AB; /* Fondo de inputs */
+  --error-color: #ff4d4d; /* Rojo para errores */
+  --bg-color: #eeeeee; /* Fondo general */
+  --title-color: #302f2f;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
