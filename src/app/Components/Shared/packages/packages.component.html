@@ -1,20 +1,25 @@
 <div class="component">
-  <div class="search-bar">
-    <input 
-      type="text" 
-      [(ngModel)]="searchWord" 
-      placeholder="Buscar por palabra..."
-      class="search-input" />
+  <div class="search-container">
+    <div class="search-bar">
+      <input 
+        type="text" 
+        [(ngModel)]="searchWord" 
+        placeholder="Buscar por palabra..."
+        class="search-input" />
       <button 
-      class="search-button" 
-      (click)="getPackagesByWord()" 
-      [disabled]="!searchWord.trim()">
-      Buscar
-    </button>
+        class="search-button" 
+        (click)="getPackagesByWord()" 
+        [disabled]="!searchWord.trim()">
+        Buscar
+      </button>
+    </div>
   </div>
 
 <div class="container">
 
+  <div class="filter-menu">
+    
+  </div>
 
 <div class="info-container">
   <div class="category-container">
@@ -71,12 +76,19 @@
   <div class="packages-container">
     <div class="product-grid">
       <div class="product-card" *ngFor="let package of packages.packages">
-        <img [src]="package.previewImage" alt="{{ package.name }}" class="product-image" />
-        <h4 class="product-name">{{ package.name }}</h4>
-        <p class="product-price">{{ package.price | currency }}</p>
-        <button class="add-to-cart-button" (click)="addToCart(package.id)">
-          Agregar al carrito
-        </button>
+        <div class="img-container">
+          <img [src]="package.previewImage" alt="{{ package.name }}" class="product-image" />
+        </div>
+        <div class="product-info-container">
+          <div class="name-price-container">
+            <h4 class="product-name">{{ package.name }}</h4>
+            <p class="product-price">{{ package.price | currency }}</p>
+          </div>
+        
+          <button class="add-to-cart-button" (click)="addToCart(package.id)">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -90,93 +102,3 @@
 </div>
 
 </div>
-
-<!--
-
-<div class="package-container">
-  <div class="search-bar">
-    <input 
-      type="text" 
-      [(ngModel)]="searchWord" 
-      placeholder="Buscar por palabra..."
-      class="search-input" />
-      <button 
-      class="search-button" 
-      (click)="getPackagesByWord()" 
-      [disabled]="!searchWord.trim()">
-      Buscar
-    </button>
-  </div>
-  <button class="filter-button" (click)="toggleFilterMenu()">Filtros</button>
-  
-<div class="filter-menu" [class.open]="showFilterMenu">
-  <button class="filter-button" (click)="toggleFilterMenu()">Cerrar</button>
-
-  <div class="menu-content" *ngFor="let category of categories">
-    <button 
-      (click)="getPackagesByCategory(category.id)" 
-      [class.active]="filters.categoryId === category.id">
-      {{ category.name }}
-    </button>
-  </div>
-
-  <div class="menu-content">
-    <label for="minPrice">Precio Mínimo:</label>
-    <input 
-      type="number" 
-      [(ngModel)]="minPrice" 
-      id="minPrice" 
-      class="filter-input" />
-
-    <label for="maxPrice">Precio Máximo:</label>
-    <input 
-      type="number" 
-      [(ngModel)]="maxPrice" 
-      id="maxPrice" 
-      class="filter-input" />
-
-    <label for="orderBy">Ordenar por:</label>
-    <select 
-      [(ngModel)]="orderBy" 
-      id="orderBy" 
-      class="filter-select">
-      <option value="price">Precio</option>
-      <option value="name">Nombre</option>
-    </select>
-
-    <label for="lir">Orden:</label>
-    <select 
-      [(ngModel)]="lir" 
-      id="lir" 
-      class="filter-select">
-      <option value="asc">Ascendente</option>
-      <option value="desc">Descendente</option>
-    </select>
-
-    <button 
-      class="apply-filters-button" 
-      (click)="applyFilters()">
-      Aplicar Filtros
-    </button>
-  </div>
-
-  <button class="filter-button" (click)="quitFilters()">Quitar Filtros</button>
-</div>
-  
-  <div class="product-grid">
-    <div class="product-card" *ngFor="let package of packages.packages">
-      <img [src]="package.previewImage" alt="{{ package.name }}" class="product-image" />
-      <h4 class="product-name">{{ package.name }}</h4>
-      <p class="product-description">{{ package.description }}</p>
-      <p class="product-price">{{ package.price | currency }}</p>
-      <button class="add-to-cart-button" (click)="addToCart(package.id)">
-        Agregar al carrito
-      </button>
-    </div>
-  </div>
-  
-  <div class="pagination-controls">
-    <button class="prev-button" (click)="prevPage()" [disabled]="!packages.prev">Anterior</button>
-    <button class="next-button" (click)="nextPage()" [disabled]="!packages?.next">Siguiente</button>
-  </div>
-</div>-->

@@ -28,8 +28,8 @@ export class PackagesComponent implements OnInit {
 
 
   filters = {
-    categoryId : "",
-    isActiveCat : false,
+    categoryId : "673e1eab229929c3626b029e",
+    isActiveCat : true,
     isActiveWord : false
   }
 
@@ -85,6 +85,11 @@ export class PackagesComponent implements OnInit {
   }
 
   getPackagesByWord(): void {
+
+    if(this.filters.isActiveWord === false && this.page !== 1){
+      this.page = 1;
+    }
+
     if (!this.searchWord.trim()) {
       this.message = "Por favor ingresa una palabra para buscar.";
       return;
