@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { DataService } from '../../../Services/data.service';
 import { CommonModule } from '@angular/common';
 import { Category } from '../../../Interfaces/category';
@@ -16,7 +16,6 @@ import { AddCartRequest } from '../../../Interfaces/add-cart-request';
 export class PackagesComponent implements OnInit {
   packages: any | undefined;
   categories : Category[] | undefined;
-  showFilterMenu: boolean = false; // Controla el estado del menú de filtros
   message: string | undefined;
   maxPrice : string = "5000";
   minPrice : string = "0";
@@ -26,6 +25,9 @@ export class PackagesComponent implements OnInit {
 
   searchWord: string = "";
 
+  isFilterMenuOpen: boolean = false;
+  isSmallScreen: boolean = false;
+
 
   filters = {
     categoryId : "673e1eab229929c3626b029e",
@@ -34,13 +36,28 @@ export class PackagesComponent implements OnInit {
   }
 
 
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    this.checkScreenSize();
+  }
 
+  checkScreenSize(): void {
+    this.isSmallScreen = window.innerWidth < 1024;
+  }
+
+  toggleFilterMenu(): void {
+    if (this.isSmallScreen) {
+      this.isFilterMenuOpen = !this.isFilterMenuOpen;
+    }
+  }
 
   constructor(private dService : DataService, private cService : ClientService) {}
+
 
   ngOnInit(): void {
     this.getPackages();
     this.getCategories();
+    this.checkScreenSize();
   }
 
 
@@ -148,11 +165,6 @@ export class PackagesComponent implements OnInit {
       }
     });
   }
-
-  // Abre o cierra el menú de filtros
-  toggleFilterMenu(): void {
-    this.showFilterMenu = !this.showFilterMenu;
-  }
   
   prevPage(): void {
     if (this.page > 1) {
@@ -180,7 +192,7 @@ export class PackagesComponent implements OnInit {
 
   applyFilters(): void {
     this.fetchPackages(); // Usa la lógica centralizada para aplicar los filtros
-    this.showFilterMenu = false; // Cierra el menú de filtros
+    
   }
   
   quitFilters():void{
@@ -188,7 +200,6 @@ export class PackagesComponent implements OnInit {
     this.lir = 'asc';
     this.minPrice = '0';
     this.maxPrice = '5000';
-    this.showFilterMenu = false;
     this.fetchPackages();
   }
 }

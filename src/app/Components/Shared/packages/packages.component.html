@@ -17,13 +17,20 @@
 
 <div class="container">
 
-  <div class="filter-menu">
-    
-  </div>
+
+  <button class="filter-button" (click)="toggleFilterMenu()" >
+    Filtrar
+  </button>
 
 <div class="info-container">
-  <div class="category-container">
-    <h5>Categorias</h5>
+
+  
+
+  <div class="category-container" [class.active]="isFilterMenuOpen && isSmallScreen" >
+    <div class="header">
+      <i class="fa-solid fa-x" (click)="toggleFilterMenu()"></i>
+      <h5>Categorias</h5>
+    </div>
     <div class="categories" *ngFor="let category of categories">
       <button 
       (click)="getPackagesByCategory(category.id)" 

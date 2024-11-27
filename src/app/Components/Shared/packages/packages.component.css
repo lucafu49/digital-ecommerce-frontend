@@ -1,3 +1,24 @@
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
 .component{
   background-color: var(--bg-color);
 }
@@ -14,9 +35,60 @@
   width: 90%;
 }
 
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  position: relative; 
+}
+
+.header h5 {
+  flex-grow: 1; 
+  text-align: left; 
+  margin: 0;
+}
+
+.header .fa-x {
+  position: absolute; 
+  left: 10px; 
+  cursor: pointer; 
+}
+
+
+.filter-button{
+  display: none;
+  position: absolute;
+  left: 5%;
+  padding: 5px 20px;
+  background-color: var(--primary-color);
+  border: transparent;
+  color: var(--bg-color);
+  border-radius: 5px;
+}
+
+
+
+
+
 .category-container{
   width: 20%;
   border-right: 1px solid gray;
+}
+
+.category-container.active {
+  padding-top: 30px;
+  display: block;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  z-index: 999;
+  animation: slideIn 0.5s ease forwards;
 }
 
 .category-container h5{
@@ -24,6 +96,7 @@
   font-weight: 400;
   margin-bottom: 20px;
   color: var(--title-color);
+  text-align: center;
 }
 
 .categories button{
@@ -178,11 +251,6 @@
   background-color: var(--secondary-color-hover);
 }
 
-.active {
-  background-color: var(--secondary-color);
-  color: white;
-}
-
 .pagination-controls {
   margin-top: 20px;
   text-align: center;
@@ -217,13 +285,24 @@
   .category-container{
     display: none;
   }
+
+  .filters{
+    justify-content: center;
+    align-items: center;
+  }
+
   .packages-container{
     width: 100%;
+    margin-top: 15px;
   }
 
   .search-container{
     display: flex;
     justify-content: center;
+  }
+
+  .filter-button{
+    display: block;
   }
 
 }
@@ -232,10 +311,27 @@
   .product-grid{
     grid-template-columns: repeat(2,1fr);
   }
-
 }
 
 @media (min-width: 1024px) {
+
+  .fa-x{
+    display: none;
+  }
+
+  .filters{
+    align-items: start;
+  }
+
+  .filter-button{
+    display: none;
+  }
+
+  .category-container{
+    width: 20%;
+    border-right: 1px solid gray;
+  }
+
   .product-grid{
     grid-template-columns: repeat(3,1fr);
   }
@@ -245,6 +341,9 @@
   }
   .packages-container{
     width: 100%;
+  }
+  .filter-button{
+    display: none;
   }
 }
 
