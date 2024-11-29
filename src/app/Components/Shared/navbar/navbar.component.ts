@@ -12,6 +12,14 @@ export class NavbarComponent {
   isOpen = false;
 
   toggleMenu() {
-    this.isOpen = !this.isOpen;
+            document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navbarContainer = document.querySelector(".navbar-container");
+
+    menuToggle.addEventListener("click", () => {
+        navbarContainer.classList.toggle("open");
+    });
+});
   }
+  
 }
