@@ -1,46 +1,14 @@
-    <nav class="navbar">
-
-        <button class="menu-toggle">
-            <i class="fas fa-bars"></i>
-        </button>
-
-        <div class="navbar-container">
-          <!-- Link de Inicio -->
-          <a href="#" class="navbar-item">Inicio</a>
-          
-          <!-- Dropdown de opciones de usuario -->
-          <div class="navbar-item dropdown">
-            <button class="dropdown-button">Usuario</button>
-            <div class="dropdown-menu">
-                <a href="#" class="dropdown-item">Perfil</a>
-                <a href="#" class="dropdown-item">Carrito</a>
-                <a href="#" class="dropdown-item">Iniciar Sesión</a>
-              </div>
-          </div>
-          
-          <!-- Mega Dropdown de categorías -->
-          <div class="navbar-item mega-dropdown">
-            <button class="mega-dropdown-button">Categorías</button>
-            <div class="mega-dropdown-menu">
-              <div class="mega-dropdown-grid">
-                <a href="#" class="mega-dropdown-item">Tecnología</a>
-                <a href="#" class="mega-dropdown-item">Hogar</a>
-                <a href="#" class="mega-dropdown-item">Moda</a>
-                <a href="#" class="mega-dropdown-item">Deportes</a>
-                <a href="#" class="mega-dropdown-item">Automóviles</a>
-                <a href="#" class="mega-dropdown-item">Juguetes</a>
-                <a href="#" class="mega-dropdown-item">Belleza</a>
-                <a href="#" class="mega-dropdown-item">Electrodomésticos</a>
-                <a href="#" class="mega-dropdown-item">Jardinería</a>
-                <a href="#" class="mega-dropdown-item">Viajes</a>
-                <a href="#" class="mega-dropdown-item">Mascotas</a>
-                <a href="#" class="mega-dropdown-item">Libros</a>
-                <a href="#" class="mega-dropdown-item">Arte</a>
-                <a href="#" class="mega-dropdown-item">Videojuegos</a>
-                <a href="#" class="mega-dropdown-item">Salud</a>
-              </div>
-              <a href="#" class="mega-dropdown-view-all">Ver todas las categorías</a>
-            </div>
-          </div>
-        </div>
-      </nav>
+<div class="navbar">
+    <div class="navbar-hamburger" (click)="toggleMenu()">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+  </div>
+  
+  <div class="fullscreen-menu" [class.open]="isOpen">
+    <div class="menu-content">
+        <section class="user-menu">
+            <a routerLink="/login">Login</a>
+            <a routerLink="/cart">Cart</a>
+        </section>
+    </div>
+  </div>

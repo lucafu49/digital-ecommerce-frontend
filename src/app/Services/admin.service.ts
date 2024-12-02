@@ -11,7 +11,7 @@ import { DeleteSourcefRequest } from '../Interfaces/delete-sourcef-request';
 })
 export class AdminService {
 
-  private url :string = 'http://localhost:3000/api/';
+  private url :string = 'https://digital-ecommerce-psi.vercel.app/api/';
 
   constructor(private http: HttpClient) { }
 

@@ -1,10 +1,11 @@
 import { Category } from "./category";
 
 export interface Package {
+    categories: Category[],
+    description : string,
     id : string,
     name : string,
     previewImage : string,
-    description : string,
-    price : number,
-    Category: Category[]
+   
+    price : number
 }

@@ -8,6 +8,7 @@ import { CategoriesComponent } from './Components/Admin/categories/categories.co
 import { SourceFilesComponent } from './Components/Admin/source-files-crud/source-files.component';
 import { PackagesComponent } from './Components/Shared/packages/packages.component';
 import { PackageDetailComponent } from './Components/Shared/package-detail/package-detail.component';
+import { PackagesCrudComponent } from './Components/Admin/packages-crud/packages-crud.component';
 
 export const routes: Routes = [
     {path: 'register', component: RegisterComponent },
@@ -16,5 +17,6 @@ export const routes: Routes = [
     {path: 'category', component: CategoriesComponent, canActivate:[authGuard]},
     {path: 'source-file', component: SourceFilesComponent, canActivate:[authGuard]},
     {path: 'packages', component: PackagesComponent, canActivate:[authGuard]},
+    {path: 'crud-packages', component: PackagesCrudComponent, canActivate:[authGuard]},
     {path: 'detail', component: PackageDetailComponent, canActivate:[authGuard]}
 ];

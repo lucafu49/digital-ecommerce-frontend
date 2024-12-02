@@ -14,8 +14,8 @@
   --secondary-color-hover: #73529c; /* Fondo de inputs */
   --error-color: #ff4d4d; /* Rojo para errores */
   --bg-color: #F6F6F6; /* Fondo general */
-  --title-color: #302f2f;
+  --title-color: #3c2a50;
 }
 
-html, body { height: 100%; }
+html, body { height: 100%; background-color: var(--bg-color);}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
