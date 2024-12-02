@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
 export class NavbarComponent {
   isOpen = false;
 
-  toggleMenu() {
+  toggleMenu() {/*
             document.addEventListener("DOMContentLoaded", () => {
     const menuToggle = document.querySelector(".menu-toggle");
     const navbarContainer = document.querySelector(".navbar-container");
@@ -19,7 +19,7 @@ export class NavbarComponent {
     menuToggle.addEventListener("click", () => {
         navbarContainer.classList.toggle("open");
     });
-});
+});*/
   }
   
 }
