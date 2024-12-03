@@ -3,42 +3,34 @@
       <h1 class="crud-title">Crear Nuevo Package</h1>
   
       <form class="crud-form">
-        <!-- Nombre -->
         <div class="form-group">
           <label for="packageName">Nombre del Package</label>
           <input type="text" id="packageName" placeholder="Ingresa el nombre" class="input-field" />
         </div>
   
-        <!-- Precio -->
         <div class="form-group">
           <label for="packagePrice">Precio</label>
           <input type="number" id="packagePrice" placeholder="Ingresa el precio" class="input-field" />
         </div>
   
-        <!-- Imagen de vista previa -->
         <div class="form-group">
           <label for="previewImage">Imagen de Vista Previa</label>
           <input type="file" id="previewImage" class="input-field file-input" />
         </div>
   
-        <!-- Categorías -->
         <div class="form-group">
           <label for="packageCategories">Categorías</label>
           <select id="packageCategories" class="input-field">
             <option value="" disabled selected>Selecciona una categoría</option>
-            <option value="category1">Categoría 1</option>
-            <option value="category2">Categoría 2</option>
-            <option value="category3">Categoría 3</option>
+            <option value="category1" *ngFor="let category of categories">{{category.name}}</option>
           </select>
         </div>
   
-        <!-- Archivos de Source -->
         <div class="form-group">
           <label for="sourceFiles">Archivos Fuente</label>
           <input type="file" id="sourceFiles" multiple class="input-field file-input" />
         </div>
   
-        <!-- Botón para Crear -->
         <button type="submit" class="submit-button">Crear Package</button>
       </form>
     </div>

@@ -1,0 +1,36 @@
+<div class="grid-wrapper">
+    <div class="grid-container">
+      <div class="grid-header">
+        <h2 class="grid-title">Mis Packages</h2>
+      </div>
+  
+      <!-- Grilla de paquetes -->
+      <div class="grid">
+        <div class="grid-item" *ngFor="let package of packages.packages.results">
+          <!-- Nombre del paquete -->
+          <h3 class="package-name">{{ package.name }}</h3>
+  
+          <!-- Archivos fuente -->
+          <div class="package-section">
+            <h4 class="section-title">Links:</h4>
+            <ul class="file-list">
+              <li *ngFor="let file of package.sourceFiles">
+                <a [href]="file.link" target="_blank" class="file-link">{{ file }}</a>
+              </li>
+            </ul>
+          </div>
+  
+          <!-- Categorías -->
+          <div class="package-section">
+            <h4 class="section-title">Categorías:</h4>
+            <ul class="category-list">
+              <li *ngFor="let category of package.categories" class="category-item">
+                {{ category }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

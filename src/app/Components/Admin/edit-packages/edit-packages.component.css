@@ -1,0 +1,89 @@
+.admin-wrapper {
+    background-color: var(--bg-color);
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .admin-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-title {
+    font-size: 1.8rem;
+    color: var(--title-color);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  
+  .admin-table thead {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .admin-table th,
+  .admin-table td {
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+  }
+  
+  .package-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+  
+  .input-field,
+  .textarea-field {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--bg-color);
+  }
+  
+  .textarea-field {
+    resize: none;
+    height: 60px;
+  }
+  
+  .edit-button,
+  .save-button,
+  .cancel-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-button:hover,
+  .save-button:hover {
+    background-color: var(--primary-color-hover);
+  }
+  
+  .cancel-button {
+    background-color: var(--error-color);
+  }
+  
+  .cancel-button:hover {
+    background-color: #e04343;
+  }

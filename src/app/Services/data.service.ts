@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GetCategoriesResponse } from '../Interfaces/Responses/categories';
 import { GetSourceFileResponse } from '../Interfaces/Responses/source-files';
-import { Packages } from '../Interfaces/Responses/packages';
+import { Packages, ResponsePackages } from '../Interfaces/Responses/packages';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,8 @@ export class DataService {
     return this.http.get<GetSourceFileResponse>(`${this.url}source-file`)
   }
 
-  getPackages(page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<Packages>{
-    return this.http.get<Packages>(`${this.url}package?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
+  getPackages(page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<ResponsePackages>{
+    return this.http.get<ResponsePackages>(`${this.url}package?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
   }
 
   getPackagesByCategory(categoryId : string, page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<Packages>{
@@ -31,5 +31,9 @@ export class DataService {
 
   getPackageByWord(word : string ,page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string){
     return this.http.get<Packages>(`${this.url}package/word/${word}?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
+  }
+
+  getPackagesByAdmin(page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<ResponsePackages>{
+    return this.http.get<ResponsePackages>(`${this.url}package/admin?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
   }
 }

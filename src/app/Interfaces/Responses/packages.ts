@@ -8,3 +8,7 @@ export interface Packages {
     prev : number,
     total : number
 }
+
+export interface ResponsePackages{
+    packages : Packages
+}

@@ -30,7 +30,7 @@ export class PackagesComponent implements OnInit {
 
 
   filters = {
-    categoryId : "673e1eab229929c3626b029e",
+    categoryId : "",
     isActiveCat : true,
     isActiveWord : false
   }
@@ -72,7 +72,7 @@ export class PackagesComponent implements OnInit {
     this.dService.getPackages(this.page.toString(),this.orderBy,this.lir,this.maxPrice,this.minPrice).subscribe({
       next : (data) => {
         console.log(data);
-        this.packages = data.results;
+        this.packages = data;
       },
       error: (error) => {
         this.message = error.message;

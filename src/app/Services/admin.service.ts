@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { DeleteCatRequest } from '../Interfaces/delete-cat-request';
 import { SourceFile } from '../Interfaces/source-file';
 import { DeleteSourcefRequest } from '../Interfaces/delete-sourcef-request';
+import { ResponsePackages } from '../Interfaces/Responses/packages';
+import { Package } from '../Interfaces/package';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +35,14 @@ export class AdminService {
   }
   deleteSourceFile(request: DeleteSourcefRequest):Observable<SourceFile>{
     return this.http.delete<SourceFile>(`${this.url}source-file`, {body:request});
+  }
+
+  getPackagesByAdmin(page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<ResponsePackages>{
+    return this.http.get<ResponsePackages>(`${this.url}package/admin?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
+  }
+
+  updatePackage(request : Package):Observable<Package>{
+    return this.http.put<Package>(`${this.url}package`, request);
   }
 
   
