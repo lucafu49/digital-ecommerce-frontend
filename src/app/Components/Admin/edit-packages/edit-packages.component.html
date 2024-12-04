@@ -1,122 +1,147 @@
 <div class="admin-wrapper">
-    <div class="admin-container">
-      <h1 class="admin-title">Administrar Packages</h1>
-  
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Descripción</th>
-            <th>Categorías</th>
-            <th>Archivos Fuente</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let package of packages; let i = index">
-            <td>
-              <img 
-                [src]="package.previewImage" 
-                alt="Preview" 
-                class="package-image" 
-                *ngIf="!package.isEditing"
-              />
-              <input 
-                *ngIf="package.isEditing" 
-                [(ngModel)]="package.previewImage" 
-                type="text" 
-                class="input-field" 
-                placeholder="URL de la imagen"
-              />
-            </td>
-            <td>
-              <span *ngIf="!package.isEditing">{{ package.name }}</span>
-              <input 
-                *ngIf="package.isEditing" 
-                [(ngModel)]="package.name" 
-                type="text" 
-                class="input-field" 
-                placeholder="Nombre del paquete"
-              />
-            </td>
-            <td>
-              <span *ngIf="!package.isEditing">{{ package.price | currency }}</span>
-              <input 
-                *ngIf="package.isEditing" 
-                [(ngModel)]="package.price" 
-                type="number" 
-                class="input-field" 
-                placeholder="Precio"
-              />
-            </td>
-            <td>
-              <p 
-                *ngIf="!package.isEditing" 
-                class="description" 
-                [class.expanded]="expandedRows[i]"
-              >
-                {{ package.description }}
-              </p>
-              <textarea 
-                *ngIf="package.isEditing" 
-                [(ngModel)]="package.description" 
-                class="textarea-field" 
-                placeholder="Descripción"
-              ></textarea>
-            </td>
-            <td>
-              <ul *ngIf="!package.isEditing" class="categories-list">
-                <li *ngFor="let category of package.categories">{{ category }}</li>
-              </ul>
-              <input 
-                *ngIf="package.isEditing" 
-                [(ngModel)]="package.categories" 
-                type="text" 
-                class="input-field" 
-                placeholder="Categorías (separadas por comas)"
-              />
-            </td>
-            <td>
-              <ul *ngIf="!package.isEditing" class="files-list">
-                <li *ngFor="let file of package.sourceFiles">
-                  <a [href]="file.link" target="_blank">{{ file.name }}</a>
-                </li>
-              </ul>
-              <input 
-                *ngIf="package.isEditing" 
-                [(ngModel)]="package.sourceFiles" 
-                type="text" 
-                class="input-field" 
-                placeholder="Archivos fuente (URLs separadas por comas)"
-              />
-            </td>
-            <td>
-              <button 
-                *ngIf="!package.isEditing" 
-                class="edit-button" 
-                (click)="enableEditPackage(package)"
-              >
-                Editar
-              </button>
-              <div *ngIf="package.isEditing" class="action-buttons">
-                <button 
-                  class="save-button" 
-                  (click)="savePackageUpdate(package)"
-                >
-                  Guardar
-                </button>
-                <button 
-                  class="cancel-button" 
-                  (click)="cancelEditPackage(package)"
-                >
-                  Cancelar
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="admin-container">
+    <h1 class="admin-title">Administrar Packages</h1>
+
+    <!-- Formulario de edición -->
+    <form class="edit-form" *ngIf="toggleForm">
+      <div class="form-group">
+        <label for="previewImage">URL de la Imagen</label>
+        <input
+          id="previewImage"
+          type="text"
+          class="input-field"
+          placeholder="URL de la imagen"
+          [(ngModel)]="editingPackage.previewImage"
+          name="previewImage"
+        />
+      </div>
+    
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input
+          id="name"
+          type="text"
+          class="input-field"
+          placeholder="Nombre del paquete"
+          [(ngModel)]="editingPackage.name"
+          name="name"
+        />
+      </div>
+    
+      <div class="form-group">
+        <label for="price">Precio</label>
+        <input
+          id="price"
+          type="number"
+          class="input-field"
+          placeholder="Precio"
+          [(ngModel)]="editingPackage.price"
+          name="price"
+        />
+      </div>
+    
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <textarea
+          id="description"
+          class="textarea-field"
+          placeholder="Descripción"
+          [(ngModel)]="editingPackage.description"
+          name="description"
+        ></textarea>
+      </div>
+    
+      <div class="form-group">
+        <label>Categorías</label>
+        <div *ngFor="let category of listCategories" class="checkbox-group">
+          <input 
+            type="checkbox" 
+            [checked]="editingPackage.categories?.includes(category.id)"
+            (change)="onCategoryChange(category, $event)"
+          />
+          <span>{{ category.id }}</span>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <label for="sourceFiles">Archivos Fuente</label>
+        <input
+          id="sourceFiles"
+          type="text"
+          class="input-field"
+          placeholder="Archivos fuente (URLs separadas por comas)"
+          [(ngModel)]="editingPackage.sourceFiles"
+          name="sourceFiles"
+        />
+      </div>
+
+      <div class="options">
+        <button type="button" class="save-button" (click)="cancelEditPackage(editingPackage)">Cancelar</button>
+        <button type="button" class="save-button" (click)="savePackageUpdate(editingPackage)">Guardar Cambios</button>
+      </div>
+    </form>
+
+    <!-- Tabla de paquetes -->
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Descripción</th>
+          <th>Categorías</th>
+          <th>Archivos Fuente</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let package of packages; let i = index">
+          <td>
+            <img
+              [src]="package.previewImage"
+              alt="Preview"
+              class="package-image"
+              *ngIf="!package.isEditing"
+            />
+          </td>
+          <td>
+            <span *ngIf="!package.isEditing">{{ package.name }}</span>
+          </td>
+          <td>
+            <span *ngIf="!package.isEditing">{{ package.price | currency }}</span>
+          </td>
+          <td>
+            <p
+              *ngIf="!package.isEditing"
+              class="description"
+              [class.expanded]="expandedRows[i]"
+            >
+              {{ package.description }}
+            </p>
+          </td>
+          <td>
+            <ul *ngIf="!package.isEditing" class="categories-list">
+              <li *ngFor="let category of package.categories">{{ category }}</li>
+            </ul>
+          </td>
+          <td>
+            <ul *ngIf="!package.isEditing" class="files-list">
+              <li *ngFor="let file of package.sourceFiles">
+                <a [href]="file.link" target="_blank">{{ file.name }}</a>
+              </li>
+            </ul>
+          </td>
+          <td>
+            <button
+              *ngIf="!package.isEditing"
+              class="edit-button"
+              (click)="enableEditPackage(package)"
+            >
+              Editar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>

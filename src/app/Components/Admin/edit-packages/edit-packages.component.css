@@ -87,3 +87,7 @@
   .cancel-button:hover {
     background-color: #e04343;
   }
+
+  .edit-form{
+    margin-bottom: 10px;
+  }

@@ -1,5 +1,5 @@
 .navbar {
-  background-color: #333;
+  background-color: var(--primary-color);
   padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
@@ -12,7 +12,7 @@
 }
 
 .navbar-item {
-  color: white;
+  color: var(--bg-color);
   text-decoration: none;
   font-size: 1rem;
   padding: 0.5rem;
@@ -20,7 +20,7 @@
 }
 
 .navbar-item:hover {
-  background-color: #444;
+  background-color: var(--primary-color);
   border-radius: 5px;
 }
 
@@ -35,7 +35,7 @@
 
 .dropdown-button:hover,
 .mega-dropdown-button:hover {
-  background-color: #444;
+  background-color: var(--primary-color);
   border-radius: 5px;
 }
 
@@ -49,7 +49,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #444;
+  background-color: var(--primary-color);
   padding: 0.5rem 0;
   display: none;
   flex-direction: column;
@@ -66,7 +66,7 @@
 }
 
 .dropdown-item:hover {
-  background-color: #555;
+  background-color: var(--primary-color-hover);
 }
 
 /* Mostrar Dropdown al hacer hover */
@@ -83,7 +83,7 @@ position: relative;
 position: absolute;
 top: 100%;
 left: 0;
-background-color: #444;
+background-color: var(--primary-color);
 padding: 2rem 1rem;
 display: none;
 width: 600px; /* Ancho del mega dropdown */
@@ -99,7 +99,7 @@ grid-gap: 0.5rem; /* Espaciado entre elementos */
 }
 /* Mega Dropdown Items */
 .mega-dropdown-item {
-color: white;
+color: var(--bg-color);
 text-decoration: none;
 font-size: 0.9rem;
 padding: 0.5rem;
@@ -133,7 +133,7 @@ display: block;
   display: none;
   background: none;
   border: none;
-  color: white;
+  color: var(--bg-color);
   font-size: 1.5rem;
   cursor: pointer;
 }

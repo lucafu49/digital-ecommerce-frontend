@@ -4,6 +4,7 @@ import { DataService } from '../../../Services/data.service';
 import { Package } from '../../../Interfaces/package';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../../Services/admin.service';
+import { Category } from '../../../Interfaces/category';
 
 @Component({
   selector: 'app-edit-packages',
@@ -24,6 +25,10 @@ export class EditPackagesComponent {
   expandedRows: boolean[] = [];
 
   listCategories : any [] = [];
+
+  editingPackage: any = {};
+
+  toggleForm : boolean = false;
 
 
 
@@ -66,40 +71,33 @@ export class EditPackagesComponent {
     })
   }
 
-  toggleDescription(index: number): void {
-    this.expandedRows[index] = !this.expandedRows[index];
-  }
-
-  updatePackage(packages : any){
-
-    const request : Package = {
-      categories : packages.categories,
-      sourceFile : packages.sourceFile,
-      id : packages.id,
-      description : packages.description,
-      name : packages.name,
-      previewImage : packages.previewImage,
-      price : packages.price
-
-    }
-    
-    this.aService.updatePackage(request).subscribe({
-      next: () => {
-        packages.isEditing = false;
-        console.log("Category updated:", packages);
-      },
-      error: (error) => {
-        this.message = error.message;
-        console.error("Error updating category:", this.message);
+  onCategoryChange(category: Category, event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+  
+    if (isChecked) {
+      // Agregar el ID de la categoría si no está presente
+      if (!this.editingPackage.categories) {
+        this.editingPackage.categories = [];
       }
-    });
+      if (!this.editingPackage.categories.includes(category.id)) {
+        this.editingPackage.categories.push(category.id);
+      }
+    } else {
+      // Eliminar el ID de la categoría si está presente
+      this.editingPackage.categories = this.editingPackage.categories.filter(
+        (catId: string) => catId !== category.id
+      );
+    }
   }
 
   enableEditPackage(pack: any) {
-    pack.isEditing = true;
+    this.editingPackage = { ...pack }; // Clonar los datos del paquete seleccionado
+    this.toggleForm = true;
   }
 
   savePackageUpdate(pack: any) {
+    console.log('Categories IDs to save:', pack.categories);
+
     this.aService.updatePackage(pack).subscribe({
       next: () => {
         pack.isEditing = false;
@@ -110,11 +108,17 @@ export class EditPackagesComponent {
         console.error("Error updating package:", this.message);
       }
     });
+
+    this.toggleForm = false;
+
+    this.getPackages();
   }
 
   cancelEditPackage(pack: any) {
-    pack.isEditing = false;
-    this.getPackages();
+    if(this.toggleForm == true){
+      this.toggleForm = false;
+      pack.isEditing = false;
+    }
   }
 
 
