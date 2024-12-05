@@ -1,5 +1,5 @@
 <nav class="navbar">
-  <button class="menu-toggle" (click)="toggleMenu()">
+  <button class="menu-toggle">
       <i class="fas fa-bars"></i>
   </button>
   <div class="navbar-container">
@@ -10,9 +10,9 @@
     <div class="navbar-item dropdown">
       <button class="dropdown-button">Usuario</button>
       <div class="dropdown-menu">
-          <a routerLink="" class="dropdown-item">Perfil</a>
-          <a routerLink="cart" class="dropdown-item">Carrito</a>
-          <a routerLink="login" class="dropdown-item">Iniciar Sesión</a>
+          <a href="#" class="dropdown-item">Perfil</a>
+          <a href="#" class="dropdown-item">Carrito</a>
+          <a href="#" class="dropdown-item">Iniciar Sesión</a>
         </div>
     </div>
     
@@ -20,8 +20,22 @@
     <div class="navbar-item mega-dropdown">
       <button class="mega-dropdown-button">Categorías</button>
       <div class="mega-dropdown-menu">
-        <div class="mega-dropdown-grid" *ngFor="let category of categories">
-          <a href="#" class="mega-dropdown-item">{{category.name}}</a>
+        <div class="mega-dropdown-grid">
+          <a href="#" class="mega-dropdown-item">Tecnología</a>
+          <a href="#" class="mega-dropdown-item">Hogar</a>
+          <a href="#" class="mega-dropdown-item">Moda</a>
+          <a href="#" class="mega-dropdown-item">Deportes</a>
+          <a href="#" class="mega-dropdown-item">Automóviles</a>
+          <a href="#" class="mega-dropdown-item">Juguetes</a>
+          <a href="#" class="mega-dropdown-item">Belleza</a>
+          <a href="#" class="mega-dropdown-item">Electrodomésticos</a>
+          <a href="#" class="mega-dropdown-item">Jardinería</a>
+          <a href="#" class="mega-dropdown-item">Viajes</a>
+          <a href="#" class="mega-dropdown-item">Mascotas</a>
+          <a href="#" class="mega-dropdown-item">Libros</a>
+          <a href="#" class="mega-dropdown-item">Arte</a>
+          <a href="#" class="mega-dropdown-item">Videojuegos</a>
+          <a href="#" class="mega-dropdown-item">Salud</a>
         </div>
         <a href="#" class="mega-dropdown-view-all">Ver todas las categorías</a>
       </div>

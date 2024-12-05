@@ -3,7 +3,7 @@
     <h1 class="admin-title">Administrar Packages</h1>
 
     <!-- Formulario de edición -->
-    <form class="edit-form" *ngIf="toggleForm">
+    <form class="edit-form" *ngIf="toggleForm" id="editForm">
       <div class="form-group">
         <label for="previewImage">URL de la Imagen</label>
         <input
@@ -56,23 +56,37 @@
         <div *ngFor="let category of listCategories" class="checkbox-group">
           <input 
             type="checkbox" 
-            [checked]="editingPackage.categories?.includes(category.id)"
+            [checked]="isCategorySelected(category)"
             (change)="onCategoryChange(category, $event)"
           />
-          <span>{{ category.id }}</span>
+          <span>{{ category.name }}</span>
         </div>
       </div>
     
       <div class="form-group">
         <label for="sourceFiles">Archivos Fuente</label>
-        <input
-          id="sourceFiles"
-          type="text"
-          class="input-field"
-          placeholder="Archivos fuente (URLs separadas por comas)"
-          [(ngModel)]="editingPackage.sourceFiles"
-          name="sourceFiles"
-        />
+        <ul class="source-files-list">
+          <li *ngFor="let file of editingPackage.sourceFiles; let i = index">
+            <input
+              type="text"
+              placeholder="Nombre del archivo"
+              [(ngModel)]="editingPackage.sourceFiles[i].name"
+              class="input-field"
+            />
+            <input
+              type="text"
+              placeholder="Link del archivo"
+              [(ngModel)]="editingPackage.sourceFiles[i].link"
+              class="input-field"
+            />
+            <button type="button" class="delete-button" (click)="removeSourceFile(i)">Eliminar</button>
+          </li>
+        </ul>
+        <button type="button" class="add-button" (click)="addSourceFile()">Añadir Archivo</button>
+      </div>
+
+      <div *ngIf="message" class="error-message">
+        {{ message }}
       </div>
 
       <div class="options">
@@ -118,16 +132,25 @@
             >
               {{ package.description }}
             </p>
+            <button 
+            *ngIf="package.description.length > 100" 
+            class="toggle-button" 
+            (click)="toggleRowExpansion(i)"
+          >
+            {{ expandedRows[i] ? 'Leer menos' : 'Leer más' }}
+          </button>
           </td>
           <td>
             <ul *ngIf="!package.isEditing" class="categories-list">
-              <li *ngFor="let category of package.categories">{{ category }}</li>
+              <li *ngFor="let category of package.categories">{{ category.name }}</li>
             </ul>
           </td>
           <td>
             <ul *ngIf="!package.isEditing" class="files-list">
               <li *ngFor="let file of package.sourceFiles">
-                <a [href]="file.link" target="_blank">{{ file.name }}</a>
+                <a [href]="file.link" target="_blank">{{ file.link }}</a><br>
+                <span>{{ file.name }}</span>
+                <br><br>
               </li>
             </ul>
           </td>

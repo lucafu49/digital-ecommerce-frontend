@@ -2,19 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DataService } from '../../../Services/data.service';
 import { Package } from '../../../Interfaces/package';
-import { FormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminService } from '../../../Services/admin.service';
 import { Category } from '../../../Interfaces/category';
 
 @Component({
   selector: 'app-edit-packages',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,ReactiveFormsModule],
   templateUrl: './edit-packages.component.html',
   styleUrl: './edit-packages.component.css'
 })
 export class EditPackagesComponent {
   packages: any | undefined;
+  pageInfo : any | undefined;
   message: string | undefined;
   maxPrice : string = "5000";
   minPrice : string = "0";
@@ -32,8 +33,7 @@ export class EditPackagesComponent {
 
 
 
-  constructor(private dService : DataService, private aService : AdminService) {
-    
+  constructor(private dService : DataService, private aService : AdminService){
   }
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class EditPackagesComponent {
   }
 
   getPackages() {
-    this.dService
+    this.aService
       .getPackagesByAdmin(this.page.toString(), this.orderBy, this.lir, this.maxPrice, this.minPrice)
       .subscribe({
         next: (data) => {
@@ -52,6 +52,8 @@ export class EditPackagesComponent {
           }));
           this.expandedRows = Array(this.packages.length).fill(false); // Inicializar después de cargar los datos
           console.log(this.packages);
+          this.pageInfo = data;
+          console.log(this.pageInfo);
         },
         error: (error) => {
           this.message = error.message;
@@ -71,32 +73,98 @@ export class EditPackagesComponent {
     })
   }
 
+  toggleRowExpansion(index: number): void {
+    this.expandedRows[index] = !this.expandedRows[index];
+  }
+
   onCategoryChange(category: Category, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
   
     if (isChecked) {
-      // Agregar el ID de la categoría si no está presente
+      // Agregar la categoría si no está presente
       if (!this.editingPackage.categories) {
         this.editingPackage.categories = [];
       }
-      if (!this.editingPackage.categories.includes(category.id)) {
-        this.editingPackage.categories.push(category.id);
+      if (!this.editingPackage.categories.some((cat: Category) => cat.id === category.id)) {
+        this.editingPackage.categories.push(category);
       }
     } else {
-      // Eliminar el ID de la categoría si está presente
+      // Eliminar la categoría si está presente
       this.editingPackage.categories = this.editingPackage.categories.filter(
-        (catId: string) => catId !== category.id
+        (cat: Category) => cat.id !== category.id
       );
     }
   }
 
   enableEditPackage(pack: any) {
-    this.editingPackage = { ...pack }; // Clonar los datos del paquete seleccionado
+    this.editingPackage = {
+      ...pack,
+      sourceFiles: pack.sourceFiles?.map((file: any) => ({
+        name: file.name || '',
+        link: file.link || '',
+      })) || [],
+    };
+
+    console.log(this.editingPackage);
+
     this.toggleForm = true;
+      const formElement = document.getElementById('editForm');
+  if (formElement) {
+    formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  }
+
+  isCategorySelected(category: Category): boolean {
+    return this.editingPackage.categories?.some((cat: Category) => cat.id === category.id) ?? false;
+  }
+
+  isFormValid(packageData: any): boolean {
+    // Validar que el nombre no esté vacío
+    if (!packageData.name || packageData.name.trim() === '') {
+      this.message = 'El nombre no puede estar vacío.';
+      return false;
+    }
+  
+    // Validar que la descripción no esté vacía y que tenga un máximo de 200 caracteres
+    if (!packageData.description || packageData.description.trim() === '') {
+      this.message = 'La descripción no puede estar vacía.';
+      return false;
+    }
+    if (packageData.description.length > 1000) {
+      this.message = 'La descripción no puede tener más de 200 caracteres.';
+      return false;
+    }
+  
+    // Validar que el precio no esté vacío
+    if (!packageData.price || packageData.price <= 0) {
+      this.message = 'El precio debe ser mayor a 0.';
+      return false;
+    }
+  
+    // Validar que haya al menos una categoría seleccionada
+    if (!packageData.categories || packageData.categories.length === 0) {
+      this.message = 'Debe seleccionar al menos una categoría.';
+      return false;
+    }
+  
+    // Validar que haya al menos un archivo fuente
+    if (!packageData.sourceFiles || packageData.sourceFiles.length === 0) {
+      this.message = 'Debe proporcionar al menos un archivo fuente.';
+      return false;
+    }
+  
+    // Si todas las validaciones pasan
+    this.message = ''; // Limpiar mensajes de error previos
+    return true;
   }
 
   savePackageUpdate(pack: any) {
-    console.log('Categories IDs to save:', pack.categories);
+
+
+    if (!this.isFormValid(pack)) {
+      console.error('Formulario no válido:', this.message);
+      return; // Detener la ejecución si el formulario no es válido
+    }
 
     this.aService.updatePackage(pack).subscribe({
       next: () => {
@@ -112,6 +180,7 @@ export class EditPackagesComponent {
     this.toggleForm = false;
 
     this.getPackages();
+    
   }
 
   cancelEditPackage(pack: any) {
@@ -121,5 +190,15 @@ export class EditPackagesComponent {
     }
   }
 
+  addSourceFile(): void {
+    if (!this.editingPackage.sourceFiles) {
+      this.editingPackage.sourceFiles = [];
+    }
+    this.editingPackage.sourceFiles.push({ name: '', link: '' });
+  }
+  
+  removeSourceFile(index: number): void {
+    this.editingPackage.sourceFiles.splice(index, 1);
+  }
 
 }

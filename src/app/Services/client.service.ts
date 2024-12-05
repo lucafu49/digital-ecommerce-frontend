@@ -13,7 +13,7 @@ import { Cart } from '../Interfaces/Responses/cart';
 })
 export class ClientService {
 
-  private url :string = 'https://digital-ecommerce-psi.vercel.app/api/';
+  private url :string = 'https://digital-ecommerce-jt70.onrender.com/api/';
 
   constructor(private http: HttpClient) { }
 

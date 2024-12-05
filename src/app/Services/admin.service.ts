@@ -13,7 +13,7 @@ import { Package } from '../Interfaces/package';
 })
 export class AdminService {
 
-  private url :string = 'https://digital-ecommerce-psi.vercel.app/api/';
+  private url :string = 'https://digital-ecommerce-jt70.onrender.com/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -38,7 +38,7 @@ export class AdminService {
   }
 
   getPackagesByAdmin(page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<ResponsePackages>{
-    return this.http.get<ResponsePackages>(`${this.url}package/admin?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
+    return this.http.get<ResponsePackages>(`${this.url}package/admin?page=${page}&limit=15&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
   }
 
   updatePackage(request : Package):Observable<Package>{

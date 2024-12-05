@@ -10,7 +10,7 @@ import { Packages, ResponsePackages } from '../Interfaces/Responses/packages';
 })
 export class DataService {
 
-  private url : string = 'https://digital-ecommerce-psi.vercel.app/api/'
+  private url : string = 'https://digital-ecommerce-jt70.onrender.com/api/'
 
   constructor(private http:HttpClient) { }
 

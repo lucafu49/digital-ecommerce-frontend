@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../../Services/data.service';
 import { Category } from '../../../Interfaces/category';
@@ -11,20 +11,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit{
   isOpen = false;
   categories : Category[] | undefined;
   message : string = ''; 
 
-  constructor(private dService : DataService, private renderer: Renderer2){}
+  constructor(private dService : DataService){}
 
-  toggleMenu() {
-    const navbarContainer = document.querySelector('.navbar-container');
-
-    if (navbarContainer) {
-      navbarContainer.classList.toggle('open');
-    }
+  ngOnInit(): void {
+    this.getCategories();
   }
+
 
   getCategories(){
     this.dService.getCategories().subscribe({
