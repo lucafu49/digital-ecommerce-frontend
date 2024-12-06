@@ -3,7 +3,7 @@ import { SourceFile } from "./source-file";
 
 export interface Package {
     categories: Category[],
-    sourceFile : SourceFile[],
+    sourceFiles : SourceFile[],
     description : string,
     id : string,
     name : string,

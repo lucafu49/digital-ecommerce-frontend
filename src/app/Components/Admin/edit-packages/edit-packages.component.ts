@@ -5,6 +5,8 @@ import { Package } from '../../../Interfaces/package';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminService } from '../../../Services/admin.service';
 import { Category } from '../../../Interfaces/category';
+import { SourceFile } from '../../../Interfaces/source-file';
+import { DeleteSourcefRequest } from '../../../Interfaces/delete-sourcef-request';
 
 @Component({
   selector: 'app-edit-packages',
@@ -100,6 +102,7 @@ export class EditPackagesComponent {
     this.editingPackage = {
       ...pack,
       sourceFiles: pack.sourceFiles?.map((file: any) => ({
+        id: file.id || '',
         name: file.name || '',
         link: file.link || '',
       })) || [],
@@ -109,9 +112,9 @@ export class EditPackagesComponent {
 
     this.toggleForm = true;
       const formElement = document.getElementById('editForm');
-  if (formElement) {
-    formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
   }
 
   isCategorySelected(category: Category): boolean {
@@ -158,29 +161,52 @@ export class EditPackagesComponent {
     return true;
   }
 
-  savePackageUpdate(pack: any) {
+savePackageUpdate(pack: any) {
+  if (!this.isFormValid(pack)) {
+    console.error('Formulario no válido:', this.message);
+    return;
+  }
 
+  const formData = new FormData();
+  formData.append('id', pack.id);
+  formData.append('name', pack.name);
+  formData.append('price', pack.price.toString());
+  formData.append('description', pack.description);
 
-    if (!this.isFormValid(pack)) {
-      console.error('Formulario no válido:', this.message);
-      return; // Detener la ejecución si el formulario no es válido
+  pack.categories.forEach((file: any) => {
+    formData.append('categories[]', file.id);
+  });
+
+  pack.sourceFiles.forEach((file: any) => {
+    formData.append('sourceFiles[]', file.id);
+  });
+
+  if (pack.previewImage instanceof File) {
+    formData.append('file', pack.previewImage);
+  }
+
+  this.aService.updatePackage(formData).subscribe({
+    next: () => {
+      console.log('Paquete actualizado:', formData);
+      this.toggleForm = false;
+      this.getPackages(); // Refrescar la lista
+    },
+    error: (error) => {
+      this.message = error.message;
+      console.error('Error al actualizar el paquete:', this.message);
+    },
+  });
+}
+
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      const selectedFile = fileInput.files[0];
+      console.log('Archivo seleccionado:', selectedFile);
+  
+      // Guardar el archivo en `editingPackage`
+      this.editingPackage.previewImage = selectedFile;
     }
-
-    this.aService.updatePackage(pack).subscribe({
-      next: () => {
-        pack.isEditing = false;
-        console.log("Package updated:", pack);
-      },
-      error: (error) => {
-        this.message = error.message;
-        console.error("Error updating package:", this.message);
-      }
-    });
-
-    this.toggleForm = false;
-
-    this.getPackages();
-    
   }
 
   cancelEditPackage(pack: any) {
@@ -197,8 +223,45 @@ export class EditPackagesComponent {
     this.editingPackage.sourceFiles.push({ name: '', link: '' });
   }
   
-  removeSourceFile(index: number): void {
-    this.editingPackage.sourceFiles.splice(index, 1);
+  removeSourceFile(sourceFileId: any) {
+    const request: DeleteSourcefRequest = { sourceFileId };
+  
+    this.aService.deleteSourceFile(request).subscribe({
+      next: () => {
+        console.log("SourceFile deleted:", sourceFileId);
+        // Filtrar la lista para eliminar visualmente el archivo eliminado
+        this.editingPackage.sourceFiles = this.editingPackage.sourceFiles.filter(
+          (file: any) => file.id !== sourceFileId
+        );
+      },
+      error: (error) => {
+        this.message = error.message;
+        console.error("Error deleting source file:", this.message);
+      },
+    });
+  }
+
+  updateSourceFile(file: any) {
+    if (!file.name || !file.link) {
+      console.error('El archivo fuente debe tener un nombre y un enlace válidos.');
+      return;
+    }
+  
+    const sourceFile: SourceFile = {
+      id: file.id,
+      name: file.name,
+      link: file.link,
+    };
+  
+    this.aService.updateSourceFile(sourceFile).subscribe({
+      next: () => {
+        console.log("Source file updated:", sourceFile);
+      },
+      error: (error) => {
+        this.message = error.message;
+        console.error("Error updating source file:", this.message);
+      },
+    });
   }
 
 }

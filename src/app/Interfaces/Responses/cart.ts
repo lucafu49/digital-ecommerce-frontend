@@ -1,6 +1,6 @@
 import { PackageCart } from "./package-cart"
 
 export interface Cart {
-    user : string
+    userId : string
     packages : PackageCart[]
 }

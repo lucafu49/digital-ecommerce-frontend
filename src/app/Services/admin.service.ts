@@ -38,10 +38,10 @@ export class AdminService {
   }
 
   getPackagesByAdmin(page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<ResponsePackages>{
-    return this.http.get<ResponsePackages>(`${this.url}package/admin?page=${page}&limit=15&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
+    return this.http.get<ResponsePackages>(`${this.url}package/admin?page=${page}&limit=17&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
   }
 
-  updatePackage(request : Package):Observable<Package>{
+  updatePackage(request : any):Observable<Package>{
     return this.http.put<Package>(`${this.url}package`, request);
   }
 

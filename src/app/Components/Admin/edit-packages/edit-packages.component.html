@@ -8,10 +8,10 @@
         <label for="previewImage">URL de la Imagen</label>
         <input
           id="previewImage"
-          type="text"
+          type="file"
           class="input-field"
           placeholder="URL de la imagen"
-          [(ngModel)]="editingPackage.previewImage"
+          (change)="onFileSelected($event)"
           name="previewImage"
         />
       </div>
@@ -72,14 +72,17 @@
               placeholder="Nombre del archivo"
               [(ngModel)]="editingPackage.sourceFiles[i].name"
               class="input-field"
+              name="sourceFileName{{i}}" 
             />
             <input
               type="text"
               placeholder="Link del archivo"
               [(ngModel)]="editingPackage.sourceFiles[i].link"
               class="input-field"
+              name="sourceFileLink{{i}}"
             />
-            <button type="button" class="delete-button" (click)="removeSourceFile(i)">Eliminar</button>
+            <button type="button" class="update-button" (click)="updateSourceFile(editingPackage.sourceFiles[i])">Actualizar</button>
+            <button type="button" class="delete-button" (click)="removeSourceFile(editingPackage.sourceFiles[i].id)">Eliminar</button>
           </li>
         </ul>
         <button type="button" class="add-button" (click)="addSourceFile()">Añadir Archivo</button>

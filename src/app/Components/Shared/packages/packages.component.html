@@ -76,6 +76,13 @@
         (click)="applyFilters()">
         Aplicar Filtros
       </button>
+
+      <button 
+        class="apply-filters-button" 
+        (click)="quitFilters()"
+        *ngIf="filters.isActiveCat || filters.isActiveWord">
+        Quitar Filtros
+      </button>
     </div>
   </div>
 
@@ -104,8 +111,8 @@
 </div>
 
 <div class="pagination-controls">
-  <button class="prev-button" (click)="prevPage()" [disabled]="!packages.prev">Anterior</button>
-  <button class="next-button" (click)="nextPage()" [disabled]="!packages?.next">Siguiente</button>
+  <button class="prev-button" (click)="prevPage()" [disabled]="!packages.packages.prev">Anterior</button>
+  <button class="next-button" (click)="nextPage()" [disabled]="!packages?.packages.next">Siguiente</button>
 </div>
 
 </div>

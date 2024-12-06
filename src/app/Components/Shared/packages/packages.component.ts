@@ -93,7 +93,7 @@ export class PackagesComponent implements OnInit {
     this.dService.getPackagesByCategory(this.filters.categoryId,this.page.toString(),this.orderBy,this.lir,this.maxPrice,this.minPrice).subscribe({
       next : (data) =>{
         console.log(data);
-        this.packages = data.results;
+        this.packages = data;
       },
       error: (error) => {
         this.message = error.message;
@@ -125,7 +125,7 @@ export class PackagesComponent implements OnInit {
     ).subscribe({
       next: (data) => {
         console.log(data);
-        this.packages = data.results;
+        this.packages = data;
         this.filters.isActiveCat = false; // Desactiva otros filtros
       },
       error: (error) => {
@@ -200,6 +200,8 @@ export class PackagesComponent implements OnInit {
     this.lir = 'asc';
     this.minPrice = '0';
     this.maxPrice = '5000';
+    this.filters.isActiveCat = false;
+    this.filters.isActiveWord = false;
     this.fetchPackages();
   }
 }
