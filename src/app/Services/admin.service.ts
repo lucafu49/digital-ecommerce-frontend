@@ -37,12 +37,18 @@ export class AdminService {
     return this.http.delete<SourceFile>(`${this.url}source-file`, {body:request});
   }
 
-  getPackagesByAdmin(page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<ResponsePackages>{
-    return this.http.get<ResponsePackages>(`${this.url}package/admin?page=${page}&limit=17&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
+  getPackagesByAdmin(page:string):Observable<ResponsePackages>{
+    return this.http.get<ResponsePackages>(`${this.url}package/admin?page=${page}&limit=10`);
+  }
+  getPackagesByAdminByCategory(categoryId: string,page:string):Observable<ResponsePackages>{
+    return this.http.get<ResponsePackages>(`${this.url}package/admin/category/${categoryId}/?page=${page}&limit=10`);
+  }
+  getPackagesByAdminByWord(word : string,page:string):Observable<ResponsePackages>{
+    return this.http.get<ResponsePackages>(`${this.url}package/admin/word/${word}?page=${page}&limit=10`);
   }
 
-  updatePackage(request : any):Observable<Package>{
-    return this.http.put<Package>(`${this.url}package`, request);
+  updatePackage(request : any):Observable<any>{
+    return this.http.put<any>(`${this.url}package`, request);
   }
 
   

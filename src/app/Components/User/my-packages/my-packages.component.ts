@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../../Services/data.service';
 import { CommonModule } from '@angular/common';
+import { ClientService } from '../../../Services/client.service';
 
 @Component({
   selector: 'app-my-packages',
@@ -12,10 +13,6 @@ import { CommonModule } from '@angular/common';
 export class MyPackagesComponent {
   packages: any | undefined;
   message: string | undefined;
-  maxPrice : string = "5000";
-  minPrice : string = "0";
-  orderBy : string = "price";
-  lir : string = "asc";
   page : number = 1;
 
   searchWord: string = "";
@@ -30,12 +27,11 @@ export class MyPackagesComponent {
     isActiveWord : false
   }
 
-  constructor(private dService : DataService) {}
+  constructor(private cService : ClientService) {}
 
 
   ngOnInit(): void {
     this.getPackages();
-    this.function();
   }
 
 
@@ -47,7 +43,7 @@ export class MyPackagesComponent {
       this.filters.isActiveWord = false;
     }
 
-    this.dService.getPackagesByAdmin(this.page.toString(),this.orderBy,this.lir,this.maxPrice,this.minPrice).subscribe({
+    this.cService.getPurchasedPackages().subscribe({
       next : (data) => {
         console.log(data);
         this.packages = data;
@@ -57,10 +53,5 @@ export class MyPackagesComponent {
       }
     })
   }
-
-  function(){
-    console.log(this.packages);
-  }
-
 
 }

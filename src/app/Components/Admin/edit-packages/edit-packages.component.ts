@@ -33,9 +33,27 @@ export class EditPackagesComponent {
 
   toggleForm : boolean = false;
 
+  searchTerm: string = '';
+  selectedCategoryId: string = '';
+
+  createForm : FormGroup
+
+  deletedSourceF : SourceFile[] = [];
 
 
-  constructor(private dService : DataService, private aService : AdminService){
+  filters = {
+    isActiveWord: false,
+    isActiveCategory: false
+  };
+
+
+
+  constructor(private dService : DataService, private aService : AdminService, private formBuilder: FormBuilder
+  ) {
+    this.createForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      link: ['', [Validators.required]]
+    });
   }
 
   ngOnInit(): void {
@@ -44,8 +62,14 @@ export class EditPackagesComponent {
   }
 
   getPackages() {
+
+    if(this.filters.isActiveCategory == true || this.filters.isActiveWord== true){
+      this.filters.isActiveCategory = false;
+      this.filters.isActiveWord = false;
+    }
+
     this.aService
-      .getPackagesByAdmin(this.page.toString(), this.orderBy, this.lir, this.maxPrice, this.minPrice)
+      .getPackagesByAdmin(this.page.toString())
       .subscribe({
         next: (data) => {
           this.packages = data.packages.results.map((pack: any) => ({
@@ -54,8 +78,7 @@ export class EditPackagesComponent {
           }));
           this.expandedRows = Array(this.packages.length).fill(false); // Inicializar después de cargar los datos
           console.log(this.packages);
-          this.pageInfo = data;
-          console.log(this.pageInfo);
+          this.pageInfo = data.packages;
         },
         error: (error) => {
           this.message = error.message;
@@ -63,6 +86,106 @@ export class EditPackagesComponent {
       });
   }
 
+  filterByWord(): void {
+
+    if(this.filters.isActiveWord === false && this.page !== 1){
+      this.page = 1;
+    }
+
+    this.filters.isActiveWord = true;
+
+    if (this.searchTerm.trim() !== '') {
+      this.aService
+        .getPackagesByAdminByWord(this.searchTerm,this.page.toString())
+        .subscribe({
+          next: (data) => {
+            this.packages = data.packages.results.map((pack: any) => ({
+              ...pack,
+              isEditing: false,
+            }));
+            this.pageInfo = data.packages;
+            this.message = '';
+          },
+          error: (error) => {
+            this.message = 'Error al buscar paquetes por palabra.';
+          },
+        });
+    } else {
+      this.getPackages(); // Si no hay búsqueda, se cargan todos los paquetes
+    }
+  }
+  
+  filterByCategory(): void {
+
+    if(this.filters.isActiveCategory === false){ //Si ya estaba en otra pagina en el inicio, setea la paginba en uno asi empieza desde el principio y no desde la ultima pagina del inicio
+      this.page = 1;
+      this.filters.isActiveCategory = true;
+      this.filters.isActiveWord = false;
+      this.searchTerm = '';
+    }
+
+    if (this.selectedCategoryId) {
+      this.aService
+        .getPackagesByAdminByCategory(this.selectedCategoryId,this.page.toString())
+        .subscribe({
+          next: (data) => {
+            this.packages = data.packages.results.map((pack: any) => ({
+              ...pack,
+              isEditing: false,
+            }));
+            this.message = '';
+            this.pageInfo = data.packages;
+          },
+          error: (error) => {
+            this.message = 'Error al filtrar paquetes por categoría.';
+          },
+        });
+    } else {
+      this.getPackages(); // Si no hay categoría seleccionada, se cargan todos los paquetes
+    }
+  }
+
+  prevPage(): void {
+    if (this.page > 1) {
+      this.page--;
+      this.fetchPackages(); // Método centralizado
+    }
+  }
+  
+  nextPage(): void {
+    if (this.pageInfo?.next) {
+      this.page++;
+      this.fetchPackages(); // Método centralizado
+    }
+  }
+  
+  fetchPackages(): void {
+    if (this.filters.isActiveWord) {
+      this.filterByWord();
+    } else if (this.filters.isActiveCategory) {
+      this.filterByCategory();
+    } else {
+      this.getPackages();
+    }
+  }
+
+  applyFilters(): void {
+    this.fetchPackages(); // Usa la lógica centralizada para aplicar los filtros
+    
+  }
+  
+  quitFilters():void{
+    this.orderBy = 'name';
+    this.lir = 'asc';
+    this.minPrice = '0';
+    this.maxPrice = '5000';
+    this.filters.isActiveCategory = false;
+    this.filters.isActiveWord = false;
+    this.fetchPackages();
+  }
+
+
+  
   getCategories(){
     this.dService.getCategories().subscribe({
       next: (data) =>{
@@ -83,7 +206,6 @@ export class EditPackagesComponent {
     const isChecked = (event.target as HTMLInputElement).checked;
   
     if (isChecked) {
-      // Agregar la categoría si no está presente
       if (!this.editingPackage.categories) {
         this.editingPackage.categories = [];
       }
@@ -91,7 +213,6 @@ export class EditPackagesComponent {
         this.editingPackage.categories.push(category);
       }
     } else {
-      // Eliminar la categoría si está presente
       this.editingPackage.categories = this.editingPackage.categories.filter(
         (cat: Category) => cat.id !== category.id
       );
@@ -108,8 +229,6 @@ export class EditPackagesComponent {
       })) || [],
     };
 
-    console.log(this.editingPackage);
-
     this.toggleForm = true;
       const formElement = document.getElementById('editForm');
       if (formElement) {
@@ -122,13 +241,11 @@ export class EditPackagesComponent {
   }
 
   isFormValid(packageData: any): boolean {
-    // Validar que el nombre no esté vacío
     if (!packageData.name || packageData.name.trim() === '') {
       this.message = 'El nombre no puede estar vacío.';
       return false;
     }
   
-    // Validar que la descripción no esté vacía y que tenga un máximo de 200 caracteres
     if (!packageData.description || packageData.description.trim() === '') {
       this.message = 'La descripción no puede estar vacía.';
       return false;
@@ -138,26 +255,22 @@ export class EditPackagesComponent {
       return false;
     }
   
-    // Validar que el precio no esté vacío
     if (!packageData.price || packageData.price <= 0) {
       this.message = 'El precio debe ser mayor a 0.';
       return false;
     }
   
-    // Validar que haya al menos una categoría seleccionada
     if (!packageData.categories || packageData.categories.length === 0) {
       this.message = 'Debe seleccionar al menos una categoría.';
       return false;
     }
   
-    // Validar que haya al menos un archivo fuente
     if (!packageData.sourceFiles || packageData.sourceFiles.length === 0) {
       this.message = 'Debe proporcionar al menos un archivo fuente.';
       return false;
     }
   
-    // Si todas las validaciones pasan
-    this.message = ''; // Limpiar mensajes de error previos
+    this.message = ''; 
     return true;
   }
 
@@ -173,23 +286,58 @@ savePackageUpdate(pack: any) {
   formData.append('price', pack.price.toString());
   formData.append('description', pack.description);
 
-  pack.categories.forEach((file: any) => {
-    formData.append('categories[]', file.id);
-  });
-
-  pack.sourceFiles.forEach((file: any) => {
-    formData.append('sourceFiles[]', file.id);
-  });
-
   if (pack.previewImage instanceof File) {
     formData.append('file', pack.previewImage);
   }
 
+  
+
+  const requestCatSourceFiles = {
+    id: pack.id,
+    categories: pack.categories.map((category: Category) => category.id),
+    sourceFiles: pack.sourceFiles.map((sourceFile: SourceFile) => sourceFile.id)
+  };
+
+  console.log(requestCatSourceFiles);
+
+
   this.aService.updatePackage(formData).subscribe({
-    next: () => {
-      console.log('Paquete actualizado:', formData);
+    next: (data) => {
+      console.log("PRIMER UPDATE");
+      console.log(data);
+    },
+    error: (error) => {
+      this.message = error.message;
+      console.error('Error al actualizar el paquete:', this.message);
+    },
+  });
+
+
+
+  this.aService.updatePackage(requestCatSourceFiles).subscribe({
+    next: (data) => {
+      console.log("SEGUNDO UPDATE");
+      console.log(data);
+
+
+      this.deletedSourceF.forEach((file: any) => {
+        const request : DeleteSourcefRequest = {
+          sourceFileId : file.id
+        }
+      
+        this.aService.deleteSourceFile(request).subscribe({
+          next: () => {
+            console.log("Source file deleted:", request.sourceFileId);
+          },
+          error: (error) => {
+            this.message = error.message;
+            console.error("Error deleting source file:", this.message);
+          }
+        });
+      });
+
       this.toggleForm = false;
-      this.getPackages(); // Refrescar la lista
+      this.fetchPackages();
     },
     error: (error) => {
       this.message = error.message;
@@ -222,23 +370,50 @@ savePackageUpdate(pack: any) {
     }
     this.editingPackage.sourceFiles.push({ name: '', link: '' });
   }
+
+  createSourceFile() {
+    if (this.createForm.invalid) {
+      this.createForm.markAllAsTouched();
+      return;
+    }
   
-  removeSourceFile(sourceFileId: any) {
-    const request: DeleteSourcefRequest = { sourceFileId };
+    const newSourceFile: SourceFile = { 
+      id: '', // Set this if server assigns an ID
+      name: this.createForm.get('name')?.value,
+      link: this.createForm.get('link')?.value
+    };
   
-    this.aService.deleteSourceFile(request).subscribe({
-      next: () => {
-        console.log("SourceFile deleted:", sourceFileId);
-        // Filtrar la lista para eliminar visualmente el archivo eliminado
-        this.editingPackage.sourceFiles = this.editingPackage.sourceFiles.filter(
-          (file: any) => file.id !== sourceFileId
-        );
+    this.aService.createSourceFile(newSourceFile).subscribe({
+      next: (data) => {
+
+        console.log("Hola");
+
+        console.log(newSourceFile);
+
+        console.log(data);
+        
+        this.editingPackage.sourceFiles.push(data);
+
+        console.log(this.editingPackage.sourceFiles);
+  
+        this.message = 'Archivo fuente creado y añadido con éxito.';
+        this.createForm.reset(); 
       },
       error: (error) => {
         this.message = error.message;
-        console.error("Error deleting source file:", this.message);
-      },
+        console.error("Error creating source file:", this.message);
+      }
     });
+  }
+  
+  removeSourceFile(fileId: string): void {
+    const index = this.editingPackage.sourceFiles.findIndex((file: SourceFile) => file.id === fileId);
+    if (index !== -1) {
+      const removedFile = this.editingPackage.sourceFiles.splice(index, 1)[0];
+      this.deletedSourceF.push(removedFile.id); // Mover el archivo al arreglo de eliminados
+      console.log(`Archivo eliminado: ${removedFile.name}`);
+      console.log('Lista de archivos eliminados:', this.deletedSourceF);
+    }
   }
 
   updateSourceFile(file: any) {

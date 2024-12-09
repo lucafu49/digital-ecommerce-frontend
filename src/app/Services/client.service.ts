@@ -7,6 +7,7 @@ import { RegisterResponse } from '../Interfaces/Responses/login-register';
 import { LoginResponse } from '../Interfaces/Responses/login-register';
 import { AddCartRequest } from '../Interfaces/add-cart-request';
 import { Cart } from '../Interfaces/Responses/cart';
+import { ResponsePackages } from '../Interfaces/Responses/packages';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,9 @@ export class ClientService {
 
   deletePackageFromCart(packageId : AddCartRequest){
     return this.http.delete(`${this.url}cart`, {body: packageId});
+  }
+
+  getPurchasedPackages():Observable<ResponsePackages>{
+    return this.http.get<ResponsePackages>(`${this.url}package/purchased-packages?limit=10`);
   }
 }

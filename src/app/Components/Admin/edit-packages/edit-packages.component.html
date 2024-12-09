@@ -2,6 +2,26 @@
   <div class="admin-container">
     <h1 class="admin-title">Administrar Packages</h1>
 
+    <div class="filter-container">
+      <select [(ngModel)]="selectedCategoryId" (change)="filterByCategory()">
+        <option value="">Todas las categorías</option>
+        <option [value]="category.id" *ngFor="let category of listCategories">
+          {{ category.name }}
+        </option>
+      </select>
+
+  <!-- Filtro por palabra -->
+  <form (submit)="filterByWord()">
+    <input
+      type="text"
+      placeholder="Buscar por nombre"
+      [(ngModel)]="searchTerm"
+      name="searchTerm"
+    />
+    <button type="submit" class="search-button" (click)="filterByWord()">Buscar</button>
+  </form>   
+    </div>
+
     <!-- Formulario de edición -->
     <form class="edit-form" *ngIf="toggleForm" id="editForm">
       <div class="form-group">
@@ -82,10 +102,24 @@
               name="sourceFileLink{{i}}"
             />
             <button type="button" class="update-button" (click)="updateSourceFile(editingPackage.sourceFiles[i])">Actualizar</button>
-            <button type="button" class="delete-button" (click)="removeSourceFile(editingPackage.sourceFiles[i].id)">Eliminar</button>
+            <button type="button" class="update-button" (click)="removeSourceFile(editingPackage.sourceFiles[i].id)">Eliminar</button>
           </li>
         </ul>
-        <button type="button" class="add-button" (click)="addSourceFile()">Añadir Archivo</button>
+
+        <h1>Crear SourceFile</h1>
+        <form [formGroup]="createForm">
+          <input formControlName="name" placeholder="SourceFile name" />
+          <input formControlName="link" placeholder="SourceFile link" />
+          <div class="error-container">
+            <div *ngIf="createForm.controls['name'].invalid && createForm.controls['name'].touched">
+              <span class="text-danger">Missing name</span>
+            </div>
+            <div *ngIf="createForm.controls['link'].invalid && createForm.controls['link'].touched">
+              <span class="text-danger">Missing link</span>
+            </div>
+          </div>
+          <button type="button" (click)="createSourceFile()">Guardar</button>
+        </form>
       </div>
 
       <div *ngIf="message" class="error-message">
@@ -122,7 +156,7 @@
             />
           </td>
           <td>
-            <span *ngIf="!package.isEditing">{{ package.name }}</span>
+            <span *ngIf="!package.isEditing" >{{ package.name }}</span>
           </td>
           <td>
             <span *ngIf="!package.isEditing">{{ package.price | currency }}</span>
@@ -169,5 +203,10 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="pagination-controls">
+      <button (click)="prevPage()" [disabled]="!pageInfo?.prev">Anterior</button>
+      <button (click)="nextPage()" [disabled]="!pageInfo?.next">Siguiente</button>
+    </div>
   </div>
 </div>

@@ -32,8 +32,4 @@ export class DataService {
   getPackageByWord(word : string ,page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string){
     return this.http.get<Packages>(`${this.url}package/word/${word}?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
   }
-
-  getPackagesByAdmin(page:string ,orderBy : string, lir: string, maxPrice : string, minPrice : string):Observable<ResponsePackages>{
-    return this.http.get<ResponsePackages>(`${this.url}package/admin?page=${page}&limit=10&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
-  }
 }
