@@ -10,16 +10,19 @@
         </option>
       </select>
 
-  <!-- Filtro por palabra -->
-  <form (submit)="filterByWord()">
-    <input
-      type="text"
-      placeholder="Buscar por nombre"
-      [(ngModel)]="searchTerm"
-      name="searchTerm"
-    />
-    <button type="submit" class="search-button" (click)="filterByWord()">Buscar</button>
-  </form>   
+      <form (submit)="filterByWord()">
+        <input
+        type="text"
+        placeholder="Buscar por nombre"
+        [(ngModel)]="searchTerm"
+        name="searchTerm"
+      />
+        <button type="submit" class="search-button" (click)="filterByWord()">Buscar</button>
+      </form>
+
+      <button class="search-button" (click)="toggleCreate()">Crear Package</button>
+      <button class="search-button" (click)="toggleCreate()" *ngIf="createMode">Cancelar</button>
+
     </div>
 
     <!-- Formulario de edición -->
@@ -128,7 +131,7 @@
 
       <div class="options">
         <button type="button" class="save-button" (click)="cancelEditPackage(editingPackage)">Cancelar</button>
-        <button type="button" class="save-button" (click)="savePackageUpdate(editingPackage)">Guardar Cambios</button>
+        <button type="button" class="save-button" (click)="savePackage()">Guardar Cambios</button>
       </div>
     </form>
 

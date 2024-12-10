@@ -40,6 +40,8 @@ export class EditPackagesComponent {
 
   deletedSourceF : SourceFile[] = [];
 
+  createMode : boolean = false;
+
 
   filters = {
     isActiveWord: false,
@@ -169,23 +171,6 @@ export class EditPackagesComponent {
     }
   }
 
-  applyFilters(): void {
-    this.fetchPackages(); // Usa la lógica centralizada para aplicar los filtros
-    
-  }
-  
-  quitFilters():void{
-    this.orderBy = 'name';
-    this.lir = 'asc';
-    this.minPrice = '0';
-    this.maxPrice = '5000';
-    this.filters.isActiveCategory = false;
-    this.filters.isActiveWord = false;
-    this.fetchPackages();
-  }
-
-
-  
   getCategories(){
     this.dService.getCategories().subscribe({
       next: (data) =>{
@@ -290,8 +275,6 @@ savePackageUpdate(pack: any) {
     formData.append('file', pack.previewImage);
   }
 
-  
-
   const requestCatSourceFiles = {
     id: pack.id,
     categories: pack.categories.map((category: Category) => category.id),
@@ -302,9 +285,8 @@ savePackageUpdate(pack: any) {
 
 
   this.aService.updatePackage(formData).subscribe({
-    next: (data) => {
-      console.log("PRIMER UPDATE");
-      console.log(data);
+    next: () => {
+
     },
     error: (error) => {
       this.message = error.message;
@@ -315,15 +297,14 @@ savePackageUpdate(pack: any) {
 
 
   this.aService.updatePackage(requestCatSourceFiles).subscribe({
-    next: (data) => {
-      console.log("SEGUNDO UPDATE");
-      console.log(data);
-
-
+    next: () => {
       this.deletedSourceF.forEach((file: any) => {
+
         const request : DeleteSourcefRequest = {
-          sourceFileId : file.id
+          sourceFileId : file
         }
+
+        console.log(request);
       
         this.aService.deleteSourceFile(request).subscribe({
           next: () => {
@@ -435,6 +416,150 @@ savePackageUpdate(pack: any) {
       error: (error) => {
         this.message = error.message;
         console.error("Error updating source file:", this.message);
+      },
+    });
+  }
+
+  //CREATE PACKAGE
+
+  toggleCreate(){
+    this.createMode = !this.createMode;
+    this.toggleForm = !this.toggleForm;
+
+    this.editingPackage = {
+      
+      sourceFiles: [], // Inicialización como arreglo vacío
+      categories: [] // Asegurarse de inicializar las categorías
+    };
+  }
+
+  savePackage(): void {
+    if (!this.isFormValid(this.editingPackage)) {
+      console.error('Formulario no válido:', this.message);
+      return;
+    }
+  
+    if (this.createMode) {
+      this.createPackage();
+    } else {
+      this.updatePackage();
+    }
+  }
+
+  createPackage(): void {
+    const formData = new FormData();
+    formData.append('name', this.editingPackage.name);
+    formData.append('price', this.editingPackage.price.toString());
+    formData.append('description', this.editingPackage.description);
+  
+    if (this.editingPackage.previewImage instanceof File) {
+      formData.append('file', this.editingPackage.previewImage);
+    }
+
+    
+  this.editingPackage.categories.forEach((cat: any) => {
+      formData.append('categories', cat.id);
+  });
+  if(this.editingPackage.categories.length == 1){
+    formData.append('categories', this.editingPackage.categories[0].id);
+  }
+  
+  this.editingPackage.sourceFiles.forEach((file: any) => {
+      formData.append('sourceFiles', file.id);
+  });
+  if(this.editingPackage.sourceFiles.length == 1){
+    formData.append('sourceFiles', this.editingPackage.sourceFiles[0].id);
+  }
+
+    this.aService.createPackage(formData).subscribe({
+      next: (data) => {
+        this.message = 'Paquete creado con éxito.';
+        this.createMode = false;
+        this.toggleForm = false;
+
+        if(this.editingPackage.sourceFiles.length == 1 || this.editingPackage.categories.length == 1){
+          const requestCatSourceFiles = {
+            id: data.id,
+            categories: this.editingPackage.categories.map((category: Category) => category.id),
+            sourceFiles: this.editingPackage.sourceFiles.map((sourceFile: SourceFile) => sourceFile.id)
+          };
+
+          this.aService.updatePackage(requestCatSourceFiles).subscribe({
+            next: () => {
+              this.deletedSourceF.forEach((file: any) => {
+        
+                const request : DeleteSourcefRequest = {
+                  sourceFileId : file
+                }
+              
+                this.aService.deleteSourceFile(request).subscribe({
+                  next: () => {
+                    console.log("Source file deleted:", request.sourceFileId);
+                  },
+                  error: (error) => {
+                    this.message = error.message;
+                    console.error("Error deleting source file:", this.message);
+                  }
+                });
+              });
+        
+              this.toggleForm = false;
+              this.fetchPackages();
+            },
+            error: (error) => {
+              this.message = error.message;
+              console.error('Error al actualizar el paquete:', this.message);
+            },
+          });
+        }
+        this.fetchPackages();
+      },
+      error: (error) => {
+        this.message = 'Error al crear el paquete.';
+        console.error(this.message, error);
+      },
+    });
+  }
+
+  updatePackage(): void {
+    const formData = new FormData();
+    formData.append('id', this.editingPackage.id);
+    formData.append('name', this.editingPackage.name);
+    formData.append('price', this.editingPackage.price.toString());
+    formData.append('description', this.editingPackage.description);
+  
+    if (this.editingPackage.previewImage instanceof File) {
+      formData.append('file', this.editingPackage.previewImage);
+    }
+  
+    const requestCatSourceFiles = {
+      id: this.editingPackage.id,
+      categories: this.editingPackage.categories.map((category: Category) => category.id),
+      sourceFiles: this.editingPackage.sourceFiles.map((sourceFile: SourceFile) => sourceFile.id),
+    };
+  
+    this.aService.updatePackage(formData).subscribe({
+      next: () => {
+        this.aService.updatePackage(requestCatSourceFiles).subscribe({
+          next: () => {
+            this.deletedSourceF.forEach((fileId: any) => {
+              const request: DeleteSourcefRequest = { sourceFileId: fileId };
+              this.aService.deleteSourceFile(request).subscribe();
+            });
+  
+            this.message = 'Paquete actualizado con éxito.';
+            this.toggleForm = false;
+            this.fetchPackages();
+          },
+          error: (error) => {
+            this.message = 'Error al actualizar categorías o archivos.';
+            console.error(this.message, error);
+          },
+        });
+      },
+      error: (error) => {
+        this.message = 'Error al actualizar el paquete.';
+        console.error(this.message, error);
       },
     });
   }

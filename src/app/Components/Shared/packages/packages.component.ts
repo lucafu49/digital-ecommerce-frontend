@@ -15,6 +15,7 @@ import { AddCartRequest } from '../../../Interfaces/add-cart-request';
 })
 export class PackagesComponent implements OnInit {
   packages: any | undefined;
+  pageInfo: any | undefined;
   categories : Category[] | undefined;
   message: string | undefined;
   maxPrice : string = "5000";
@@ -73,6 +74,7 @@ export class PackagesComponent implements OnInit {
       next : (data) => {
         console.log(data);
         this.packages = data;
+        this.pageInfo = data.packages;
       },
       error: (error) => {
         this.message = error.message;
@@ -94,6 +96,7 @@ export class PackagesComponent implements OnInit {
       next : (data) =>{
         console.log(data);
         this.packages = data;
+        this.pageInfo = data.packages;
       },
       error: (error) => {
         this.message = error.message;
@@ -126,6 +129,7 @@ export class PackagesComponent implements OnInit {
       next: (data) => {
         console.log(data);
         this.packages = data;
+        this.pageInfo = data.packages;
         this.filters.isActiveCat = false; // Desactiva otros filtros
       },
       error: (error) => {
@@ -174,7 +178,7 @@ export class PackagesComponent implements OnInit {
   }
   
   nextPage(): void {
-    if (this.packages?.next) {
+    if (this.pageInfo?.next) {
       this.page++;
       this.fetchPackages(); // Método centralizado
     }

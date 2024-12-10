@@ -21,5 +21,5 @@ export const routes: Routes = [
     {path: 'edit-packages', component: EditPackagesComponent, canActivate:[authGuard]},
     {path: 'admin/category', component: CategoriesComponent, canActivate:[authGuard]},
     {path: 'user/mypackages', component: MyPackagesComponent, canActivate:[authGuard]},
-    {path: 'detail', component: PackageDetailComponent, canActivate:[authGuard]}
+    {path: 'detail/:id', component: PackageDetailComponent, canActivate:[authGuard]}
 ];

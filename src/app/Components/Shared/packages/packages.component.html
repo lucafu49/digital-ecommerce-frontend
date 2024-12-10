@@ -12,6 +12,8 @@
         [disabled]="!searchWord.trim()">
         Buscar
       </button>
+
+      <a routerLink="/edit-packages">DETAIL</a>
     </div>
   </div>
 
@@ -89,7 +91,7 @@
 
   <div class="packages-container">
     <div class="product-grid">
-      <div class="product-card" *ngFor="let package of packages.packages.results">
+      <a class="product-card" routerLink="detail" *ngFor="let package of packages.packages.results"  >
         <div class="img-container">
           <img [src]="package.previewImage" alt="{{ package.name }}" class="product-image" />
         </div>
@@ -103,7 +105,7 @@
             <i class="fa-solid fa-cart-shopping"></i>
           </button>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 

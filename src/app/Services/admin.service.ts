@@ -47,6 +47,10 @@ export class AdminService {
     return this.http.get<ResponsePackages>(`${this.url}package/admin/word/${word}?page=${page}&limit=10`);
   }
 
+  createPackage(request : any):Observable<any>{
+    return this.http.post<any>(`${this.url}package`, request);
+  }
+
   updatePackage(request : any):Observable<any>{
     return this.http.put<any>(`${this.url}package`, request);
   }
