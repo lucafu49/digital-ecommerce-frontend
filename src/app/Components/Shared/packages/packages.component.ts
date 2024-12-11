@@ -5,11 +5,12 @@ import { Category } from '../../../Interfaces/category';
 import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../../Services/client.service';
 import { AddCartRequest } from '../../../Interfaces/add-cart-request';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-packages',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './packages.component.html',
   styleUrl: './packages.component.css'
 })

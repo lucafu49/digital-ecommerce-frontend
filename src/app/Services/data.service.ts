@@ -34,7 +34,5 @@ export class DataService {
     return this.http.get<ResponsePackages>(`${this.url}package/word/${word}?page=${page}&limit=9&orderBy=${orderBy}:${lir}&maxPrice=${maxPrice}&minPrice=${minPrice}`);
   }
 
-  getPackageById(packageId : string):Observable<Package>{
-    return this.http.get<Package>(`${this.url}package/${packageId}`);
-  }
+
 }

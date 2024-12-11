@@ -8,6 +8,7 @@ import { LoginResponse } from '../Interfaces/Responses/login-register';
 import { AddCartRequest } from '../Interfaces/add-cart-request';
 import { Cart } from '../Interfaces/Responses/cart';
 import { ResponsePackages } from '../Interfaces/Responses/packages';
+import { Package } from '../Interfaces/package';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,9 @@ export class ClientService {
 
   getPurchasedPackages():Observable<ResponsePackages>{
     return this.http.get<ResponsePackages>(`${this.url}package/purchased-packages?limit=10`);
+  }
+
+  getPackageById(packageId : string):Observable<Package>{
+    return this.http.get<Package>(`${this.url}package/${packageId}`);
   }
 }

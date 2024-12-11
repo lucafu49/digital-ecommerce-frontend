@@ -91,7 +91,7 @@
 
   <div class="packages-container">
     <div class="product-grid">
-      <a class="product-card" routerLink="detail" *ngFor="let package of packages.packages.results"  >
+      <div class="product-card" routerLink="/detail/{{package.id}}" *ngFor="let package of packages.packages.results"  >
         <div class="img-container">
           <img [src]="package.previewImage" alt="{{ package.name }}" class="product-image" />
         </div>
@@ -105,7 +105,7 @@
             <i class="fa-solid fa-cart-shopping"></i>
           </button>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 

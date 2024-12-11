@@ -235,8 +235,8 @@ export class EditPackagesComponent {
       this.message = 'La descripción no puede estar vacía.';
       return false;
     }
-    if (packageData.description.length > 1000) {
-      this.message = 'La descripción no puede tener más de 200 caracteres.';
+    if (packageData.description.length > 300) {
+      this.message = 'La descripción no puede tener más de 300 caracteres.';
       return false;
     }
   

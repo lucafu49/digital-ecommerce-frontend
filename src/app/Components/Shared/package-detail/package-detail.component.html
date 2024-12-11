@@ -1,30 +1,25 @@
-
-<div class="wrapper">
+<div class="package-detail-container">
   <div class="container">
-    <div class="img-container">
-      <img src="https://media.revistagq.com/photos/5f45010acb266484bb785c78/1:1/w_720,h_720,c_limit/dragon-ball-z.jpg" 
-           alt="Product Name" 
-           class="product-image">
+  <div class="image-section">
+    <img [src]="packageData?.previewImage" alt="{{ packageData?.name }}" />
+  </div>
+  <div class="details-section">
+    <h1>{{ packageData?.name }}</h1>
+    <p class="description">
+      {{ packageData?.description?.length > 300 
+        ? (packageData?.description | slice:0:300) + '...' 
+        : packageData?.description }}
+    </p>
+    <p class="price">Precio: {{ packageData?.price | currency }}</p>
+    <div class="categories">
+      <h3>Categorías:</h3>
+      <ul>
+        <li *ngFor="let category of packageData?.categories">{{ category }}</li>
+      </ul>
     </div>
-    <div class="package-container">
-      <h5>Goku Super Saiyan 0 despues de comer polenta</h5>
-      <p 
-        class="description" 
-        [class.expanded]="isExpanded" 
-        [class.collapsed]="!isExpanded">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae quis temporibus quod sed aliquam, eum accusamus omnis repudiandae soluta, velit, possimus ipsum. Cum soluta adipisci facilis cupiditate quo mollitia illo incidunt quidem natus suscipit, molestiae dignissimos architecto quos quam temporibus! Ratione aliquam autem nemo ut voluptate vitae impedit consectetur commodi ipsum, quas dolorem quos cumque? Ut natus quis nemo quibusdam. Iusto cumque ullam ex, perferendis animi placeat similique maiores nemo reiciendis doloribus molestias necessitatibus neque vitae velit officiis quibusdam voluptas atque dignissimos ducimus qui quia sunt consequatur. Assumenda facere minima eaque placeat beatae quisquam laudantium asperiores nemo neque, rem voluptates.
-      </p>
-      <button 
-        class="toggle-button" 
-        *ngIf="isExpandable" 
-        (click)="toggleExpand()">
-        {{ isExpanded ? 'Leer menos' : 'Leer más' }}
-      </button>
-      <div class="shop-container">
-        <span>$250</span>
-        <button class="add-button"><i class="fa-solid fa-cart-shopping"></i></button>
-      </div>
-    </div>
+    <button class="add-to-cart-button" (click)="addToCart(packageData?.id)">
+      Agregar al carrito
+    </button>
+  </div>
   </div>
 </div>
-
