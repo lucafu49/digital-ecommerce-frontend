@@ -119,6 +119,10 @@ export class EditPackagesComponent {
   
   filterByCategory(): void {
 
+    if(this.searchTerm !== ''){
+      this.searchTerm = '';
+    }
+
     if(this.filters.isActiveCategory === false){ //Si ya estaba en otra pagina en el inicio, setea la paginba en uno asi empieza desde el principio y no desde la ultima pagina del inicio
       this.page = 1;
       this.filters.isActiveCategory = true;

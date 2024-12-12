@@ -1,25 +1,37 @@
-<div class="package-detail-container">
+<div class="wrapper">
   <div class="container">
-  <div class="image-section">
-    <img [src]="packageData?.previewImage" alt="{{ packageData?.name }}" />
-  </div>
-  <div class="details-section">
-    <h1>{{ packageData?.name }}</h1>
-    <p class="description">
-      {{ packageData?.description?.length > 300 
-        ? (packageData?.description | slice:0:300) + '...' 
-        : packageData?.description }}
-    </p>
-    <p class="price">Precio: {{ packageData?.price | currency }}</p>
-    <div class="categories">
-      <h3>Categorías:</h3>
-      <ul>
-        <li *ngFor="let category of packageData?.categories">{{ category }}</li>
-      </ul>
+    <div class="img-container">
+      <img [src]="packageData?.previewImage" alt="{{ packageData?.name }}"
+           class="product-image">
     </div>
-    <button class="add-to-cart-button" (click)="addToCart(packageData?.id)">
-      Agregar al carrito
-    </button>
-  </div>
+    <div class="package-container">
+      <h5>{{packageData.name}}</h5>
+      <p 
+        class="description" 
+        [class.expanded]="isExpanded" 
+        [class.collapsed]="!isExpanded">
+        {{packageData.description}}
+      </p>
+      <button 
+        class="toggle-button" 
+        *ngIf="isExpandable" 
+        (click)="toggleExpand()">
+        {{ isExpanded ? 'Leer menos' : 'Leer más' }}
+      </button>
+      
+      <h6 class="categories-header">Categorías</h6>
+
+      <!-- Contenedor de Categorías -->
+      <div class="categories-grid">
+        <div class="category-item" *ngFor="let category of packageData.categories">
+          {{category.name}}
+        </div>
+      </div>
+      <span>Cantidad de archivos: {{packageData.sourceFiles.length}}</span>
+      <div class="shop-container">
+        <span>{{packageData.price | currency}}</span>
+        <button class="add-button"><i class="fa-solid fa-cart-shopping"></i></button>
+      </div>
+    </div>
   </div>
 </div>

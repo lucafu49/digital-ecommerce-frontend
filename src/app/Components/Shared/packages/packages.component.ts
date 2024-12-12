@@ -85,6 +85,10 @@ export class PackagesComponent implements OnInit {
 
   getPackagesByCategory(pickedCat: string){
 
+    if(this.searchWord !== ''){
+      this.searchWord = '';
+    }
+
     if(this.filters.isActiveCat === false){ //Si ya estaba en otra pagina en el inicio, setea la paginba en uno asi empieza desde el principio y no desde la ultima pagina del inicio
       this.page = 1;
       this.filters.isActiveCat = true;
@@ -141,7 +145,7 @@ export class PackagesComponent implements OnInit {
   
 
   getCategories(){
-    this.dService.getCategories().subscribe({
+    this.dService.getPopularCategories().subscribe({
       next: (data) =>{
         this.categories = data.categories;
         console.log(this.categories);
@@ -151,7 +155,6 @@ export class PackagesComponent implements OnInit {
       }
     })
   }
-
 
   addToCart(requestId: string): void {
 

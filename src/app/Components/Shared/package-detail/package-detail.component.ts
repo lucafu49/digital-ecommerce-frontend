@@ -13,18 +13,29 @@ import { AddCartRequest } from '../../../Interfaces/add-cart-request';
   templateUrl: './package-detail.component.html',
   styleUrl: './package-detail.component.css'
 })
-export class PackageDetailComponent implements OnInit {
+export class PackageDetailComponent implements OnInit, AfterViewInit {
   packageId: string = ''; // Aquí se almacenará el ID del paquete
   packageData: any;
 
-  isDescriptionLong = false;
-  isDescriptionExpanded = false;
+  isExpandable = false;
+  isExpanded = false;
 
   constructor(private elementRef: ElementRef, private route: ActivatedRoute, private cService : ClientService) {}
 
   ngOnInit(): void {
     this.packageId = this.route.snapshot.paramMap.get('id') || '';
     this.fetchPackageDetails();
+  }
+
+  ngAfterViewInit(): void {
+    const descriptionElement = this.elementRef.nativeElement.querySelector('.description');
+    if (descriptionElement.scrollHeight > 80) { // Altura límite (ajustable)
+      this.isExpandable = true;
+    }
+  }
+
+  toggleExpand(): void {
+    this.isExpanded = !this.isExpanded;
   }
 
   fetchPackageDetails(): void {
@@ -55,10 +66,6 @@ export class PackageDetailComponent implements OnInit {
         alert('No se pudo agregar el paquete al carrito. Inténtalo de nuevo.');
       }
     });
-  }
-
-  toggleDescription() {
-    this.isDescriptionExpanded = !this.isDescriptionExpanded;
   }
 
 }

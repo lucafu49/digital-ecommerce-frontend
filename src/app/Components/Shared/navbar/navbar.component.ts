@@ -1,8 +1,8 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DataService } from '../../../Services/data.service';
-import { Category } from '../../../Interfaces/category';
 import { CommonModule } from '@angular/common';
+import { Category } from '../../../Interfaces/category';
+import { DataService } from '../../../Services/data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,19 +12,32 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit{
-  isOpen = false;
-  categories : Category[] | undefined;
-  message : string = ''; 
+  activeDropdown: string | null = null;
+  isMenuOpen: boolean = false;
 
-  constructor(private dService : DataService){}
+  categories : Category[] = [];
+  message : string = '';
 
-  ngOnInit(): void {
-    this.getCategories();
+  constructor(private dService: DataService){
+
   }
 
+  ngOnInit() {
+    this.loadCategories();
+  }
 
+  loadCategories() {
+    const categories = this.dService.getCategoriesLocalStorage();
+    if (categories) {
+      this.categories = categories;
+      console.log('Categorías cargadas desde localStorage:', this.categories);
+    } else {
+      console.warn('No hay categorías guardadas en localStorage');
+    }
+  }
+  
   getCategories(){
-    this.dService.getCategories().subscribe({
+    this.dService.getPopularCategories().subscribe({
       next: (data) =>{
         this.categories = data.categories;
         console.log(this.categories);
@@ -33,6 +46,20 @@ export class NavbarComponent implements OnInit{
         this.message = error.message;
       }
     })
+  }
+
+
+  toggleDropdown(event: Event, dropdown: string) {
+    event.preventDefault();
+    this.activeDropdown = this.activeDropdown === dropdown ? null : dropdown;
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+    const navbarLinks = document.querySelector('.navbar-links');
+    if (navbarLinks) {
+      navbarLinks.classList.toggle('active');
+    }
   }
   
 }

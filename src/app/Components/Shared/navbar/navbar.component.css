@@ -1,199 +1,85 @@
 .navbar {
-  background-color: #333;
-  padding: 0.5rem 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-container {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.navbar-item {
-  color: white;
-  text-decoration: none;
-  font-size: 1rem;
-  padding: 0.5rem;
-  cursor: pointer;
-}
-
-.navbar-item:hover {
-  background-color: #444;
-  border-radius: 5px;
-}
-
-.dropdown-button,
-.mega-dropdown-button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.dropdown-button:hover,
-.mega-dropdown-button:hover {
-  background-color: #444;
-  border-radius: 5px;
-}
-
-/* Dropdown Container */
-.dropdown {
-  position: relative;
-}
-
-/* Dropdown Menu (oculto por defecto) */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #444;
-  padding: 0.5rem 0;
-  display: none;
-  flex-direction: column;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-}
-
-/* Dropdown Items */
-.dropdown-item {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  white-space: nowrap;
-}
-
-.dropdown-item:hover {
-  background-color: #555;
-}
-
-/* Mostrar Dropdown al hacer hover */
-.dropdown:hover .dropdown-menu {
-  display: flex;
-}
-
-/* Mega Dropdown Container */
-.mega-dropdown {
-position: relative;
-}
-/* Mega Dropdown Menu */
-.mega-dropdown-menu {
-position: absolute;
-top: 100%;
-left: 0;
-background-color: #444;
-padding: 2rem 1rem;
-display: none;
-width: 600px; /* Ancho del mega dropdown */
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-border-radius: 5px;
-z-index: 10; /* Asegura que esté encima de otros elementos */
-}
-/* Mega Dropdown Grid */
-.mega-dropdown-grid {
-display: grid;
-grid-template-columns: repeat(5, 1fr); /* 5 columnas */
-grid-gap: 0.5rem; /* Espaciado entre elementos */
-}
-/* Mega Dropdown Items */
-.mega-dropdown-item {
-color: white;
-text-decoration: none;
-font-size: 0.9rem;
-padding: 0.5rem;
-text-align: center;
-font-weight: 300;
-border-radius: 5px;
-white-space: nowrap;
-}
-.mega-dropdown-item:hover {
-  text-decoration: underline;
-}
-/* Mostrar el Mega Dropdown al hacer hover */
-.mega-dropdown:hover .mega-dropdown-menu {
-display: block;
-}
-.mega-dropdown-view-all {
-  display: block;
-  margin-top: 1rem; /* Separación del grid */
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 500;
-  color: white;
-  text-decoration: none;
-}
-
-.mega-dropdown-view-all:hover {
-  text-decoration: underline;
-}
-/* Ocultar el botón del menú en pantallas grandes */
-.menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-/* Hacer que la navbar sea un menú deslizante */
-.navbar-container {
-  display: flex;
-  gap: 1.5rem;
-}
-/* Estilos responsivos */
-@media (max-width: 768px) {
-  .navbar {
-      position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-color);
+    padding: 10px 20px;
   }
-  .menu-toggle {
-      display: block;
+  
+  .navbar-logo {
+    font-size: 24px;
+    color: var(--primary-color);
   }
-  .navbar-container {
-      position: fixed;
-      top: 0;
-      left: -100%; /* Fuera de la vista inicialmente */
-      background-color: #333;
-      width: 75%; /* Ancho del menú deslizante */
-      height: 100%;
+  
+  .navbar-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+  }
+  
+  .navbar-links a {
+    text-decoration: none;
+    color: var(--title-color);
+    font-weight: bold;
+  }
+  
+  .navbar-links .dropdown {
+    position: relative;
+  }
+  
+  .navbar-links .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--primary-color);
+    color: #fff;
+    list-style: none;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-links .dropdown-menu a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .navbar-links .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  
+  .navbar-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .navbar-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--title-color);
+  }
+  
+  @media (max-width: 768px) {
+    .navbar-links {
+      display: none;
       flex-direction: column;
-      gap: 1rem;
-      padding: 1rem;
-      transition: left 0.3s ease-in-out;
-      z-index: 1000;
-  }
-  .navbar-container.open {
-      left: 0; /* Mostrar el menú */
-  }
-  .navbar-item {
-      font-size: 1.2rem;
-      padding: 0.8rem;
-      text-align: left;
-  }
-  .dropdown {
-      position: relative;
-      width: 100%; /* Ocupa todo el ancho en el menú deslizante */
-  }
-  .dropdown-menu {
-      position: relative; /* Ajuste para evitar que se superponga */
-      top: auto;
+      background-color: var(--bg-color);
+      position: absolute;
+      top: 60px;
       left: 0;
-      width: 100%; /* Ocupa todo el ancho del menú */
-      background-color: #444; /* Mismo color que el menú */
-      display: none; /* Oculto inicialmente */
-      flex-direction: column;
+      width: 100%;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    .navbar-links.active {
+      display: flex;
+    }
+  
+    .navbar-toggle {
+      display: flex;
+    }
   }
-  /* Mostrar el dropdown al hacer hover */
-  .dropdown:hover .dropdown-menu {
-      display: flex; /* Muestra las opciones en bloque */
-  }
-  /* Opciones individuales */
-  .dropdown-item {
-      text-align: left;
-      padding: 0.8rem 1rem; /* Espaciado más amplio */
-  }
-  .dropdown-item:hover {
-      background-color: #555; /* Mismo efecto hover que las demás opciones */
-  }
-}

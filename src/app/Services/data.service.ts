@@ -13,10 +13,26 @@ export class DataService {
 
   private url : string = 'https://digital-ecommerce-jt70.onrender.com/api/'
 
+  private storageKey = 'categories';
+
+
+  saveCategories(categories: any[]) {
+    localStorage.setItem(this.storageKey, JSON.stringify(categories));
+    console.log('Categorías guardadas en localStorage:', categories);
+  }
+
+  getCategoriesLocalStorage(): any[] | null {
+    const storedCategories = localStorage.getItem(this.storageKey);
+    return storedCategories ? JSON.parse(storedCategories) : null;
+  }
+
   constructor(private http:HttpClient) { }
 
   getCategories(): Observable<GetCategoriesResponse>{
     return this.http.get<GetCategoriesResponse>(`${this.url}category`)
+  }
+  getPopularCategories():Observable<GetCategoriesResponse>{
+    return this.http.get<GetCategoriesResponse>(`${this.url}category/popular-categories`)
   }
   getSourceFiles():Observable<GetSourceFileResponse>{
     return this.http.get<GetSourceFileResponse>(`${this.url}source-file`)
