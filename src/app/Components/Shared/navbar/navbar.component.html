@@ -1,29 +1,33 @@
-<!-- navbar.component.html -->
-<nav class="navbar">
-    <div class="navbar-logo">
-      <i class="fa-solid fa-fire"></i>
-    </div>
-    <ul class="navbar-links">
-      <li><a href="#inicio">Inicio</a></li>
-      <li class="dropdown">
-        <a href="#tienda" (click)="toggleDropdown($event, 'tienda')">Tienda</a>
-        <ul class="dropdown-menu" *ngIf="activeDropdown === 'tienda'">
+<header class="header">
+  <a href="" class="logo">LOGO</a>
+
+  <input type="checkbox" id="menu-bar">
+  <label for="menu-bar">Menu</label>
+
+  <nav class="navbar">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="javascript:void(0)">Productos +</a>
+        <ul>
           <li *ngFor="let category of categories"><a href="#">{{category.name}}</a></li>
+          <li><a href="#">Services+</a>
+            <ul>
+              <li><a href="#">HTML</a></li>
+              <li><a href="#">CSS</a></li>
+              <li><a href="#">JAVASCRIPT</a></li>
+            </ul>
+          </li>
         </ul>
       </li>
-      <li class="dropdown">
-        <a href="#usuario" (click)="toggleDropdown($event, 'usuario')">Usuario</a>
-        <ul class="dropdown-menu" *ngIf="activeDropdown === 'usuario'">
-          <li><a href="#perfil">Perfil</a></li>
-          <li><a href="#configuracion">Configuración</a></li>
+      <li><a href="#">Usuario</a>
+        <ul>
+          <li><a href="#">Carrito</a></li>
+          <li><a href="#">Mis contenidos</a></li>
+          <li><a href="#">Iniciar sesion</a></li>
         </ul>
       </li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#">Contact</a></li>
     </ul>
-    <button class="navbar-toggle" (click)="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
   </nav>
-  
+</header>

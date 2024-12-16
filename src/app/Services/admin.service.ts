@@ -13,7 +13,7 @@ import { Package } from '../Interfaces/package';
 })
 export class AdminService {
 
-  private url :string = 'https://digital-ecommerce-jt70.onrender.com/api/';
+  private url :string = 'https://www.naumowf.com/api/';
 
   constructor(private http: HttpClient) { }
 
