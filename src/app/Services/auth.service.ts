@@ -24,10 +24,12 @@ export class AuthService {
 
   isUserAdmin(): boolean {
     const token = this.getToken();
+    console.log(token);
     if (!token) return false;
 
     try {
       const decodedToken: any = jwtDecode(token);
+      console.log(decodedToken);
       return decodedToken.role === 'ADMIN_ROLE';
     } catch (error) {
       console.error('Token decoding error:', error);

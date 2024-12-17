@@ -1,0 +1,8 @@
+<div class="categories-container">
+    <h2 class="categories-title">Categorías</h2>
+    <div class="categories-grid">
+      <a  [routerLink]="['/packages', { category: category.id }]" class="category-card" *ngFor="let category of categories" >
+        <h3 class="category-name">{{ category.name }}</h3>
+      </a>
+    </div>
+  </div>

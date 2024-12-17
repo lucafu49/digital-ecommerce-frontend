@@ -5,33 +5,29 @@
            class="product-image">
     </div>
     <div class="package-container">
-      <h5>{{packageData.name}}</h5>
-      <p 
-        class="description" 
-        [class.expanded]="isExpanded" 
-        [class.collapsed]="!isExpanded">
-        {{packageData.description}}
-      </p>
-      <button 
-        class="toggle-button" 
-        *ngIf="isExpandable" 
-        (click)="toggleExpand()">
-        {{ isExpanded ? 'Leer menos' : 'Leer más' }}
-      </button>
-      
-      <h6 class="categories-header">Categorías</h6>
 
-      <!-- Contenedor de Categorías -->
-      <div class="categories-grid">
+      <div class="category-container">
         <div class="category-item" *ngFor="let category of packageData.categories">
           {{category.name}}
         </div>
       </div>
-      <span>Cantidad de archivos: {{packageData.sourceFiles.length}}</span>
-      <div class="shop-container">
-        <span>{{packageData.price | currency}}</span>
+
+      <h5>{{packageData.name}}</h5>
+      <span class="sourcefile">Cantidad de archivos: {{packageData.sourceFiles.length}}</span>
+      <span>{{packageData.price | currency}}</span>
+
+
+      <!-- Contenedor de Categorías -->
+
+      
+
         <button class="add-button"><i class="fa-solid fa-cart-shopping"></i></button>
-      </div>
+
     </div>
   </div>
+
+  <p 
+  class="description">
+  {{packageData.description}}
+</p>
 </div>

@@ -2,32 +2,33 @@
   <a href="" class="logo">LOGO</a>
 
   <input type="checkbox" id="menu-bar">
-  <label for="menu-bar">Menu</label>
+  <label for="menu-bar"><i class="fa-solid fa-bars"></i></label>
 
   <nav class="navbar">
     <ul>
       <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
       <li><a href="javascript:void(0)">Productos +</a>
         <ul>
-          <li *ngFor="let category of categories"><a href="#">{{category.name}}</a></li>
-          <li><a href="#">Services+</a>
-            <ul>
-              <li><a href="#">HTML</a></li>
-              <li><a href="#">CSS</a></li>
-              <li><a href="#">JAVASCRIPT</a></li>
-            </ul>
-          </li>
+          <li><a routerLink="/packages">Todos los productos</a></li>
+          <li *ngFor="let category of categories"><a [routerLink]="['/packages', { category: category.id }]">{{category.name}}</a></li>
+          <li><a routerLink="/allcategories">Todas las categorias</a></li>
         </ul>
       </li>
-      <li><a href="#">Usuario</a>
+      <li><a href="javascript:void(0)">Usuario +</a>
         <ul>
-          <li><a href="#">Carrito</a></li>
-          <li><a href="#">Mis contenidos</a></li>
-          <li><a href="#">Iniciar sesion</a></li>
+          <li><a routerLink="/cart">Carrito</a></li>
+          <li><a routerLink="/my-packages">Mis contenidos</a></li>
+          <li><a routerLink="/login">Iniciar sesion</a></li>
         </ul>
       </li>
       <li><a href="#">Contact</a></li>
+      <li *ngIf="isAdmin">
+        <a href="javascript:void(0)">Administrador +</a>
+        <ul>
+          <li><a routerLink="/edit-packages">Gestionar Packages</a></li>
+          <li><a routerLink="/categories">Gestionar Categorias</a></li>
+        </ul>
+      </li>
     </ul>
   </nav>
 </header>

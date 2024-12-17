@@ -22,7 +22,7 @@ export class LoginComponent {
   constructor(private formBuilder:FormBuilder, private router:Router, private cService:ClientService){
     this.loginForm = this.formBuilder.group({
       email: ["",[Validators.required,Validators.email]],
-      password: ["",[Validators.required,Validators.minLength(8),Validators.maxLength(20)]],
+      password: ["",[Validators.required,Validators.minLength(8),Validators.maxLength(30)]],
     })
   }
 

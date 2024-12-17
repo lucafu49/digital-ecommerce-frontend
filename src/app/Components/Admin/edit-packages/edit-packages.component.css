@@ -1,6 +1,7 @@
 .admin-wrapper {
     background-color: var(--bg-color);
     min-height: 100vh;
+    margin-top: 40px;
     padding: 20px;
     display: flex;
     justify-content: center;

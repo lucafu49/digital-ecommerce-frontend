@@ -5,7 +5,7 @@ import { Category } from '../../../Interfaces/category';
 import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../../Services/client.service';
 import { AddCartRequest } from '../../../Interfaces/add-cart-request';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-packages',
@@ -53,13 +53,24 @@ export class PackagesComponent implements OnInit {
     }
   }
 
-  constructor(private dService : DataService, private cService : ClientService) {}
+  constructor(private dService : DataService, private cService : ClientService, private route:ActivatedRoute) {}
 
 
   ngOnInit(): void {
-    this.getPackages();
     this.getCategories();
     this.checkScreenSize();
+
+    this.route.params.subscribe((params) => {
+      const categoryId = params['category']; // Obtiene el ID de la categoría
+      if (categoryId) {
+        this.filters.categoryId = categoryId;
+        this.filters.isActiveCat = true;
+        this.filters.isActiveWord = false;
+        this.getPackagesByCategory(categoryId); // Llama a los paquetes de la categoría
+      } else {
+        this.getPackages(); // Llama al método general si no hay categoría
+      }
+    });
   }
 
 

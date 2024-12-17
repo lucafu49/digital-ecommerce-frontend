@@ -3,6 +3,8 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Category } from '../../../Interfaces/category';
 import { DataService } from '../../../Services/data.service';
+import { error } from 'node:console';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,16 +16,32 @@ import { DataService } from '../../../Services/data.service';
 export class NavbarComponent implements OnInit{
   activeDropdown: string | null = null;
   isMenuOpen: boolean = false;
+  isAdmin: boolean = false;
 
   categories : Category[] = [];
   message : string = '';
 
-  constructor(private dService: DataService){
+  constructor(private dService: DataService, private authService: AuthService) {}
 
-  }
+  
 
   ngOnInit() {
     this.loadCategories();
+    this.getSuperCategories();
+
+    this.isAdmin = this.authService.isUserAdmin();
+  }
+
+  getSuperCategories(){
+    this.dService.getPopularCategories().subscribe({
+      next:(data) =>{
+        console.log(data.categories);
+        this.categories = data.categories;
+      },
+      error:(error) =>{
+        this.message = error.message;
+      }
+    })
   }
 
   loadCategories() {
