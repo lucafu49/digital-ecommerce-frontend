@@ -216,7 +216,10 @@ export class EditPackagesComponent {
         name: file.name || '',
         link: file.link || '',
       })) || [],
+  
     };
+
+    console.log(this.editingPackage);
 
     this.toggleForm = true;
       const formElement = document.getElementById('editForm');
@@ -264,6 +267,9 @@ export class EditPackagesComponent {
   }
 
 savePackageUpdate(pack: any) {
+
+  console.log("HOLA");
+
   if (!this.isFormValid(pack)) {
     console.error('Formulario no válido:', this.message);
     return;
@@ -275,15 +281,22 @@ savePackageUpdate(pack: any) {
   formData.append('price', pack.price.toString());
   formData.append('description', pack.description);
 
+  
+
   if (pack.previewImage instanceof File) {
     formData.append('file', pack.previewImage);
   }
 
+  console.log(pack);
+
   const requestCatSourceFiles = {
     id: pack.id,
     categories: pack.categories.map((category: Category) => category.id),
-    sourceFiles: pack.sourceFiles.map((sourceFile: SourceFile) => sourceFile.id)
+    sourceFiles: pack.sourceFiles.map((sourceFile: SourceFile) => sourceFile.id),
+    isActive: pack.isActive
   };
+  
+  console.log("HOLA 1");
 
   console.log(requestCatSourceFiles);
 
@@ -531,16 +544,21 @@ savePackageUpdate(pack: any) {
     formData.append('name', this.editingPackage.name);
     formData.append('price', this.editingPackage.price.toString());
     formData.append('description', this.editingPackage.description);
+    formData.append('isActive', this.editingPackage.isActive);
   
     if (this.editingPackage.previewImage instanceof File) {
       formData.append('file', this.editingPackage.previewImage);
     }
+
+    console.log("HOLA a");
   
     const requestCatSourceFiles = {
       id: this.editingPackage.id,
       categories: this.editingPackage.categories.map((category: Category) => category.id),
-      sourceFiles: this.editingPackage.sourceFiles.map((sourceFile: SourceFile) => sourceFile.id),
+      sourceFiles: this.editingPackage.sourceFiles.map((sourceFile: SourceFile) => sourceFile.id)
     };
+
+    console.log(requestCatSourceFiles);
   
     this.aService.updatePackage(formData).subscribe({
       next: () => {

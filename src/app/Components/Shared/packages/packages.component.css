@@ -21,6 +21,7 @@
 
 .component{
   background-color: var(--bg-color);
+  padding-top: 5rem;
 }
 
 .container{
@@ -46,6 +47,7 @@
   flex-grow: 1; 
   text-align: left; 
   margin: 0;
+  
 }
 
 .header .fa-x {
@@ -195,6 +197,10 @@
   margin: 5px 0;
   font-weight: 500;
   color: var(--secondary-color);
+  text-align: center;
+  overflow: hidden; /* Esconde contenido que se desborde */
+  white-space: nowrap; /* Mantiene el texto en una sola línea */
+  text-overflow: ellipsis; /* Agrega puntos suspensivos si el texto es muy largo */
 }
 
 .product-price {

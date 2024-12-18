@@ -5,7 +5,7 @@
            class="product-image">
     </div>
     <div class="package-container">
-
+      
       <div class="category-container">
         <div class="category-item" *ngFor="let category of packageData.categories">
           {{category.name}}
@@ -13,21 +13,19 @@
       </div>
 
       <h5>{{packageData.name}}</h5>
+
+      <span class="price">{{packageData.price | currency}}</span>
+
       <span class="sourcefile">Cantidad de archivos: {{packageData.sourceFiles.length}}</span>
-      <span>{{packageData.price | currency}}</span>
-
-
-      <!-- Contenedor de Categorías -->
-
       
-
-        <button class="add-button"><i class="fa-solid fa-cart-shopping"></i></button>
+      <p class="description">
+        {{packageData.description}}
+      </p>
+      
+      <button class="add-button" (click)="addToCart(packageData.id)">
+        <i class="fa-solid fa-cart-shopping"></i> Añadir al carrito
+      </button>
 
     </div>
   </div>
-
-  <p 
-  class="description">
-  {{packageData.description}}
-</p>
 </div>

@@ -63,36 +63,54 @@ header label{
   display: none;
 }
 
-@media(max-width:991px){
-  header{
+@media(max-width: 991px) {
+  header {
     padding: 20px;
   }
-  header label{
+
+  header label {
     display: initial;
   }
-  header .navbar{
-    position: absolute;
-    top: 100%;left: 0;right: 0;
+
+  header .navbar {
+    position: fixed; /* Fija el menú en la pantalla */
+    top: 60px; /* Ajusta para que no se superponga con el header */
+    left: 0;
+    right: 0;
+    bottom: 0; /* Asegura que ocupe todo el alto disponible */
     background: var(--primary-color);
     border-top: 1px solid rgba(0, 0, 0, .1);
     display: none;
+    z-index: 999;
+    overflow-y: auto; /* Permite el desplazamiento vertical */
   }
-  header .navbar ul li{
+
+  header .navbar ul {
+    padding: 10px 0;
+    list-style: none;
+    margin: 0;
+  }
+
+  header .navbar ul li {
     width: 100%;
+    text-align: left; /* Asegura que los enlaces no queden centrados */
   }
-  header .navbar ul li ul{
+
+  header .navbar ul li ul {
     position: relative;
     width: 100%;
   }
-  header .navbar ul li ul li{
+
+  header .navbar ul li ul li {
     background: rgb(101, 69, 140);
   }
-  header .navbar ul li ul li ul{
+
+  header .navbar ul li ul li ul {
     width: 100%;
     left: 0;
   }
 
-  #menu-bar:checked ~ .navbar{
-    display: initial;
+  #menu-bar:checked ~ .navbar {
+    display: block;
   }
 }

@@ -19,7 +19,7 @@ export class PackagesComponent implements OnInit {
   pageInfo: any | undefined;
   categories : Category[] | undefined;
   message: string | undefined;
-  maxPrice : string = "5000";
+  maxPrice : string = "500000000000000000000000000000000000";
   minPrice : string = "0";
   orderBy : string = "price";
   lir : string = "asc";

@@ -8,5 +8,6 @@ export interface Package {
     id : string,
     name : string,
     previewImage : string,
-    price : number
+    price : number,
+    isActive : boolean
 }

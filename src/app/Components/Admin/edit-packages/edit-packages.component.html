@@ -125,6 +125,16 @@
         </form>
       </div>
 
+      <div class="form-group">
+        <label for="isActive">¿Está activo?</label>
+        <input
+          id="isActive"
+          type="checkbox"
+          [(ngModel)]="editingPackage.isActive"
+          name="isActive"
+        />
+      </div>
+
       <div *ngIf="message" class="error-message">
         {{ message }}
       </div>
@@ -145,6 +155,7 @@
           <th>Descripción</th>
           <th>Categorías</th>
           <th>Archivos Fuente</th>
+          <th>Activo</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -193,6 +204,9 @@
                 <br><br>
               </li>
             </ul>
+          </td>
+          <td>
+            <span *ngIf="!package.isEditing">{{ package.isActive ? 'Sí' : 'No' }}</span>
           </td>
           <td>
             <button

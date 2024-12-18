@@ -255,3 +255,22 @@
   color: black;
   list-style: none;
 }
+
+.file-link {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Muestra 2 líneas por defecto */
+  -webkit-box-orient: vertical;
+  max-height: 3em; /* Aproximadamente 2 líneas */
+  transition: max-height 0.3s ease;
+}
+
+.file-link.expanded {
+  -webkit-line-clamp: unset;
+  max-height: 100%;
+}
+
+.file-container {
+  margin-bottom: 10px;
+}
