@@ -73,6 +73,20 @@
     border: 1px solid #ddd;
     vertical-align: top;
   }
+
+  .admin-table td:nth-child(2) {
+    max-width: 100px; /* Define un ancho máximo para la celda */
+    overflow: hidden; /* Oculta el contenido que se salga del límite */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos cuando el texto se desborda */
+    white-space: nowrap; /* Evita que el texto salte de línea */
+  }
+
+  .admin-table td:nth-child(3) {
+    max-width: 100px; /* Define un ancho máximo para la celda */
+    overflow: hidden; /* Oculta el contenido que se salga del límite */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos cuando el texto se desborda */
+    white-space: nowrap; /* Evita que el texto salte de línea */
+  }
   
   .admin-table th:nth-child(4), .admin-table td:nth-child(4) {
     width: 20%; /* Ajusta este porcentaje según el espacio deseado */
@@ -246,6 +260,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.files-container {
+  position: relative;
+}
+
+.files-list {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Mostrar hasta 3 elementos por defecto */
+  -webkit-box-orient: vertical;
+  transition: max-height 0.3s ease;
+  max-height: 6em; /* Altura aproximada para 3 líneas */
+}
+
+.files-list.expanded {
+  -webkit-line-clamp: unset; /* Quita la restricción de elementos */
+  max-height: 100%; /* Expande al tamaño completo */
+}
 .files-list{
   list-style: none;
   font-size: 0.8rem;
@@ -265,6 +296,9 @@
   max-height: 3em; /* Aproximadamente 2 líneas */
   transition: max-height 0.3s ease;
 }
+.file-name{
+  font-weight: 500;
+}
 
 .file-link.expanded {
   -webkit-line-clamp: unset;
@@ -273,4 +307,76 @@
 
 .file-container {
   margin-bottom: 10px;
+}
+
+@media (max-width: 1230px) {
+  .package-image {
+    width: 80px; /* Ajusta según tus necesidades */
+    height: 80px; /* Asegúrate de mantener la proporción */
+  }
+
+  /* Opcional: Si necesitas que otras columnas también se adapten */
+  .admin-table td, 
+  .admin-table th {
+    font-size: 0.9rem; /* Reduce el tamaño del texto */
+    padding: 8px; /* Ajusta el espacio interno */
+  }
+}
+
+
+@media (max-width: 950px) {
+  th {
+    display: none;
+  }
+
+  td {
+    display: block;
+    width: 100%; /* Se asegura que cada celda ocupe todo el ancho */
+    padding: 8px;
+    border: none; /* Elimina bordes para una vista más limpia */
+    word-wrap: break-word; /* Permite el salto de línea */
+    white-space: normal; /* Asegura que el texto no se trunque */
+  }
+
+  td::before {
+    content: attr(data-cell) ": ";
+    font-weight: bold;
+    color: var(--secondary-color); /* Usa el color secundario del tema */
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  tr {
+    margin-bottom: 50px; /* Añade espacio entre filas */
+    border-bottom: 1px solid #ddd; /* Opcional: separador entre registros */
+  }
+
+  .admin-table td {
+    width: 100%; /* Se asegura que las celdas sean responsivas */
+  }
+
+  .admin-table td:nth-child(2) {
+    max-width: 950px; /* Define un ancho máximo para la celda */
+    overflow: hidden; /* Oculta el contenido que se salga del límite */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos cuando el texto se desborda */
+    white-space: nowrap; /* Evita que el texto salte de línea */
+  }
+
+  .admin-table td:nth-child(3) {
+    max-width: 950px; /* Define un ancho máximo para la celda */
+    overflow: hidden; /* Oculta el contenido que se salga del límite */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos cuando el texto se desborda */
+    white-space: nowrap; /* Evita que el texto salte de línea */
+  }
+  
+  .admin-table th:nth-child(4), .admin-table td:nth-child(4) {
+    width: 100%; /* Ajusta este porcentaje según el espacio deseado */
+    word-wrap: break-word;
+    white-space: normal; /* Permite el salto de línea */
+  }
+  
+  .admin-table th:nth-child(6), .admin-table td:nth-child(6) {
+    width: 100%; /* Aumenta el espacio de esta columna */
+    word-wrap: break-word;
+  }
 }

@@ -26,6 +26,7 @@ export class EditPackagesComponent {
   page : number = 1;
 
   expandedRows: boolean[] = [];
+  expandedSourceRows: boolean[] = [];
 
   listCategories : any [] = [];
 
@@ -79,6 +80,7 @@ export class EditPackagesComponent {
             isEditing: false
           }));
           this.expandedRows = Array(this.packages.length).fill(false); // Inicializar después de cargar los datos
+          this.expandedSourceRows = Array(this.packages.length).fill(false);
           console.log(this.packages);
           this.pageInfo = data.packages;
         },
@@ -189,6 +191,9 @@ export class EditPackagesComponent {
 
   toggleRowExpansion(index: number): void {
     this.expandedRows[index] = !this.expandedRows[index];
+  }
+  toggleSourceRowExpansion(index: number) {
+    this.expandedSourceRows[index] = !this.expandedSourceRows[index];
   }
 
   onCategoryChange(category: Category, event: Event): void {

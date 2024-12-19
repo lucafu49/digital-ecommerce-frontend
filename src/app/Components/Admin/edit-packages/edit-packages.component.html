@@ -161,7 +161,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let package of packages; let i = index">
-          <td>
+          <td data-cell="Imagen">
             <img
               [src]="package.previewImage"
               alt="Preview"
@@ -169,13 +169,13 @@
               *ngIf="!package.isEditing"
             />
           </td>
-          <td>
+          <td data-cell="Nombre">
             <span *ngIf="!package.isEditing" >{{ package.name }}</span>
           </td>
-          <td>
+          <td data-cell="Precio">
             <span *ngIf="!package.isEditing">{{ package.price | currency }}</span>
           </td>
-          <td>
+          <td data-cell="Descripción">
             <p
               *ngIf="!package.isEditing"
               class="description"
@@ -191,24 +191,37 @@
             {{ expandedRows[i] ? 'Leer menos' : 'Leer más' }}
           </button>
           </td>
-          <td>
+          <td data-cell="Categorías">
             <ul *ngIf="!package.isEditing" class="categories-list">
               <li *ngFor="let category of package.categories">{{ category.name }}</li>
             </ul>
           </td>
-          <td>
-            <ul *ngIf="!package.isEditing" class="files-list">
-              <li *ngFor="let file of package.sourceFiles">
-                <a [href]="file.link" target="_blank">{{ file.link }}</a><br>
-                <span>{{ file.name }}</span>
-                <br><br>
-              </li>
-            </ul>
+          <td data-cell="Archivos Fuente:">
+            <div class="files-container">
+              <ul 
+                *ngIf="!package.isEditing" 
+                class="files-list" 
+                [class.expanded]="expandedSourceRows[i]"
+              >
+                <li *ngFor="let file of package.sourceFiles">
+                  <a [href]="file.link" target="_blank">{{ file.link }}</a><br>
+                  <span class="file-name">{{ file.name }}</span>
+                  <br><br>
+                </li>
+              </ul>
+              <button 
+                *ngIf="package.sourceFiles.length > 2" 
+                class="toggle-button" 
+                (click)="toggleSourceRowExpansion(i)"
+              >
+                {{ expandedSourceRows[i] ? 'Leer menos' : 'Leer más' }}
+              </button>
+            </div>
           </td>
-          <td>
+          <td data-cell="Activo?">
             <span *ngIf="!package.isEditing">{{ package.isActive ? 'Sí' : 'No' }}</span>
           </td>
-          <td>
+          <td data-cell="Acciones">
             <button
               *ngIf="!package.isEditing"
               class="edit-button"
