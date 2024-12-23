@@ -52,4 +52,21 @@ export class CartComponent implements OnInit {
       }
     });
   }
+
+  createPayment(){
+    const request : AddCartRequest = {
+      packageId : '123546'
+    }
+
+    this.cService.createPayment(request).subscribe({
+      next: () => {
+        console.log(`Confirmacion de pago creada perfectamente`);
+        this.cartItems = this.cartItems.filter(item => item.id !== request.packageId)
+      },
+      error: (error) => {
+        this.message = 'Error al eliminar el paquete del carrito.';
+        console.error('Error:', error);
+      }
+    });
+  }
 }

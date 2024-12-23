@@ -38,6 +38,10 @@ export class ClientService {
     return this.http.delete(`${this.url}cart`, {body: packageId});
   }
 
+  createPayment(packageId : AddCartRequest){
+    return this.http.post(`${this.url}payment`, packageId);
+  }
+
   getPurchasedPackages():Observable<ResponsePackages>{
     return this.http.get<ResponsePackages>(`${this.url}package/purchased-packages?limit=10`);
   }

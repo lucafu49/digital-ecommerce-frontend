@@ -43,6 +43,9 @@ export class EditPackagesComponent {
 
   createMode : boolean = false;
 
+  filterMenuActive: boolean = false;
+
+
 
   filters = {
     isActiveWord: false,
@@ -64,6 +67,11 @@ export class EditPackagesComponent {
    this.getCategories();
   }
 
+
+  toggleFilterMenu(): void {
+    this.filterMenuActive = !this.filterMenuActive;
+  }
+
   getPackages() {
 
     if(this.filters.isActiveCategory == true || this.filters.isActiveWord== true){
@@ -81,7 +89,6 @@ export class EditPackagesComponent {
           }));
           this.expandedRows = Array(this.packages.length).fill(false); // Inicializar después de cargar los datos
           this.expandedSourceRows = Array(this.packages.length).fill(false);
-          console.log(this.packages);
           this.pageInfo = data.packages;
         },
         error: (error) => {
@@ -181,7 +188,6 @@ export class EditPackagesComponent {
     this.dService.getCategories().subscribe({
       next: (data) =>{
         this.listCategories = data.categories;
-        console.log(this.listCategories);
       },
       error: (error) =>{
         this.message = error.message;
@@ -223,8 +229,6 @@ export class EditPackagesComponent {
       })) || [],
   
     };
-
-    console.log(this.editingPackage);
 
     this.toggleForm = true;
       const formElement = document.getElementById('editForm');
@@ -273,8 +277,6 @@ export class EditPackagesComponent {
 
 savePackageUpdate(pack: any) {
 
-  console.log("HOLA");
-
   if (!this.isFormValid(pack)) {
     console.error('Formulario no válido:', this.message);
     return;
@@ -292,7 +294,6 @@ savePackageUpdate(pack: any) {
     formData.append('file', pack.previewImage);
   }
 
-  console.log(pack);
 
   const requestCatSourceFiles = {
     id: pack.id,
@@ -300,11 +301,6 @@ savePackageUpdate(pack: any) {
     sourceFiles: pack.sourceFiles.map((sourceFile: SourceFile) => sourceFile.id),
     isActive: pack.isActive
   };
-  
-  console.log("HOLA 1");
-
-  console.log(requestCatSourceFiles);
-
 
   this.aService.updatePackage(formData).subscribe({
     next: () => {
@@ -326,11 +322,9 @@ savePackageUpdate(pack: any) {
           sourceFileId : file
         }
 
-        console.log(request);
       
         this.aService.deleteSourceFile(request).subscribe({
           next: () => {
-            console.log("Source file deleted:", request.sourceFileId);
           },
           error: (error) => {
             this.message = error.message;
@@ -353,7 +347,6 @@ savePackageUpdate(pack: any) {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       const selectedFile = fileInput.files[0];
-      console.log('Archivo seleccionado:', selectedFile);
   
       // Guardar el archivo en `editingPackage`
       this.editingPackage.previewImage = selectedFile;
@@ -364,6 +357,7 @@ savePackageUpdate(pack: any) {
     if(this.toggleForm == true){
       this.toggleForm = false;
       pack.isEditing = false;
+      this.deletedSourceF = [];
     }
   }
 
@@ -388,17 +382,7 @@ savePackageUpdate(pack: any) {
   
     this.aService.createSourceFile(newSourceFile).subscribe({
       next: (data) => {
-
-        console.log("Hola");
-
-        console.log(newSourceFile);
-
-        console.log(data);
-        
         this.editingPackage.sourceFiles.push(data);
-
-        console.log(this.editingPackage.sourceFiles);
-  
         this.message = 'Archivo fuente creado y añadido con éxito.';
         this.createForm.reset(); 
       },
@@ -414,8 +398,6 @@ savePackageUpdate(pack: any) {
     if (index !== -1) {
       const removedFile = this.editingPackage.sourceFiles.splice(index, 1)[0];
       this.deletedSourceF.push(removedFile.id); // Mover el archivo al arreglo de eliminados
-      console.log(`Archivo eliminado: ${removedFile.name}`);
-      console.log('Lista de archivos eliminados:', this.deletedSourceF);
     }
   }
 
@@ -433,7 +415,6 @@ savePackageUpdate(pack: any) {
   
     this.aService.updateSourceFile(sourceFile).subscribe({
       next: () => {
-        console.log("Source file updated:", sourceFile);
       },
       error: (error) => {
         this.message = error.message;
@@ -516,7 +497,6 @@ savePackageUpdate(pack: any) {
               
                 this.aService.deleteSourceFile(request).subscribe({
                   next: () => {
-                    console.log("Source file deleted:", request.sourceFileId);
                   },
                   error: (error) => {
                     this.message = error.message;
@@ -554,16 +534,12 @@ savePackageUpdate(pack: any) {
     if (this.editingPackage.previewImage instanceof File) {
       formData.append('file', this.editingPackage.previewImage);
     }
-
-    console.log("HOLA a");
   
     const requestCatSourceFiles = {
       id: this.editingPackage.id,
       categories: this.editingPackage.categories.map((category: Category) => category.id),
       sourceFiles: this.editingPackage.sourceFiles.map((sourceFile: SourceFile) => sourceFile.id)
     };
-
-    console.log(requestCatSourceFiles);
   
     this.aService.updatePackage(formData).subscribe({
       next: () => {
