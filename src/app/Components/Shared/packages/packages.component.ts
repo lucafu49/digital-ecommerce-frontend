@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../../Services/client.service';
 import { AddCartRequest } from '../../../Interfaces/add-cart-request';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-packages',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink,LoadingComponent],
   templateUrl: './packages.component.html',
   styleUrl: './packages.component.css'
 })
@@ -29,6 +30,8 @@ export class PackagesComponent implements OnInit {
 
   isFilterMenuOpen: boolean = false;
   isSmallScreen: boolean = false;
+
+  isLoading : boolean = false;
 
 
   filters = {
@@ -82,14 +85,17 @@ export class PackagesComponent implements OnInit {
       this.filters.isActiveWord = false;
     }
 
+    this.isLoading = true;
     this.dService.getPackages(this.page.toString(),this.orderBy,this.lir,this.maxPrice,this.minPrice).subscribe({
       next : (data) => {
-        console.log(data);
         this.packages = data;
         this.pageInfo = data.packages;
       },
       error: (error) => {
         this.message = error.message;
+      },
+      complete: () => {
+        this.isLoading = false; // Ocultar el loading
       }
     })
   }
@@ -108,14 +114,17 @@ export class PackagesComponent implements OnInit {
     
     this.filters.categoryId = pickedCat;
 
+    this.isLoading = true;
     this.dService.getPackagesByCategory(this.filters.categoryId,this.page.toString(),this.orderBy,this.lir,this.maxPrice,this.minPrice).subscribe({
       next : (data) =>{
-        console.log(data);
         this.packages = data;
         this.pageInfo = data.packages;
       },
       error: (error) => {
         this.message = error.message;
+      },
+      complete: () => {
+        this.isLoading = false; // Ocultar el loading
       }
     })
   }
@@ -134,6 +143,7 @@ export class PackagesComponent implements OnInit {
     this.filters.isActiveWord = true;
     this.filters.isActiveCat = false;
     
+    this.isLoading = true;
     this.dService.getPackageByWord(
       this.searchWord,
       this.page.toString(),
@@ -143,13 +153,15 @@ export class PackagesComponent implements OnInit {
       this.minPrice
     ).subscribe({
       next: (data) => {
-        console.log(data);
         this.packages = data;
         this.pageInfo = data.packages;
         this.filters.isActiveCat = false; // Desactiva otros filtros
       },
       error: (error) => {
         this.message = error.message;
+      },
+      complete: () => {
+        this.isLoading = false; // Ocultar el loading
       }
     });
   }
@@ -159,7 +171,6 @@ export class PackagesComponent implements OnInit {
     this.dService.getPopularCategories().subscribe({
       next: (data) =>{
         this.categories = data.categories;
-        console.log(this.categories);
       },
       error: (error) =>{
         this.message = error.message;
@@ -175,7 +186,6 @@ export class PackagesComponent implements OnInit {
 
     this.cService.addItemtoCart(request).subscribe({
       next: (response) => {
-        console.log(`Paquete ${request} agregado al carrito.`, response);
         alert('Paquete agregado al carrito con éxito.');
       },
       error: (error) => {

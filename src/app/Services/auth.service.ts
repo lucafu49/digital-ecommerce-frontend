@@ -27,6 +27,8 @@ export class AuthService {
     console.log(token);
     if (!token) return false;
 
+    console.log("HOLA")
+
     try {
       const decodedToken: any = jwtDecode(token);
       console.log(decodedToken);

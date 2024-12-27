@@ -35,7 +35,6 @@ export class NavbarComponent implements OnInit{
   getSuperCategories(){
     this.dService.getPopularCategories().subscribe({
       next:(data) =>{
-        console.log(data.categories);
         this.categories = data.categories;
       },
       error:(error) =>{

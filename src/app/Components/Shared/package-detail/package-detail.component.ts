@@ -5,17 +5,19 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { DataService } from '../../../Services/data.service';
 import { ClientService } from '../../../Services/client.service';
 import { AddCartRequest } from '../../../Interfaces/add-cart-request';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-package-detail',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink,LoadingComponent],
   templateUrl: './package-detail.component.html',
   styleUrl: './package-detail.component.css'
 })
 export class PackageDetailComponent implements OnInit, AfterViewInit {
   packageId: string = ''; // Aquí se almacenará el ID del paquete
   packageData: any;
+  isLoading : boolean = false;
 
   isExpandable = false;
   isExpanded = false;
@@ -39,14 +41,20 @@ export class PackageDetailComponent implements OnInit, AfterViewInit {
   }
 
   fetchPackageDetails(): void {
-    this.cService.getPackageById(this.packageId).subscribe(
-      (data) => {
-        this.packageData = data; // Asigna los datos a tu variable
-        console.log('Datos del paquete:', this.packageData);
+
+    this.isLoading = true;
+
+    this.cService.getPackageById(this.packageId).subscribe({
+      next: (data) =>{
+        this.packageData = data;
       },
-      (error) => {
+      error: (error) =>{
         console.error('Error al obtener el paquete:', error);
+      },
+      complete: () => {
+        this.isLoading = false; // Ocultar el loading
       }
+    }
     );
   }
 
@@ -58,7 +66,6 @@ export class PackageDetailComponent implements OnInit, AfterViewInit {
 
     this.cService.addItemtoCart(request).subscribe({
       next: (response) => {
-        console.log(`Paquete ${request} agregado al carrito.`, response);
         alert('Paquete agregado al carrito con éxito.');
       },
       error: (error) => {

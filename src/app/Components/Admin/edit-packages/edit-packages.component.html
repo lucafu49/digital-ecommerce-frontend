@@ -145,8 +145,13 @@
       </div>
     </form>
 
+
+    <div class="loader-container" *ngIf="isLoading">
+      <app-loading></app-loading>
+    </div>
+
     <!-- Tabla de paquetes -->
-    <table class="admin-table">
+    <table class="admin-table" *ngIf="!isLoading">
       <thead>
         <tr>
           <th>Imagen</th>
@@ -234,7 +239,7 @@
       </tbody>
     </table>
 
-    <div class="pagination-controls">
+    <div class="pagination-controls" *ngIf="!isLoading">
       <button (click)="prevPage()" [disabled]="!pageInfo?.prev">Anterior</button>
       <button (click)="nextPage()" [disabled]="!pageInfo?.next">Siguiente</button>
     </div>

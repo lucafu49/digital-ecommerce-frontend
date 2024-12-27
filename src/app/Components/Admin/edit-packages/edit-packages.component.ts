@@ -7,11 +7,12 @@ import { AdminService } from '../../../Services/admin.service';
 import { Category } from '../../../Interfaces/category';
 import { SourceFile } from '../../../Interfaces/source-file';
 import { DeleteSourcefRequest } from '../../../Interfaces/delete-sourcef-request';
+import { LoadingComponent } from '../../Shared/loading/loading.component';
 
 @Component({
   selector: 'app-edit-packages',
   standalone: true,
-  imports: [CommonModule, FormsModule,ReactiveFormsModule],
+  imports: [CommonModule, FormsModule,ReactiveFormsModule,LoadingComponent],
   templateUrl: './edit-packages.component.html',
   styleUrl: './edit-packages.component.css'
 })
@@ -24,35 +25,22 @@ export class EditPackagesComponent {
   orderBy : string = "price";
   lir : string = "asc";
   page : number = 1;
-
   expandedRows: boolean[] = [];
   expandedSourceRows: boolean[] = [];
-
   listCategories : any [] = [];
-
   editingPackage: any = {};
-
   toggleForm : boolean = false;
-
   searchTerm: string = '';
   selectedCategoryId: string = '';
-
   createForm : FormGroup
-
   deletedSourceF : SourceFile[] = [];
-
   createMode : boolean = false;
-
   filterMenuActive: boolean = false;
-
-
-
+  isLoading : boolean = false;
   filters = {
     isActiveWord: false,
     isActiveCategory: false
   };
-
-
 
   constructor(private dService : DataService, private aService : AdminService, private formBuilder: FormBuilder
   ) {
@@ -67,7 +55,6 @@ export class EditPackagesComponent {
    this.getCategories();
   }
 
-
   toggleFilterMenu(): void {
     this.filterMenuActive = !this.filterMenuActive;
   }
@@ -79,6 +66,8 @@ export class EditPackagesComponent {
       this.filters.isActiveWord = false;
     }
 
+    
+    this.isLoading = true;
     this.aService
       .getPackagesByAdmin(this.page.toString())
       .subscribe({
@@ -94,6 +83,9 @@ export class EditPackagesComponent {
         error: (error) => {
           this.message = error.message;
         },
+        complete: () => {
+          this.isLoading = false; // Ocultar el loading
+        }
       });
   }
 
@@ -104,6 +96,8 @@ export class EditPackagesComponent {
     }
 
     this.filters.isActiveWord = true;
+
+    this.isLoading = true;
 
     if (this.searchTerm.trim() !== '') {
       this.aService
@@ -120,6 +114,9 @@ export class EditPackagesComponent {
           error: (error) => {
             this.message = 'Error al buscar paquetes por palabra.';
           },
+          complete: () => {
+            this.isLoading = false; // Ocultar el loading
+          }
         });
     } else {
       this.getPackages(); // Si no hay búsqueda, se cargan todos los paquetes
@@ -139,6 +136,7 @@ export class EditPackagesComponent {
       this.searchTerm = '';
     }
 
+    this.isLoading = true;
     if (this.selectedCategoryId) {
       this.aService
         .getPackagesByAdminByCategory(this.selectedCategoryId,this.page.toString())
@@ -154,6 +152,9 @@ export class EditPackagesComponent {
           error: (error) => {
             this.message = 'Error al filtrar paquetes por categoría.';
           },
+          complete: () => {
+            this.isLoading = false; // Ocultar el loading
+          }
         });
     } else {
       this.getPackages(); // Si no hay categoría seleccionada, se cargan todos los paquetes

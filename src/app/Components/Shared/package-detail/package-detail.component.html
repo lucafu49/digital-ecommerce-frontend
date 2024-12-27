@@ -1,12 +1,17 @@
 <div class="wrapper">
   <div class="container">
-    <div class="img-container">
+
+    <div class="loader-container" *ngIf="isLoading">
+      <app-loading></app-loading>
+    </div>
+
+    <div class="img-container" *ngIf="!isLoading">
       <img [src]="packageData?.previewImage" alt="{{ packageData?.name }}"
            class="product-image">
     </div>
     <div class="package-container">
       
-      <div class="category-container">
+      <div class="category-container" *ngIf="!isLoading">
         <div class="category-item" *ngFor="let category of packageData.categories">
           {{category.name}}
         </div>
@@ -22,7 +27,7 @@
         {{packageData.description}}
       </p>
       
-      <button class="add-button" (click)="addToCart(packageData.id)">
+      <button class="add-button" (click)="addToCart(packageData.id)" *ngIf="!isLoading">
         <i class="fa-solid fa-cart-shopping"></i> Añadir al carrito
       </button>
 

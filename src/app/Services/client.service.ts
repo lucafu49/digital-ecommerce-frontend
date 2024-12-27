@@ -9,6 +9,7 @@ import { AddCartRequest } from '../Interfaces/add-cart-request';
 import { Cart } from '../Interfaces/Responses/cart';
 import { ResponsePackages } from '../Interfaces/Responses/packages';
 import { Package } from '../Interfaces/package';
+import { Payment } from '../Interfaces/Responses/payment';
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +39,8 @@ export class ClientService {
     return this.http.delete(`${this.url}cart`, {body: packageId});
   }
 
-  createPayment(packageId : AddCartRequest){
-    return this.http.post(`${this.url}payment`, packageId);
+  createPayment(packageId : AddCartRequest):Observable<Payment>{
+    return this.http.post<Payment>(`${this.url}payment`, packageId);
   }
 
   getPurchasedPackages():Observable<ResponsePackages>{

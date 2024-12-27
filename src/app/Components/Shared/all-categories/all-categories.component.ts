@@ -3,17 +3,19 @@ import { Category } from '../../../Interfaces/category';
 import { DataService } from '../../../Services/data.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-all-categories',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink,LoadingComponent],
   templateUrl: './all-categories.component.html',
   styleUrl: './all-categories.component.css'
 })
 export class AllCategoriesComponent implements OnInit{
   categories : Category[] = [];
   message : string = '';
+  isLoading : boolean = false;
 
   constructor(private dService : DataService){}
 
@@ -33,6 +35,8 @@ export class AllCategoriesComponent implements OnInit{
   }
 
   getCategories(){
+
+    this.isLoading = true;
     this.dService.getCategories().subscribe({
       next: (data) =>{
         console.log(data)
@@ -40,6 +44,9 @@ export class AllCategoriesComponent implements OnInit{
       },
       error: (error) =>{
         this.message = error.message;
+      },
+      complete: () => {
+        this.isLoading = false; // Ocultar el loading
       }
     })
   }

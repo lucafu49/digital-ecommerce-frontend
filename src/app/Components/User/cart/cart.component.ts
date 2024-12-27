@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../../../Services/client.service';
 import { AddCartRequest } from '../../../Interfaces/add-cart-request';
 import { CommonModule } from '@angular/common';
+import { LoadingComponent } from '../../Shared/loading/loading.component';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,LoadingComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
@@ -53,15 +54,25 @@ export class CartComponent implements OnInit {
     });
   }
 
-  createPayment(){
-    const request : AddCartRequest = {
-      packageId : '123546'
-    }
-
+  createPayment() {
+    const request: AddCartRequest = {
+      packageId: '123546'
+    };
+  
     this.cService.createPayment(request).subscribe({
-      next: () => {
-        console.log(`Confirmacion de pago creada perfectamente`);
-        this.cartItems = this.cartItems.filter(item => item.id !== request.packageId)
+      next: (data) => {
+        console.log(data.resp);
+  
+        // Supongamos que `data.url` contiene la URL que quieres abrir.
+        if (data) {
+          window.open(data.resp, '_blank'); // Abre la URL en una nueva pestaña
+        } else {
+          console.log('No se encontró una URL en la respuesta.');
+        }
+  
+        console.log(`Confirmación de pago creada perfectamente`);
+        this.cartItems = this.cartItems.filter(item => item.id !== request.packageId);
+        location.reload();
       },
       error: (error) => {
         this.message = 'Error al eliminar el paquete del carrito.';

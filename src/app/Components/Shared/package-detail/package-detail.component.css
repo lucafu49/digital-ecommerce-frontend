@@ -14,6 +14,19 @@
   flex-wrap: wrap; /* Ajusta elementos en pantallas pequeñas */
 }
 
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+
 .img-container {
   flex: 1;
   max-width: 50%; /* Ocupa la mitad del ancho en pantallas grandes */
