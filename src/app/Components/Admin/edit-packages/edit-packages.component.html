@@ -2,7 +2,18 @@
   <div class="admin-container">
     <h1 class="admin-title">Administrar Packages</h1>
 
-    <div class="filter-container">
+    <button 
+    class="filter-toggle-button" 
+    (click)="toggleFilterMenu()" 
+    *ngIf="isSmallScreen">
+    {{ isFilterMenuOpen ? 'Ocultar Filtros' : 'Mostrar Filtros' }}
+  </button>
+
+    <div class="filter-container" [class.hidden]="!isFilterMenuOpen && isSmallScreen">
+      <div class="header">
+        <i class="fa-solid fa-x" (click)="toggleFilterMenu()"></i>
+        <h5>Opciones</h5>
+      </div>
       <select [(ngModel)]="selectedCategoryId" (change)="filterByCategory()">
         <option value="">Todas las categorías</option>
         <option [value]="category.id" *ngFor="let category of listCategories">
@@ -111,8 +122,8 @@
 
         <h1>Crear SourceFile</h1>
         <form [formGroup]="createForm">
-          <input formControlName="name" placeholder="SourceFile name" />
-          <input formControlName="link" placeholder="SourceFile link" />
+          <input formControlName="name" placeholder="SourceFile name" class="input-field"/>
+          <input formControlName="link" placeholder="SourceFile link" class="input-field"/>
           <div class="error-container">
             <div *ngIf="createForm.controls['name'].invalid && createForm.controls['name'].touched">
               <span class="text-danger">Missing name</span>
@@ -121,7 +132,7 @@
               <span class="text-danger">Missing link</span>
             </div>
           </div>
-          <button type="button" (click)="createSourceFile()">Guardar</button>
+          <button type="button" (click)="createSourceFile()" class="update-button">Guardar</button>
         </form>
       </div>
 
@@ -132,6 +143,7 @@
           type="checkbox"
           [(ngModel)]="editingPackage.isActive"
           name="isActive"
+          class="checkbox"
         />
       </div>
 

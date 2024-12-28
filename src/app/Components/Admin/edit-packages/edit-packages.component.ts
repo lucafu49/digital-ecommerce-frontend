@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { DataService } from '../../../Services/data.service';
 import { Package } from '../../../Interfaces/package';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -41,8 +41,10 @@ export class EditPackagesComponent {
     isActiveWord: false,
     isActiveCategory: false
   };
+  isFilterMenuOpen: boolean = false;
+  isSmallScreen: boolean = false;
 
-  constructor(private dService : DataService, private aService : AdminService, private formBuilder: FormBuilder
+  constructor(private dService : DataService, private aService : AdminService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef
   ) {
     this.createForm = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -51,12 +53,22 @@ export class EditPackagesComponent {
   }
 
   ngOnInit(): void {
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize.bind(this));
     this.getPackages();
    this.getCategories();
   }
 
-  toggleFilterMenu(): void {
-    this.filterMenuActive = !this.filterMenuActive;
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.checkScreenSize.bind(this));
+  }
+
+  checkScreenSize() {
+    this.isSmallScreen = window.innerWidth <= 950;
+    this.cdr.detectChanges(); // Asegura que los cambios se reflejen en la vista
+  }
+  toggleFilterMenu() {
+    this.isFilterMenuOpen = !this.isFilterMenuOpen;
   }
 
   getPackages() {
@@ -135,6 +147,8 @@ export class EditPackagesComponent {
       this.filters.isActiveWord = false;
       this.searchTerm = '';
     }
+
+    this.isFilterMenuOpen = false;
 
     this.isLoading = true;
     if (this.selectedCategoryId) {
@@ -429,6 +443,7 @@ savePackageUpdate(pack: any) {
   toggleCreate(){
     this.createMode = !this.createMode;
     this.toggleForm = !this.toggleForm;
+    this.isFilterMenuOpen = false;
 
     this.editingPackage = {
       

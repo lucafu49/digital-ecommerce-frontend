@@ -16,6 +16,25 @@
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
+
+  .filter-container.hidden {
+    display: none;
+  }
+  
+  .filter-toggle-button {
+    display: none;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .filter-toggle-button:hover {
+    background-color: var(--primary-color-hover);
+  }
   
   .admin-title {
     font-size: 1.8rem;
@@ -47,6 +66,21 @@
     margin-left: 15px;
   }
 
+  .form-group{
+    margin-top: 24px;
+  }
+  .form-group label{
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .form-group h1{
+    margin-top: 10px;
+    font-size: 1.2rem;
+  }
+  .form-group h1{
+    margin-top: 10px;
+    font-size: 1.2rem;
+  }
 
   .update-button {
     background-color: var(--primary-color);
@@ -56,6 +90,9 @@
     border-radius: 5px;
     cursor: pointer;
     margin: 10px 5px ;
+  }
+  .source-files-list{
+    list-style: none;
   }
 
   
@@ -194,7 +231,9 @@
     border-radius: 5px;
     font-size: 1rem;
     background-color: var(--bg-color);
+    margin-top: 10px;
   }
+  
   
   .textarea-field {
     resize: none;
@@ -319,6 +358,29 @@
   margin-bottom: 10px;
 }
 
+.filter-container .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: var(--secondary-color);
+  border-bottom: 1px solid var(--secondary-color-hover);
+}
+
+.filter-container .header h5 {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+  font-size: 1rem;
+  color: white;
+}
+
+.filter-container .header i {
+  color: white;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
 @media (max-width: 1230px) {
   .package-image {
     width: 80px; /* Ajusta según tus necesidades */
@@ -334,7 +396,30 @@
 }
 
 
+
 @media (max-width: 950px) {
+
+  .filter-toggle-button {
+    display: block;
+  }
+
+  .filter-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
   th {
     display: none;
   }
