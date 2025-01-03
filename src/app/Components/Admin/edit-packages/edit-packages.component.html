@@ -10,7 +10,7 @@
   </button>
 
     <div class="filter-container" [class.hidden]="!isFilterMenuOpen && isSmallScreen">
-      <div class="header">
+      <div class="header"     *ngIf="isSmallScreen">
         <i class="fa-solid fa-x" (click)="toggleFilterMenu()"></i>
         <h5>Opciones</h5>
       </div>

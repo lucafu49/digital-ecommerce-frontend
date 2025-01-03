@@ -1,3 +1,10 @@
+.category-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 80px;
+}
 .category-grid table {
   width: 100%;
   border-collapse: collapse;
@@ -27,7 +34,7 @@
   padding: 6px 8px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  background-color: var(--secondary-color);
+  background-color: white;
   color: var(--text-color);
   font-size: 14px;
   line-height: 1.4;
@@ -51,7 +58,7 @@
 
 .action-button.edit {
   background-color: var(--primary-color);
-  color: var(--white);
+  color: white;
 }
 
 .action-button.delete {
@@ -78,7 +85,7 @@
   margin-top: 20px;
   padding: 10px 20px;
   background-color: var(--primary-color);
-  color: var(--white);
+  color: white;
   border: none;
   cursor: pointer;
   border-radius: 4px;
@@ -103,7 +110,7 @@
   padding: 6px 10px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  background-color: var(--secondary-color);
+  background-color: white;
   font-size: 14px;
   margin-right: 10px;
 }

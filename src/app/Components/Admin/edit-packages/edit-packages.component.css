@@ -354,6 +354,17 @@
   max-height: 100%;
 }
 
+.header{
+  position: fixed; /* Fija la posición del elemento */
+  top: 0; /* Alínea al inicio del alto de la pantalla */
+  left: 0; /* Alinea al borde izquierdo */
+  width: 100%; /* Ocupa todo el ancho de la pantalla */
+  background-color: white; /* Fondo blanco para que sea visible */
+  z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+  padding: 10px; /* Espaciado interno */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
 .file-container {
   margin-bottom: 10px;
 }

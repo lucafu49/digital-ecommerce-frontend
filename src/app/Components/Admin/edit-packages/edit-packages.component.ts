@@ -35,7 +35,6 @@ export class EditPackagesComponent {
   createForm : FormGroup
   deletedSourceF : SourceFile[] = [];
   createMode : boolean = false;
-  filterMenuActive: boolean = false;
   isLoading : boolean = false;
   filters = {
     isActiveWord: false,
@@ -110,6 +109,10 @@ export class EditPackagesComponent {
     this.filters.isActiveWord = true;
 
     this.isLoading = true;
+
+    if(this.isSmallScreen){
+      this.isFilterMenuOpen = false;
+    }
 
     if (this.searchTerm.trim() !== '') {
       this.aService
