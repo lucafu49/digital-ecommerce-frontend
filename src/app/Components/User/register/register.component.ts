@@ -55,6 +55,8 @@ export class RegisterComponent {
 
         localStorage.setItem('token',data.token)
         localStorage.getItem('token');
+
+        this.route.navigate(['/login']);
       },
       error: (error) => {
         this.message = error.message;

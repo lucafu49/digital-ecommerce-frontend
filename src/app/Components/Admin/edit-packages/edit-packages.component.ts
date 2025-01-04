@@ -20,10 +20,6 @@ export class EditPackagesComponent {
   packages: any | undefined;
   pageInfo : any | undefined;
   message: string | undefined;
-  maxPrice : string = "5000";
-  minPrice : string = "0";
-  orderBy : string = "price";
-  lir : string = "asc";
   page : number = 1;
   expandedRows: boolean[] = [];
   expandedSourceRows: boolean[] = [];
@@ -292,74 +288,6 @@ export class EditPackagesComponent {
     this.message = ''; 
     return true;
   }
-
-savePackageUpdate(pack: any) {
-
-  if (!this.isFormValid(pack)) {
-    console.error('Formulario no válido:', this.message);
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('id', pack.id);
-  formData.append('name', pack.name);
-  formData.append('price', pack.price.toString());
-  formData.append('description', pack.description);
-
-  
-
-  if (pack.previewImage instanceof File) {
-    formData.append('file', pack.previewImage);
-  }
-
-
-  const requestCatSourceFiles = {
-    id: pack.id,
-    categories: pack.categories.map((category: Category) => category.id),
-    sourceFiles: pack.sourceFiles.map((sourceFile: SourceFile) => sourceFile.id),
-    isActive: pack.isActive
-  };
-
-  this.aService.updatePackage(formData).subscribe({
-    next: () => {
-
-    },
-    error: (error) => {
-      this.message = error.message;
-      console.error('Error al actualizar el paquete:', this.message);
-    },
-  });
-
-
-
-  this.aService.updatePackage(requestCatSourceFiles).subscribe({
-    next: () => {
-      this.deletedSourceF.forEach((file: any) => {
-
-        const request : DeleteSourcefRequest = {
-          sourceFileId : file
-        }
-
-      
-        this.aService.deleteSourceFile(request).subscribe({
-          next: () => {
-          },
-          error: (error) => {
-            this.message = error.message;
-            console.error("Error deleting source file:", this.message);
-          }
-        });
-      });
-
-      this.toggleForm = false;
-      this.fetchPackages();
-    },
-    error: (error) => {
-      this.message = error.message;
-      console.error('Error al actualizar el paquete:', this.message);
-    },
-  });
-}
 
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;

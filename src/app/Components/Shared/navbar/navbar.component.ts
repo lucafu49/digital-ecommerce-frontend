@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { AfterViewInit, Component, OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Category } from '../../../Interfaces/category';
@@ -13,7 +13,7 @@ import { AuthService } from '../../../Services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements AfterViewInit{
   activeDropdown: string | null = null;
   isMenuOpen: boolean = false;
   isAdmin: boolean = false;
@@ -25,16 +25,20 @@ export class NavbarComponent implements OnInit{
 
   
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    console.log("LOCAL");
     this.loadCategories();
-    this.getSuperCategories();
+    console.log("LOCAL DESP");
+    this.getPopularCategories();
+    console.log("CATEGORIES");
 
     this.isAdmin = this.authService.isUserAdmin();
   }
 
-  getSuperCategories(){
+  getPopularCategories(){
     this.dService.getPopularCategories().subscribe({
       next:(data) =>{
+        console.log(data)
         this.categories = data.categories;
       },
       error:(error) =>{
@@ -44,8 +48,8 @@ export class NavbarComponent implements OnInit{
   }
 
   loadCategories() {
-    const categories = this.dService.getCategoriesLocalStorage();
-    if (categories) {
+    const categories = this.dService.getCategoriesLocalStorage() || [];
+    if (categories.length > 0) {
       this.categories = categories;
       console.log('Categorías cargadas desde localStorage:', this.categories);
     } else {

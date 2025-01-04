@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ClientService } from '../../../Services/client.service';
 import { LoginRequest } from '../../../Interfaces/login-request';
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,RouterOutlet],
+  imports: [CommonModule,ReactiveFormsModule,RouterOutlet,RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -48,6 +48,7 @@ export class LoginComponent {
         console.log(data);
 
         localStorage.setItem('token', data.user.token);
+        this.router.navigate(['/packages']);
       },
       error: (error) => {
         this.message = error.message;
