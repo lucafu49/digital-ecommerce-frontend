@@ -6,6 +6,7 @@ import { LoginRequest } from '../../../Interfaces/login-request';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   showPassword: boolean= false;
   message:string='';
+  toastr= inject(ToastrService);
 
   constructor(private formBuilder:FormBuilder, private router:Router, private cService:ClientService){
     this.loginForm = this.formBuilder.group({
@@ -45,16 +47,24 @@ export class LoginComponent {
   loginClient(client: LoginRequest){
     this.cService.loginClient(client).subscribe({
       next: (data) => {
-        console.log(data);
+        this.toastr.success("Successful login!", "Success");
 
-        localStorage.setItem('token', data.user.token);
+        const tokenData = {
+          token: data.user.token,
+          timeLogged: new Date().toISOString() // Tiempo en formato ISO
+        };
+  
+        // Guardar el objeto como JSON en localStorage
+        localStorage.setItem('token', JSON.stringify(tokenData));
+
         this.router.navigate(['/packages']);
       },
       error: (error) => {
         this.message = error.message;
         const statusCode = error.status;
   
-        console.error("Status:", statusCode, "message:", this.message);
+
+        this.toastr.error(this.message,statusCode);
       }
     });
     

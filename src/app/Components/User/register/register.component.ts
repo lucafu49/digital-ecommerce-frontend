@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClientService } from '../../../Services/client.service';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { RegisterRequest } from '../../../Interfaces/register-request';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,7 @@ export class RegisterComponent {
   showPassword:any;
   showConfirmPassword:any;
   message : string = '';
+  toastr= inject(ToastrService);
 
 
   constructor(private cService: ClientService,private formBuilder:FormBuilder,private route:Router){
@@ -51,17 +53,14 @@ export class RegisterComponent {
 
     this.cService.registerClient(client).subscribe({
       next: (data) => {
-        console.log(data);
-
-        localStorage.setItem('token',data.token)
-        localStorage.getItem('token');
-
+        this.toastr.success("Registered Successfully","Register");
         this.route.navigate(['/login']);
       },
       error: (error) => {
         this.message = error.message;
+       
         const statusCode = error.status;
-  
+        this.toastr.error(this.message,statusCode);
         console.error("Status:", statusCode, "message:", this.message);
       }
     });

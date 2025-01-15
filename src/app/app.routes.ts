@@ -13,18 +13,23 @@ import { AllCategoriesComponent } from './Components/Shared/all-categories/all-c
 import { SuccessComponent } from './Components/User/success/success.component';
 import { CancelComponent } from './Components/User/cancel/cancel.component';
 import { adminGuard } from './Guards/admin.guard';
+import { NotFoundComponent } from './Components/Shared/not-found/not-found.component';
+import { HomeComponent } from './Components/Shared/home/home.component';
 
 export const routes: Routes = [
     {path: 'register', component: RegisterComponent },
     {path: 'login', component: LoginComponent},
     {path: 'allcategories', component: AllCategoriesComponent},
-    {path: 'success', component: SuccessComponent},
-    {path: 'cancel', component: CancelComponent},
+    {path: 'home', component: HomeComponent},
+    {path: 'success', component: SuccessComponent,canActivate:[authGuard]},
+    {path: 'cancel', component: CancelComponent,canActivate:[authGuard]},
     {path: 'packages', component: PackagesComponent, canActivate:[authGuard]},
     {path: 'packages/:category', component: PackagesComponent, canActivate:[authGuard]},
     {path: 'cart', component: CartComponent, canActivate:[authGuard]},
     {path: 'edit-packages', component: EditPackagesComponent, canActivate:[authGuard,adminGuard]},
     {path: 'admin/category', component: CategoriesComponent, canActivate:[authGuard,adminGuard]},
     {path: 'user/mypackages', component: MyPackagesComponent, canActivate:[authGuard]},
-    {path: 'detail/:id', component: PackageDetailComponent, canActivate:[authGuard]}
+    {path: 'detail/:id', component: PackageDetailComponent, canActivate:[authGuard]},
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: '**', component: NotFoundComponent }
 ];

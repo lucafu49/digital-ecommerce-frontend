@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Category } from '../../../Interfaces/category';
 import { DataService } from '../../../Services/data.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-all-categories',
@@ -17,38 +18,37 @@ export class AllCategoriesComponent implements OnInit{
   message : string = '';
   isLoading : boolean = false;
 
-  constructor(private dService : DataService){}
+  constructor(
+    private dService: DataService,
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
-    this.loadCategories();
-    this.getCategories();
+    this.getPopularCategories();
   }
 
-  loadCategories() {
-    const categories = this.dService.getCategoriesLocalStorage();
-    if (categories) {
-      this.categories = categories;
-      console.log('Categorías cargadas desde localStorage:', this.categories);
-    } else {
-      console.warn('No hay categorías guardadas en localStorage');
-    }
-  }
-
-  getCategories(){
-
-    this.isLoading = true;
-    this.dService.getCategories().subscribe({
-      next: (data) =>{
-        console.log(data)
-        this.categories = data.categories;
-      },
-      error: (error) =>{
-        this.message = error.message;
-      },
-      complete: () => {
-        this.isLoading = false; // Ocultar el loading
+async getPopularCategories() {
+  if (isPlatformBrowser(this.platformId)) {
+    try {
+      const data = await this.dService.getPopularCategories().toPromise();
+      if (data) {
+        console.log('Datos recibidos:', data);
+        this.categories = data.categories || [];
+      } else {
+        console.warn('No se recibieron datos');
+        this.categories = [];
       }
-    })
+    
+      // Forzar la actualización de la vista
+      this.cdr.detectChanges();
+    } catch (error) {
+      console.error('Error en getPopularCategories:', error);
+      this.categories = [];
+    }
+  } else {
   }
+}
 
 }

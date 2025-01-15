@@ -15,17 +15,6 @@ export class DataService {
 
   private storageKey = 'categories';
 
-
-  saveCategories(categories: any[]) {
-    localStorage.setItem(this.storageKey, JSON.stringify(categories));
-    console.log('Categorías guardadas en localStorage:', categories);
-  }
-
-  getCategoriesLocalStorage(): any[] | null {
-    const storedCategories = localStorage.getItem(this.storageKey);
-    return storedCategories ? JSON.parse(storedCategories) : null;
-  }
-
   constructor(private http:HttpClient) { }
 
   getCategories(): Observable<GetCategoriesResponse>{

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { DataService } from '../../../Services/data.service';
 import { Package } from '../../../Interfaces/package';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,6 +8,7 @@ import { Category } from '../../../Interfaces/category';
 import { SourceFile } from '../../../Interfaces/source-file';
 import { DeleteSourcefRequest } from '../../../Interfaces/delete-sourcef-request';
 import { LoadingComponent } from '../../Shared/loading/loading.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-packages',
@@ -38,6 +39,7 @@ export class EditPackagesComponent {
   };
   isFilterMenuOpen: boolean = false;
   isSmallScreen: boolean = false;
+    toastr= inject(ToastrService);
 
   constructor(private dService : DataService, private aService : AdminService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef
   ) {
@@ -89,6 +91,10 @@ export class EditPackagesComponent {
         },
         error: (error) => {
           this.message = error.message;
+          const statusCode = error.status;
+    
+          
+        this.toastr.error(this.message,statusCode);
         },
         complete: () => {
           this.isLoading = false; // Ocultar el loading
@@ -123,7 +129,11 @@ export class EditPackagesComponent {
             this.message = '';
           },
           error: (error) => {
-            this.message = 'Error al buscar paquetes por palabra.';
+            this.message = error.message;
+            const statusCode = error.status;
+      
+            
+        this.toastr.error(this.message,statusCode);
           },
           complete: () => {
             this.isLoading = false; // Ocultar el loading
@@ -163,7 +173,11 @@ export class EditPackagesComponent {
             this.pageInfo = data.packages;
           },
           error: (error) => {
-            this.message = 'Error al filtrar paquetes por categoría.';
+            this.message = error.message;
+            const statusCode = error.status;
+      
+            
+          this.toastr.error(this.message,statusCode);
           },
           complete: () => {
             this.isLoading = false; // Ocultar el loading
@@ -205,6 +219,10 @@ export class EditPackagesComponent {
       },
       error: (error) =>{
         this.message = error.message;
+        const statusCode = error.status;
+  
+        
+        this.toastr.error(this.message,statusCode);
       }
     })
   }
@@ -334,7 +352,10 @@ export class EditPackagesComponent {
       },
       error: (error) => {
         this.message = error.message;
-        console.error("Error creating source file:", this.message);
+        const statusCode = error.status;
+  
+        
+        this.toastr.error(this.message,statusCode);
       }
     });
   }
@@ -364,7 +385,10 @@ export class EditPackagesComponent {
       },
       error: (error) => {
         this.message = error.message;
-        console.error("Error updating source file:", this.message);
+        const statusCode = error.status;
+  
+        
+        this.toastr.error(this.message,statusCode);
       },
     });
   }
@@ -385,7 +409,7 @@ export class EditPackagesComponent {
 
   savePackage(): void {
     if (!this.isFormValid(this.editingPackage)) {
-      console.error('Formulario no válido:', this.message);
+      this.toastr.error(this.message,"Error");
       return;
     }
   
@@ -447,7 +471,7 @@ export class EditPackagesComponent {
                   },
                   error: (error) => {
                     this.message = error.message;
-                    console.error("Error deleting source file:", this.message);
+                    this.toastr.error(this.message,"Error");
                   }
                 });
               });
@@ -457,7 +481,9 @@ export class EditPackagesComponent {
             },
             error: (error) => {
               this.message = error.message;
-              console.error('Error al actualizar el paquete:', this.message);
+              const statusCode = error.status;
+        
+              this.toastr.error(this.message,statusCode);
             },
           });
         }
@@ -496,20 +522,25 @@ export class EditPackagesComponent {
               const request: DeleteSourcefRequest = { sourceFileId: fileId };
               this.aService.deleteSourceFile(request).subscribe();
             });
-  
-            this.message = 'Paquete actualizado con éxito.';
+
+            
+            this.toastr.success('Paquete actualizado con éxito.', "Success");
             this.toggleForm = false;
             this.fetchPackages();
           },
           error: (error) => {
-            this.message = 'Error al actualizar categorías o archivos.';
-            console.error(this.message, error);
+            this.message = error.message;
+            const statusCode = error.status;
+      
+            console.error("Status:", statusCode, "message:", this.message);
           },
         });
       },
       error: (error) => {
-        this.message = 'Error al actualizar el paquete.';
-        console.error(this.message, error);
+        this.message = error.message;
+        const statusCode = error.status;
+  
+        console.error("Status:", statusCode, "message:", this.message);
       },
     });
   }

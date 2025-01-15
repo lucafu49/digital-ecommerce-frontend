@@ -1,6 +1,6 @@
-import { AfterViewInit, ApplicationRef, Component, inject, OnInit} from '@angular/core';
+import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, Inject, inject, OnInit, PLATFORM_ID} from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Category } from '../../../Interfaces/category';
 import { DataService } from '../../../Services/data.service';
 import { error } from 'node:console';
@@ -18,40 +18,70 @@ export class NavbarComponent implements OnInit{
   activeDropdown: string | null = null;
   isMenuOpen: boolean = false;
   isAdmin: boolean = false;
-
+  isLoggedIn: boolean = false;
   categories : Category[] = [];
   message : string = '';
+  
 
-  constructor(private dService: DataService, private authService: AuthService) {
-    Promise.resolve().then(() => this.getPopularCategories());
-  }
 
-  ngOnInit() {
-    this.isAdmin = this.authService.isUserAdmin();
-  }
-
-  getPopularCategories(){
-    this.dService.getPopularCategories().subscribe({
-      next:(data) =>{
+  constructor(
+    private dService: DataService,
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+  
+async getPopularCategories() {
+  if (isPlatformBrowser(this.platformId)) {
+    try {
+      const data = await this.dService.getPopularCategories().toPromise();
+      if (data) {
         console.log('Datos recibidos:', data);
         this.categories = data.categories || [];
-      },
-      error:(error) =>{
-        this.message = error.message;
+      } else {
+        console.warn('No se recibieron datos');
+        this.categories = [];
       }
-    })
-  }
-
-  loadCategories() {
-    const categories = this.dService.getCategoriesLocalStorage() || [];
-    if (categories.length > 0) {
-      this.categories = categories;
-      console.log('Categorías cargadas desde localStorage:', this.categories);
-    } else {
-      console.warn('No hay categorías guardadas en localStorage');
+    
+      // Forzar la actualización de la vista
+      this.cdr.detectChanges();
+    } catch (error) {
+      console.error('Error en getPopularCategories:', error);
+      this.categories = [];
     }
+  } else {
   }
+}
 
 
-  
+ngOnInit() {
+
+  this.authService.isLoggedIn$.subscribe((loggedIn) => {
+    this.isLoggedIn = loggedIn;
+  });
+
+  this.authService.isAdmin$.subscribe((admin) => {
+    this.isAdmin = admin;
+  });
+
+  this.getPopularCategories();
+
+}
+
+updateUserState() {
+  this.isLoggedIn = this.authService.isLoggedIn();
+  this.isAdmin = this.authService.isUserAdmin();
+}
+
+logout() {
+  this.authService.logout();
+  this.updateUserState();
+}
+
+closeMenu() {
+  const menuBar = document.getElementById('menu-bar') as HTMLInputElement;
+  if (menuBar) {
+    menuBar.checked = false;
+  }
+}
 }
