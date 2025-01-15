@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, OnInit} from '@angular/core';
+import { AfterViewInit, ApplicationRef, Component, inject, OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Category } from '../../../Interfaces/category';
 import { DataService } from '../../../Services/data.service';
 import { error } from 'node:console';
 import { AuthService } from '../../../Services/auth.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,7 @@ import { AuthService } from '../../../Services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements AfterViewInit{
+export class NavbarComponent implements OnInit{
   activeDropdown: string | null = null;
   isMenuOpen: boolean = false;
   isAdmin: boolean = false;
@@ -21,25 +22,19 @@ export class NavbarComponent implements AfterViewInit{
   categories : Category[] = [];
   message : string = '';
 
-  constructor(private dService: DataService, private authService: AuthService) {}
+  constructor(private dService: DataService, private authService: AuthService) {
+    Promise.resolve().then(() => this.getPopularCategories());
+  }
 
-  
-
-  ngAfterViewInit() {
-    console.log("LOCAL");
-    this.loadCategories();
-    console.log("LOCAL DESP");
-    this.getPopularCategories();
-    console.log("CATEGORIES");
-
+  ngOnInit() {
     this.isAdmin = this.authService.isUserAdmin();
   }
 
   getPopularCategories(){
     this.dService.getPopularCategories().subscribe({
       next:(data) =>{
-        console.log(data)
-        this.categories = data.categories;
+        console.log('Datos recibidos:', data);
+        this.categories = data.categories || [];
       },
       error:(error) =>{
         this.message = error.message;

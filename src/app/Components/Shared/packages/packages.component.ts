@@ -221,7 +221,7 @@ export class PackagesComponent implements OnInit {
 
   applyFilters(): void {
     this.fetchPackages(); // Usa la lógica centralizada para aplicar los filtros
-    
+    this.isFilterMenuOpen = false;
   }
   
   quitFilters():void{
