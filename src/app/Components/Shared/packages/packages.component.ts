@@ -60,6 +60,7 @@ export class PackagesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    
     this.getCategories();
     this.checkScreenSize();
 

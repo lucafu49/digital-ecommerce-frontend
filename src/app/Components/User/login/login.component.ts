@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent {
   message:string='';
   toastr= inject(ToastrService);
 
-  constructor(private formBuilder:FormBuilder, private router:Router, private cService:ClientService){
+  constructor(private formBuilder:FormBuilder, private router:Router, private cService:ClientService, private authService : AuthService){
     this.loginForm = this.formBuilder.group({
       email: ["",[Validators.required,Validators.email]],
       password: ["",[Validators.required,Validators.minLength(8),Validators.maxLength(30)]],
@@ -53,6 +54,8 @@ export class LoginComponent {
           token: data.user.token,
           timeLogged: new Date().toISOString() // Tiempo en formato ISO
         };
+
+        this.authService.login(data.user.token);
   
         // Guardar el objeto como JSON en localStorage
         localStorage.setItem('token', JSON.stringify(tokenData));
