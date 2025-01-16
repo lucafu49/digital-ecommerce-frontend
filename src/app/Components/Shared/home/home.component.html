@@ -1,1 +1,41 @@
-<p>home works!</p>
+<div class="home">
+    <!-- Header Section -->
+    <header class="home-header">
+      <div class="title-container">
+        <h1>Welcome to Our Store!</h1>
+        <p>Your one-stop shop for everything you need.</p>
+      </div>
+      <div class="logo-container">
+        <i class="fa-solid fa-earth-americas"></i>
+      </div>
+    </header>
+    
+
+  
+      <h2 class="most-sold">Most Sold Products</h2>
+
+    <swiper-container  speed="500" [slides-per-view]="3"
+    [breakpoints]="breakpoints" pagination="true">
+      <swiper-slide  *ngFor="let package of packages" >
+        <div class="product-card" routerLink="/detail/{{package.id}}">
+          <img [src]="package.previewImage" alt="{{ package.name }}" class="product-image" />
+          <h3>{{ package.name }}</h3>
+          <p>{{ package.price | currency }} </p>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  
+    <!-- Popular Categories Section -->
+    <section class="popular-categories">
+      <h2 class="popular-categories">Popular Categories</h2>
+    </section>
+
+    <swiper-container  speed="500" loop="true" [slides-per-view]="3"
+    [breakpoints]="breakpoints" pagination="true">
+      <swiper-slide  *ngFor="let category of categories" >
+        <div class="category-card">
+          <a [routerLink]="['/packages', { category: category.id }]" (click)="number()">{{ category.name }}</a>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>

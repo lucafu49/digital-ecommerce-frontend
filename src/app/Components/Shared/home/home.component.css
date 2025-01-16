@@ -1,3 +1,223 @@
-p{
-    padding-top: 100px;
+/* src/app/components/home/home.component.css */
+.home {
+    background-color: var(--primary-color);
+    color: var(--title-color);
+    padding: 20px;
+    padding-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+/* Updated CSS for the Header Section */
+.home-header {
+  color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  height: 70vh;
+  padding: 50px;
+  background-color: var(--primary-color);
+  border-radius: 12px;
+  flex-wrap: wrap; /* Allows wrapping for smaller screens */
+}
+
+.title-container {
+  max-width: 50%;
+  flex: 1 1 300px; /* Flex-grow, flex-shrink, and minimum width */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title-container h1 {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  color: var(--bg-color);
+}
+
+.title-container p {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--bg-color);
+}
+
+.logo-container {
+  font-size: 15rem;
+  color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 200px; /* Flex-grow, flex-shrink, and minimum width */
+  margin-bottom: 20px;
+}
+
+.most-sold{
+  color: var(--bg-color);
+}
+
+.product-card {
+  width: 300px;
+  padding: 15px;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.product-card h3 {
+  font-size: 1.2rem;
+  color: var(--bg-color);
+  margin: 10px 0;
+  white-space: nowrap; /* Ensures text does not wrap */
+  overflow: hidden;    /* Hides overflowing text */
+  text-overflow: ellipsis; /* Displays ellipsis for overflowing text */
+  width: 100%; /* Ensures the ellipsis works within the card's width */
+}
+
+.product-card p {
+  font-size: 1rem;
+  color: var(--bg-color);
+  margin: 5px 0 0;
+}
+
+/* Swiper container adjustments */
+swiper-container {
+  width: 80%;
+  height: auto; /* Allow Swiper height to adjust based on content */
+  align-self: center;
+  padding: 20px 0;
+  margin-bottom: 30px;
+}
+
+swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+swiper-container::part(bullet-active) {
+  background-color: var(--bg-color);
+}
+swiper-container::part(button-prev){
+  
+  color: var(--primary-color);
+  margin-top: 30px;
+}
+swiper-container::part(button-next){
+  
+  color: var(--primary-color);
+}
+
+.popular-categories{
+  color: var(--bg-color);
+  margin-bottom: 20px;
+}
+
+.category-card {
+  width: 220px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--secondary-color);
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.category-card a {
+  color: var(--bg-color);
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: var(--secondary-color-hover);
+}
+
+.category-card a:hover {
+  color: rgb(206, 206, 206);
+  text-decoration: underline;
+}
+
+@media (max-width: 991px) {
+
+  .logo-container {
+    display: none; /* Hide the logo */
+  }
+  
+  .home-header {
+    flex-direction: column; /* Apilar verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    justify-content: center; /* Centrar verticalmente */
+    text-align: center;
+    padding: 40px 20px; /* Más aire alrededor del texto */
+  }
+
+  .title-container {
+    max-width: 600px; /* Limitar el ancho del contenedor */
+    margin: 0 auto; /* Centrar el contenedor */
+  }
+
+  .title-container h1 {
+    font-size: 5rem; /* Ajustar tamaño del título */
+    line-height: 1.4; /* Altura de línea mejorada */
+    margin-bottom: 20px; /* Espacio entre título y subtítulo */
+  }
+
+  .title-container p {
+    font-size: 1.4rem;
+    line-height: 1.6; /* Mayor espacio entre líneas para legibilidad */
+  }
+}
+
+@media (max-width: 768px) {
+  .title-container h1 {
+    font-size: 3.5rem; /* Reducir tamaño del título */
+    margin-bottom: 15px; /* Ajustar el espaciado */
+  }
+
+  .title-container p {
+    font-size: 1.2rem; /* Reducir texto secundario */
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-container h1 {
+    font-size: 3rem; /* Título más pequeño */
+    margin-bottom: 10px;
+  }
+
+  .title-container p {
+    font-size: 1rem; /* Texto más pequeño */
+    line-height: 1.4;
+  }
 }

@@ -1,5 +1,5 @@
 import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, Inject, inject, OnInit, PLATFORM_ID} from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Category } from '../../../Interfaces/category';
 import { DataService } from '../../../Services/data.service';
@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit{
 
   constructor(
     private dService: DataService,
-    private authService: AuthService,
+    private authService: AuthService, private router:Router,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -38,12 +38,12 @@ async getPopularCategories() {
       if (data) {
         console.log('Datos recibidos:', data);
         this.categories = data.categories || [];
+        this.cdr.detectChanges();
       } else {
         console.warn('No se recibieron datos');
         this.categories = [];
       }
     
-      // Forzar la actualización de la vista
       this.cdr.detectChanges();
     } catch (error) {
       console.error('Error en getPopularCategories:', error);
@@ -58,13 +58,16 @@ ngOnInit() {
 
   this.authService.isLoggedIn$.subscribe((loggedIn) => {
     this.isLoggedIn = loggedIn;
+    this.cdr.detectChanges();
   });
 
   this.authService.isAdmin$.subscribe((admin) => {
     this.isAdmin = admin;
+    this.cdr.detectChanges();
   });
 
   this.getPopularCategories();
+  
 
 }
 
@@ -76,6 +79,7 @@ updateUserState() {
 logout() {
   this.authService.logout();
   this.updateUserState();
+  this.router.navigate(['/login']);
 }
 
 closeMenu() {
@@ -84,4 +88,5 @@ closeMenu() {
     menuBar.checked = false;
   }
 }
+
 }

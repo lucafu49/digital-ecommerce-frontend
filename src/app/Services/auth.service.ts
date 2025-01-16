@@ -18,6 +18,20 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+
+  login(token: string) {
+    const tokenData = {
+      token,
+      timeLogged: new Date().toISOString(),
+    };
+
+    localStorage.setItem('token', JSON.stringify(tokenData));
+
+    // Emitir los cambios de estado
+    this.isLoggedInSubject.next(true);
+    this.isAdminSubject.next(this.isUserAdmin());
+  }
+
   getToken(): string | null {
     if (typeof window !== 'undefined' && localStorage) {
       const tokenData = localStorage.getItem('token');
@@ -43,11 +57,8 @@ export class AuthService {
     const token = this.getToken();
     if (!token) return false;
 
-    console.log(token);
-
     try {
       const decodedToken: any = jwtDecode(token);
-      console.log(decodedToken);
       return decodedToken.role === 'ADMIN_ROLE';
     } catch (error) {
       console.error('Token decoding error:', error);
