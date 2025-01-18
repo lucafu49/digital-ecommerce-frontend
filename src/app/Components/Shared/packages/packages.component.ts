@@ -20,7 +20,7 @@ export class PackagesComponent implements OnInit {
   pageInfo: any | undefined;
   categories : Category[] | undefined;
   message: string | undefined;
-  maxPrice : string = "500000000000000000000000000000000000";
+  maxPrice : string = "5000000000000000";
   minPrice : string = "0";
   orderBy : string = "price";
   lir : string = "asc";
@@ -220,8 +220,15 @@ export class PackagesComponent implements OnInit {
     }
   }
 
+  validatePriceFilters(): void {
+    // Si los valores están vacíos o son null, se asignan los valores predeterminados
+    this.minPrice = this.minPrice?.trim() ? this.minPrice : '0';
+    this.maxPrice = this.maxPrice?.trim() ? this.maxPrice : '5000000000000000';
+  }
+
   applyFilters(): void {
-    this.fetchPackages(); // Usa la lógica centralizada para aplicar los filtros
+    this.validatePriceFilters(); // Asegura valores válidos
+    this.fetchPackages(); // Lógica centralizada
     this.isFilterMenuOpen = false;
   }
   
@@ -229,7 +236,7 @@ export class PackagesComponent implements OnInit {
     this.orderBy = 'name';
     this.lir = 'asc';
     this.minPrice = '0';
-    this.maxPrice = '5000';
+    this.maxPrice = '5000000000000000';
     this.filters.isActiveCat = false;
     this.filters.isActiveWord = false;
     this.fetchPackages();
