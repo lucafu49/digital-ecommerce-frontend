@@ -7,29 +7,29 @@
   <nav class="navbar">
     <ul>
       <li><a href="#">Home</a></li>
-      <li><a href="javascript:void(0)">Productos +</a>
+      <li><a href="javascript:void(0)">Products +</a>
         <ul>
-          <li><a routerLink="/packages">Todos los productos</a></li>
+          <li><a routerLink="/packages" (click)="closeMenu()">All the products</a></li>
           <li *ngFor="let category of categories"><a [routerLink]="['/packages', { category: category.id }]" (click)="closeMenu()">{{category.name}}</a></li>
-          <li><a routerLink="/allcategories" (click)="closeMenu()">Todas las categorias</a></li>
+          <li><a routerLink="/allcategories" (click)="closeMenu()">All the categories</a></li>
         </ul>
       </li>
 
 
-      <li><a href="javascript:void(0)">Usuario +</a>
+      <li><a href="javascript:void(0)">User +</a>
         <ul>
-          <li *ngIf="isLoggedIn" ><a routerLink="/cart" (click)="closeMenu()">Carrito</a></li>
-          <li *ngIf="isLoggedIn"><a routerLink="/user/mypackages" (click)="closeMenu()">Mis contenidos</a></li>
-          <li *ngIf="isLoggedIn"><a (click)="logout()" (click)="closeMenu()">Cerrar sesión</a></li>
-          <li *ngIf="!isLoggedIn"><a routerLink="/login" (click)="closeMenu()">Iniciar sesión</a></li>
-          <li *ngIf="!isLoggedIn"><a routerLink="/register" (click)="closeMenu()">Registrar</a></li>
+          <li *ngIf="isLoggedIn" ><a routerLink="/cart" (click)="closeMenu()">Cart</a></li>
+          <li *ngIf="isLoggedIn"><a routerLink="/user/mypackages" (click)="closeMenu()">My content</a></li>
+          <li *ngIf="isLoggedIn"><a (click)="logout()" (click)="closeMenu()">Logout</a></li>
+          <li *ngIf="!isLoggedIn"><a routerLink="/login" (click)="closeMenu()">Login</a></li>
+          <li *ngIf="!isLoggedIn"><a routerLink="/register" (click)="closeMenu()">Register</a></li>
         </ul>
       </li>
       <li *ngIf="isAdmin">
-        <a href="javascript:void(0)">Administrador +</a>
+        <a href="javascript:void(0)">Admin +</a>
         <ul>
-          <li><a routerLink="/edit-packages" (click)="closeMenu()">Gestionar Packages</a></li>
-          <li><a routerLink="/admin/category" (click)="closeMenu()">Gestionar Categorias</a></li>
+          <li><a routerLink="/edit-packages" (click)="closeMenu()">Manage Packages</a></li>
+          <li><a routerLink="/admin/category" (click)="closeMenu()">Manage Categories</a></li>
         </ul>
       </li>
     </ul>

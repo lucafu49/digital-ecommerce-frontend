@@ -21,14 +21,14 @@
 
       <span class="price">{{packageData.price | currency}}</span>
 
-      <span class="sourcefile">Cantidad de archivos: {{packageData.sourceFiles.length}}</span>
+      <span class="sourcefile">Number of files: {{packageData.sourceFiles.length}}</span>
       
       <p class="description">
         {{packageData.description}}
       </p>
       
       <button class="add-button" (click)="addToCart(packageData.id)" *ngIf="!isLoading">
-        <i class="fa-solid fa-cart-shopping"></i> Añadir al carrito
+        <i class="fa-solid fa-cart-shopping"></i> Add to cart
       </button>
 
     </div>

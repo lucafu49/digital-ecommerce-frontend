@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ClientService } from '../../../Services/client.service';
 import { AddCartRequest } from '../../../Interfaces/add-cart-request';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from '../../Shared/loading/loading.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +14,8 @@ import { LoadingComponent } from '../../Shared/loading/loading.component';
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = []; // Lista de items en el carrito
-  message: string = ''; // Mensaje de error o confirmación
+  message: string = ''; // Mensaje de error o confirmación´
+  toastr= inject(ToastrService);
 
   constructor(private cService: ClientService) {}
 
@@ -44,12 +46,11 @@ export class CartComponent implements OnInit {
 
     this.cService.deletePackageFromCart(request).subscribe({
       next: () => {
-        console.log(`Paquete ${request} eliminado del carrito`);
+        this.toastr.success("Package deleted succesfully", "Deleted")
         this.cartItems = this.cartItems.filter(item => item.id !== request.packageId)
       },
       error: (error) => {
-        this.message = 'Error al eliminar el paquete del carrito.';
-        console.error('Error:', error);
+        this.toastr.error("Error deleting package","Error");
       }
     });
   }
