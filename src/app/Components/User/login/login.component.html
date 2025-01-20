@@ -1,7 +1,7 @@
 <div class="container">
 <div class="login-container">
   <div class="login-card">
-    <h1 class="title">Iniciar Sesión</h1>
+    <h1 class="title">Login</h1>
     <form [formGroup]="loginForm">
       <div class="input-group">
         <input
@@ -14,10 +14,10 @@
       </div>
       <div class="error-message" *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].touched || loginForm.controls['email'].dirty)">
         <span *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
-          Debes ingresar un correo.
+          You must enter an email address.
         </span>
         <span *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched">
-          Ingresa un correo válido.
+          You must enter a valid email address.
         </span>
       </div>
 
@@ -36,16 +36,16 @@
       </div>
       <div class="error-message" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)">
         <span *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
-          Debes ingresar una contraseña.
+          You must enter a password.
         </span>
         <span *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched || 
         loginForm.get('password')?.hasError('maxlength') && loginForm.get('password')?.touched">
-          Utiliza entre 8 y 30 caracteres.
+        Use between 8 and 30 characters.
         </span>
       </div>
 
       <button type="button" class="submit-button" (click)="onSubmit()">Iniciar Sesión</button>
-      <span>No estas registrado? <a routerLink="/register">Registrarse</a></span>
+      <span>Not registered?<a routerLink="/register">Register</a></span>
     </form>
   </div>
 </div>

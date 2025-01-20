@@ -1,22 +1,20 @@
 <div class="wrapper">
-
+  <h1 class="title">My cart</h1>
 <div class="cart-grid">
     <table>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Precio</th>
-          <th>Acciones</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of cartItems">
-          <td>{{ item.packageId }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.price | currency }}</td>
           <td>
-            <button (click)="removeItemFromCart(item.id)">Eliminar</button>
+            <button (click)="removeItemFromCart(item.id)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -24,9 +22,11 @@
   
     <!-- Mostrar mensaje si el carrito está vacío -->
     <div *ngIf="cartItems.length === 0" class="empty-cart">
-      El carrito está vacío.
+      The cart is empty
     </div>
   </div>
 
-  <button (click)="createPayment()">Pagar</button>
+  <button     *ngIf="cartItems.length > 0" 
+    (click)="createPayment()" 
+    class="pay-button">Pay</button>
 </div>

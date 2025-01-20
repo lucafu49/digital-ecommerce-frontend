@@ -21,7 +21,7 @@
 
 
   <button class="filter-button" (click)="toggleFilterMenu()" >
-    Filtrar
+    Filter
   </button>
 
 <div class="info-container">
@@ -35,55 +35,56 @@
     </div>
     <div class="categories" *ngFor="let category of categories">
       <button 
-      (click)="getPackagesByCategory(category.id)" 
+      (click)="getPackagesByCategory(category.id) ; toggleFilterMenu()" 
       [class.active]="filters.categoryId === category.id">
       {{ category.name }}
       </button>
     </div>
     <div class="filters">
-      <label for="minPrice">Precio Mínimo:</label>
+      <label for="minPrice">Min. Price:</label>
       <input 
         type="number" 
         [(ngModel)]="minPrice" 
         id="minPrice" 
         class="filter-input" />
   
-      <label for="maxPrice">Precio Máximo:</label>
+      <label for="maxPrice">Max Price:</label>
       <input 
         type="number" 
         [(ngModel)]="maxPrice" 
         id="maxPrice" 
         class="filter-input" />
   
-      <label for="orderBy">Ordenar por:</label>
+      <label for="orderBy">Order by:</label>
       <select 
         [(ngModel)]="orderBy" 
         id="orderBy" 
         class="filter-select">
         <option value="price">Precio</option>
         <option value="name">Nombre</option>
+        <option value="timesSold">Times Sold</option>
       </select>
   
-      <label for="lir">Orden:</label>
+      <label for="lir">Order:</label>
       <select 
         [(ngModel)]="lir" 
         id="lir" 
         class="filter-select">
-        <option value="asc">Ascendente</option>
-        <option value="desc">Descendente</option>
+        <option value="asc">Ascendant</option>
+        <option value="desc">Descending</option>
       </select>
   
       <button 
         class="apply-filters-button" 
         (click)="applyFilters()">
-        Aplicar Filtros
+        Apply Filters
       </button>
 
       <button 
         class="apply-filters-button" 
         (click)="quitFilters()"
         *ngIf="filters.isActiveCat || filters.isActiveWord">
-        Quitar Filtros
+        Remove Filters
       </button>
     </div>
   </div>
@@ -116,8 +117,8 @@
 </div>
 
 <div class="pagination-controls">
-  <button class="prev-button" (click)="prevPage()" [disabled]="!packages.packages.prev">Anterior</button>
-  <button class="next-button" (click)="nextPage()" [disabled]="!packages?.packages.next">Siguiente</button>
+  <button class="prev-button" (click)="prevPage()" [disabled]="!packages.packages.prev">Previous</button>
+  <button class="next-button" (click)="nextPage()" [disabled]="!packages?.packages.next">Next</button>
 </div>
 
 </div>

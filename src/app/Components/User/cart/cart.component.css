@@ -1,5 +1,17 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 80px;
+}
+.title{
+  align-self: center;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
 .cart-grid table {
-  margin-top: 30px;
+    margin-top: 30px;
     width: 100%;
     border-collapse: collapse;
   }
@@ -19,13 +31,13 @@
     padding: 5px 10px;
     border: none;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: white;
     border-radius: 4px;
   }
   
   .cart-grid button:hover {
-    background-color: #0056b3;
+    background-color: var(--primary-color-hover);
   }
   
   .empty-cart {
@@ -34,4 +46,21 @@
     font-size: 18px;
     color: #555;
   }
+
+  .pay-button {
+    display: inline-block; /* Asegura que sea visible */
+    margin: 10px 0;
+    padding: 5px 20px;
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--bg-color);
+    border-radius: 5px;
+    cursor: pointer;
+    width: 20%;
+    align-self: center;
+}
+
+.pay-button:hover {
+  background-color: var(--primary-color-hover);
+}
   

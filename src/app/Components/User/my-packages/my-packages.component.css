@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    padding-top: 80px;
   }
   
   .grid-container {
@@ -68,6 +69,15 @@
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+
+  .file-list li {
+    margin-bottom: 5px; /* Agrega espacio entre los enlaces */
+  }
+
+  .file-link {
+    display: inline-block; /* Asegura un área clicable más grande */
+    padding: 5px 10px; /* Amplía el área alrededor del texto */
   }
   
   .file-link {
@@ -135,6 +145,15 @@
   
     .category-item {
       padding: 5px 10px; /* Ajustar tamaño de las etiquetas */
+    }
+
+    .file-list li {
+      margin-bottom: 10px; /* Agrega espacio entre los enlaces */
+    }
+  
+    .file-link {
+      display: inline-block; /* Asegura un área clicable más grande */
+      padding: 5px 10px; /* Amplía el área alrededor del texto */
     }
   }
   

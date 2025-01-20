@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { DataService } from '../../../Services/data.service';
 import { CommonModule } from '@angular/common';
 import { Category } from '../../../Interfaces/category';
@@ -7,6 +7,8 @@ import { ClientService } from '../../../Services/client.service';
 import { AddCartRequest } from '../../../Interfaces/add-cart-request';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
+import { AuthService } from '../../../Services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-packages',
@@ -25,7 +27,7 @@ export class PackagesComponent implements OnInit {
   orderBy : string = "price";
   lir : string = "asc";
   page : number = 1;
-
+  toastr= inject(ToastrService);
   searchWord: string = "";
 
   isFilterMenuOpen: boolean = false;
@@ -56,7 +58,7 @@ export class PackagesComponent implements OnInit {
     }
   }
 
-  constructor(private dService : DataService, private cService : ClientService, private route:ActivatedRoute) {}
+  constructor(private dService : DataService, private cService : ClientService, private route:ActivatedRoute, private auth:AuthService) {}
 
 
   ngOnInit(): void {
@@ -137,7 +139,7 @@ export class PackagesComponent implements OnInit {
     }
 
     if (!this.searchWord.trim()) {
-      this.message = "Por favor ingresa una palabra para buscar.";
+      this.toastr.warning("Please enter a word to search.","Warning");
       return;
     }
 
@@ -181,19 +183,28 @@ export class PackagesComponent implements OnInit {
 
   addToCart(requestId: string): void {
 
-    const request : AddCartRequest = {
-      packageId : requestId
+    if(this.auth.isLoggedIn()){
+      const request : AddCartRequest = {
+        packageId : requestId
+      }
+  
+      this.cService.addItemtoCart(request).subscribe({
+        next: (response) => {
+          this.toastr.success('Package added to cart.',"Added to cart");
+        },
+        error: (error) => {
+          this.message = error.message;
+          const statusCode = error.status;
+    
+  
+          this.toastr.error(this.message,statusCode);
+        }
+      });
+    } else{
+      this.toastr.warning("You must be logged in to add a product to your cart.","Warning");
     }
 
-    this.cService.addItemtoCart(request).subscribe({
-      next: (response) => {
-        alert('Paquete agregado al carrito con éxito.');
-      },
-      error: (error) => {
-        console.error(`Error al agregar el paquete ${request} al carrito:`, error);
-        alert('No se pudo agregar el paquete al carrito. Inténtalo de nuevo.');
-      }
-    });
+
   }
   
   prevPage(): void {

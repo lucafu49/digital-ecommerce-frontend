@@ -21,15 +21,17 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'allcategories', component: AllCategoriesComponent},
     {path: 'home', component: HomeComponent},
+    {path: 'packages', component: PackagesComponent},
+    {path: 'packages/:category', component: PackagesComponent},
+    {path: 'detail/:id', component: PackageDetailComponent},
     {path: 'success', component: SuccessComponent,canActivate:[authGuard]},
     {path: 'cancel', component: CancelComponent,canActivate:[authGuard]},
-    {path: 'packages', component: PackagesComponent, canActivate:[authGuard]},
-    {path: 'packages/:category', component: PackagesComponent, canActivate:[authGuard]},
+
     {path: 'cart', component: CartComponent, canActivate:[authGuard]},
     {path: 'edit-packages', component: EditPackagesComponent, canActivate:[authGuard,adminGuard]},
     {path: 'admin/category', component: CategoriesComponent, canActivate:[authGuard,adminGuard]},
     {path: 'user/mypackages', component: MyPackagesComponent, canActivate:[authGuard]},
-    {path: 'detail/:id', component: PackageDetailComponent, canActivate:[authGuard]},
+
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: NotFoundComponent }
 ];

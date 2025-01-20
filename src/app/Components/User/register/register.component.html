@@ -11,7 +11,7 @@
       <div class="error-message">
         <span
           *ngIf="registerForm.controls['username'].invalid && (registerForm.controls['username'].touched || registerForm.controls['username'].dirty)">
-          Missing username
+          You must enter a name.
         </span>
       </div>
 
@@ -44,7 +44,7 @@
         </span>
         <span
           *ngIf="registerForm.get('password')?.hasError('minlength') || registerForm.get('password')?.hasError('maxlength')">
-          Utiliza entre 8 y 20 caracteres.
+          Use between 8 and 30 characters.
         </span>
       </div>
 
@@ -64,7 +64,7 @@
       </div>
 
       <!-- Botón de Registro -->
-      <button class="submit-button" (click)="onSubmit()">Registrar</button>
+      <button class="submit-button" (click)="onSubmit()">Register</button>
     </form>
   </div>
 </div>

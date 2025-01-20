@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Category } from '../../../Interfaces/category';
 import { DataService } from '../../../Services/data.service';
 import { AdminService } from '../../../Services/admin.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DeleteCatRequest } from '../../../Interfaces/delete-cat-request';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-categories',
@@ -19,6 +20,7 @@ export class CategoriesComponent implements OnInit{
   listCategories : any [] = [];
   showCreateForm: boolean = false;
   newCategoryName: string = '';
+  toastr= inject(ToastrService);
 
   constructor(private dService: DataService, private aService: AdminService, private formBuilder : FormBuilder){
     this.createForm = this.formBuilder.group({
@@ -42,8 +44,8 @@ export class CategoriesComponent implements OnInit{
       error: (error) => {
         this.message = error.message;
         const statusCode = error.status;
-  
-        console.error("Status:", statusCode, "message:", this.message);
+
+        this.toastr.error(this.message,statusCode);
       }
     });
   }
@@ -68,11 +70,13 @@ export class CategoriesComponent implements OnInit{
         this.listCategories.push(data);
         this.toggleCreateCategoryForm();
         this.createForm.reset(); 
+        this.toastr.success('Categoria creada con éxito.', "Success");
       },
       error: (error) => {
         this.message = error.message;
         const statusCode = error.status;
-        console.error("Status:", statusCode, "message:", this.message);
+
+        this.toastr.error(this.message,statusCode);
       }
     });
   }
@@ -105,10 +109,13 @@ export class CategoriesComponent implements OnInit{
       next: () => {
         category.isEditing = false;
         console.log("Category updated:", updatedCategory);
+        this.toastr.success('Categoria actualizada con éxito.', "Success");
       },
       error: (error) => {
         this.message = error.message;
-        console.error("Error updating category:", this.message);
+        const statusCode = error.status;
+
+        this.toastr.error(this.message,statusCode);
       }
     });
   }
@@ -129,12 +136,13 @@ export class CategoriesComponent implements OnInit{
       next: () => {
         console.log("Category deleted:", idRequest);
         this.listCategories = this.listCategories.filter(category => category.id !== idRequest);
+        this.toastr.success('Categoria borrada con éxito.', "Success");
       },
       error: (error) => {
         this.message = error.message;
         const statusCode = error.status;
 
-        console.error("Status:", statusCode, "message: ", this.message);
+        this.toastr.error(this.message,statusCode);
       }
     })
   }
