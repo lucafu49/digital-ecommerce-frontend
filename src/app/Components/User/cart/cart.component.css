@@ -15,6 +15,12 @@
     width: 100%;
     border-collapse: collapse;
   }
+
+  .cart-grid tbody tr:first-child td {
+    padding: 4px; /* Reducir el padding */
+    font-size: 0.9rem; /* Tamaño de texto más pequeño */
+    background-color: #f9f9f9; /* Color de fondo diferente */
+  }
   
   .cart-grid th, .cart-grid td {
     border: 1px solid #ddd;
@@ -47,6 +53,15 @@
     color: #555;
   }
 
+  .total-price {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+  
+
   .pay-button {
     display: inline-block; /* Asegura que sea visible */
     margin: 10px 0;
@@ -62,5 +77,16 @@
 
 .pay-button:hover {
   background-color: var(--primary-color-hover);
+}
+
+@media (max-width: 768px) {
+
+  .wrapper{
+    align-items: center;
+  }
+
+  .pay-button{
+    width: 70%;
+  }
 }
   
