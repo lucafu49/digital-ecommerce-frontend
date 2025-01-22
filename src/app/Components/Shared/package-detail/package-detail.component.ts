@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit } from '@angular/core';
 import { Package } from '../../../Interfaces/package';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { DataService } from '../../../Services/data.service';
 import { ClientService } from '../../../Services/client.service';
 import { AddCartRequest } from '../../../Interfaces/add-cart-request';
 import { LoadingComponent } from '../loading/loading.component';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-package-detail',
@@ -18,11 +20,12 @@ export class PackageDetailComponent implements OnInit, AfterViewInit {
   packageId: string = ''; // Aquí se almacenará el ID del paquete
   packageData: any;
   isLoading : boolean = false;
-
+  toastr= inject(ToastrService);
+  message : string = '';
   isExpandable = false;
   isExpanded = false;
 
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private cService : ClientService) {}
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private cService : ClientService, private auth:AuthService) {}
 
   ngOnInit(): void {
     this.packageId = this.route.snapshot.paramMap.get('id') || '';
@@ -60,19 +63,26 @@ export class PackageDetailComponent implements OnInit, AfterViewInit {
 
   addToCart(requestId: string): void {
 
-    const request : AddCartRequest = {
-      packageId : requestId
-    }
-
-    this.cService.addItemtoCart(request).subscribe({
-      next: (response) => {
-        alert('Paquete agregado al carrito con éxito.');
-      },
-      error: (error) => {
-        console.error(`Error al agregar el paquete ${request} al carrito:`, error);
-        alert('No se pudo agregar el paquete al carrito. Inténtalo de nuevo.');
+    if(this.auth.isLoggedIn()){
+      const request : AddCartRequest = {
+        packageId : requestId
       }
-    });
+  
+      this.cService.addItemtoCart(request).subscribe({
+        next: (response) => {
+          this.toastr.success('Package added to cart.',"Added to cart");
+        },
+        error: (error) => {
+          this.message = error.message;
+          const statusCode = error.status;
+    
+  
+          this.toastr.error(this.message,statusCode);
+        }
+      });
+    } else{
+      this.toastr.warning("You must be logged in to add a product to your cart.","Warning");
+    }
   }
 
 }

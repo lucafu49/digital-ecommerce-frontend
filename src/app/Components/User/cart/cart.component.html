@@ -4,16 +4,18 @@
     <table>
       <thead>
         <tr>
+          <th>ID</th>
           <th>Name</th>
           <th>Price</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of cartItems">
-          <td>{{ item.name }}</td>
-          <td>{{ item.price | currency }}</td>
-          <td>
+        <tr *ngFor="let item of cartItems; let i = index" [ngClass]="{'short-row': i === 0}">
+          <td data-cell="id">{{item.id}}</td>
+          <td data-cell="name">{{ item.name }}</td>
+          <td data-cell="price">{{ item.price | currency }}</td>
+          <td data-cell="actions">
             <button (click)="removeItemFromCart(item.id)">Delete</button>
           </td>
         </tr>
@@ -24,6 +26,9 @@
     <div *ngIf="cartItems.length === 0" class="empty-cart">
       The cart is empty
     </div>
+  </div>
+  <div *ngIf="cartItems.length > 0" class="total-price">
+    <h2>Total Price: {{ totalPrice | currency }}</h2>
   </div>
 
   <button     *ngIf="cartItems.length > 0" 

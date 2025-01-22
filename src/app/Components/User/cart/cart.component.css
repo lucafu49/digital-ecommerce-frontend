@@ -15,6 +15,15 @@
     width: 100%;
     border-collapse: collapse;
   }
+
+  .cart-grid tbody tr:first-child td {
+    padding: 4px; /* Reducir el padding */
+    font-size: 0.9rem; /* Tamaño de texto más pequeño */
+    background-color: #f9f9f9; /* Color de fondo diferente */
+    width: 30%;
+  }
+
+
   
   .cart-grid th, .cart-grid td {
     border: 1px solid #ddd;
@@ -47,6 +56,15 @@
     color: #555;
   }
 
+  .total-price {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+  
+
   .pay-button {
     display: inline-block; /* Asegura que sea visible */
     margin: 10px 0;
@@ -62,5 +80,49 @@
 
 .pay-button:hover {
   background-color: var(--primary-color-hover);
+}
+
+@media (max-width: 768px) {
+
+  .wrapper{
+    align-items: center;
+  }
+
+  .pay-button{
+    width: 70%;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    display: block;
+    width: 100%; /* Se asegura que cada celda ocupe todo el ancho */
+    padding: 8px;
+    border: none; /* Elimina bordes para una vista más limpia */
+    word-wrap: break-word; /* Permite el salto de línea */
+    white-space: normal; /* Asegura que el texto no se trunque */
+  }
+
+  td::before {
+    content: attr(data-cell) ": ";
+    font-weight: bold;
+    color: var(--secondary-color); /* Usa el color secundario del tema */
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  tr {
+    margin-bottom: 50px; /* Añade espacio entre filas */
+    border-bottom: 1px solid #ddd; /* Opcional: separador entre registros */
+  }
+
+  .cart-grid tbody tr:first-child td {
+    padding: 4px; /* Reducir el padding */
+    font-size: 0.9rem; /* Tamaño de texto más pequeño */
+    background-color: #f9f9f9; /* Color de fondo diferente */
+    width: 100%;
+  }
 }
   

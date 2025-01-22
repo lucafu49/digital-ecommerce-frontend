@@ -13,7 +13,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
-  cartItems: any[] = []; // Lista de items en el carrito
+  cartItems: any[] = [];
+  totalPrice: number = 0; 
   message: string = ''; // Mensaje de error o confirmación´
   toastr= inject(ToastrService);
 
@@ -28,6 +29,7 @@ export class CartComponent implements OnInit {
     this.cService.getCart().subscribe({
       next: (data) => {
         this.cartItems = data.packages || [];
+        this.calculateTotalPrice();
         console.log('Carrito:', this.cartItems);
       },
       error: (error) => {
@@ -37,12 +39,18 @@ export class CartComponent implements OnInit {
     });
   }
 
+  calculateTotalPrice(): void {
+    this.totalPrice = this.cartItems.reduce((acc, item) => acc + item.price, 0);
+  }
+
   // Eliminar un paquete del carrito
   removeItemFromCart(packageIdRequest: string): void {
 
     const request : AddCartRequest = {
       packageId : packageIdRequest
     }
+
+    console.log(request)
 
     this.cService.deletePackageFromCart(request).subscribe({
       next: () => {
