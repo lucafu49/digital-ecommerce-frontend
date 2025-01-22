@@ -12,10 +12,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of cartItems; let i = index" [ngClass]="{'short-row': i === 0}">
-          <td>{{item.id}}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.price | currency }}</td>
-          <td>
+          <td data-cell="id">{{item.id}}</td>
+          <td data-cell="name">{{ item.name }}</td>
+          <td data-cell="price">{{ item.price | currency }}</td>
+          <td data-cell="actions">
             <button (click)="removeItemFromCart(item.id)">Delete</button>
           </td>
         </tr>
