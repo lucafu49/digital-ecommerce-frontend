@@ -56,6 +56,7 @@ export class CartComponent implements OnInit {
       next: () => {
         this.toastr.success("Package deleted succesfully", "Deleted")
         this.cartItems = this.cartItems.filter(item => item.id !== request.packageId)
+        this.calculateTotalPrice();
       },
       error: (error) => {
         this.toastr.error("Error deleting package","Error");
