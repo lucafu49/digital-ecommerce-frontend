@@ -1,6 +1,6 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { DataService } from '../../../Services/data.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Category } from '../../../Interfaces/category';
 import { FormsModule } from '@angular/forms';
 import { ClientService } from '../../../Services/client.service';
@@ -45,11 +45,15 @@ export class PackagesComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(): void {
-    this.checkScreenSize();
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkScreenSize();
+    }
   }
 
   checkScreenSize(): void {
-    this.isSmallScreen = window.innerWidth < 1024;
+    if (isPlatformBrowser(this.platformId)) {
+      this.isSmallScreen = window.innerWidth < 1024;
+    }
   }
 
   toggleFilterMenu(): void {
@@ -58,25 +62,27 @@ export class PackagesComponent implements OnInit {
     }
   }
 
-  constructor(private dService : DataService, private cService : ClientService, private route:ActivatedRoute, private auth:AuthService) {}
+  constructor(private dService : DataService, private cService : ClientService, private route:ActivatedRoute, private auth:AuthService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
 
   ngOnInit(): void {
     
-    this.getCategories();
-    this.checkScreenSize();
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkScreenSize(); // Solo se ejecuta en el navegador
+      this.getCategories();
 
-    this.route.params.subscribe((params) => {
-      const categoryId = params['category']; // Obtiene el ID de la categoría
-      if (categoryId) {
-        this.filters.categoryId = categoryId;
-        this.filters.isActiveCat = true;
-        this.filters.isActiveWord = false;
-        this.getPackagesByCategory(categoryId); // Llama a los paquetes de la categoría
-      } else {
-        this.getPackages(); // Llama al método general si no hay categoría
-      }
-    });
+      this.route.params.subscribe((params) => {
+        const categoryId = params['category']; // Obtiene el ID de la categoría
+        if (categoryId) {
+          this.filters.categoryId = categoryId;
+          this.filters.isActiveCat = true;
+          this.filters.isActiveWord = false;
+          this.getPackagesByCategory(categoryId); // Llama a los paquetes de la categoría
+        } else {
+          this.getPackages(); // Llama al método general si no hay categoría
+        }
+      });
+    }
   }
 
 
