@@ -24,7 +24,7 @@ export class PackagesComponent implements OnInit {
   message: string | undefined;
   maxPrice : string = "5000000000000000";
   minPrice : string = "0";
-  orderBy : string = "price";
+  orderBy : string = "timesSold";
   lir : string = "asc";
   page : number = 1;
   toastr= inject(ToastrService);
@@ -191,6 +191,41 @@ export class PackagesComponent implements OnInit {
         this.message = error.message;
       }
     })
+  }
+
+  onOrderChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const value = target.value;
+  
+    switch (value) {
+      case 'timesSold':
+        this.orderBy = 'timesSold';
+        this.lir = 'desc';
+        break;
+      case 'price-low-high':
+        this.orderBy = 'price';
+        this.lir = 'asc';
+        break;
+      case 'price-high-low':
+        this.orderBy = 'price';
+        this.lir = 'desc';
+        break;
+      case 'name-asc':
+        this.orderBy = 'name';
+        this.lir = 'asc';
+        break;
+      case 'name-desc':
+        this.orderBy = 'name';
+        this.lir = 'desc';
+        break;
+      default:
+        this.orderBy = 'timesSold';
+        this.lir = 'desc';
+    }
+
+    this.page = 1;
+  
+    this.fetchPackages(); // Llama a la función para recargar los paquetes con los nuevos parámetros
   }
 
   addToCart(requestId: string): void {
