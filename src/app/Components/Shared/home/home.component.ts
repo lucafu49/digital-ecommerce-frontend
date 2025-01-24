@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit{
             if (data) {
               console.log(data);
               this.packages = data.packages.results;
-              console.log(this.packages);
+              this.pageInfo = data.packages;
             } else {
               console.warn('No se recibieron datos');
               this.packages = [];
@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit{
     async getPopularCategories() {
       if (isPlatformBrowser(this.platformId)) {
         try {
-          const data = await this.dService.getPopularCategories().toPromise();
+          const data = await this.dService.getCategories().toPromise();
           if (data) {
             console.log('Datos recibidos:', data);
             this.categories = data.categories || [];

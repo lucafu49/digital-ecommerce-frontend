@@ -9,14 +9,13 @@
     transition: .2s;
     text-decoration: none;
 }
-:root {
-  --primary-color: #523B6F; /* Azul principal */
-  --primary-color-hover: #73529c; /* Azul más oscuro para hover */
-  --secondary-color: #523B6F; /* Fondo de inputs */
-  --secondary-color-hover: #73529c; /* Fondo de inputs */
-  --error-color: #ff4d4d; /* Rojo para errores */
-  --bg-color: #F6F6F6; /* Fondo general */
-  --title-color: #3c2a50;
+
+:root{
+  --text: #5d5d5d;
+  --bg: #FFFFFF;
+  --main-bg: #9b9b9b;
+  --primary: #ff3152;
+  --primary-hover: #cd2642;
 }
 
 html, body { height: 100%; background-color: var(--bg-color);
