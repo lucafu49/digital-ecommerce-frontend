@@ -1,5 +1,5 @@
 .wrapper{
-  margin-top: 70px;
+  margin-top: 60px;
   padding-top: 60px;
   background-color: var(--main-bg);
   display: flex;
@@ -48,16 +48,26 @@
   border-radius: 10px;
   padding: 10px 30px;
   color: var(--bg);
+  cursor: pointer;
 }
 .select option{
   background-color: var(--primary-hover);
   color: var(--bg);
   border: none;
 }
+.select option:hover{
+  background-color: var(--primary);
+}
 
 
 .packages{
   margin-top: 30px;
+}
+
+.loader-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product-grid {
@@ -68,6 +78,7 @@
 }
 
 .product-card {
+  cursor: pointer;
   background-color: var(--bg);
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -118,6 +129,10 @@
   overflow: hidden;    /* Oculta el texto que se sale del contenedor */
   text-overflow: ellipsis; /* Agrega los puntos suspensivos */
   max-width: 100px;
+}
+
+.category-badge:hover{
+  background-color: var(--primary-hover);
 }
 
 
