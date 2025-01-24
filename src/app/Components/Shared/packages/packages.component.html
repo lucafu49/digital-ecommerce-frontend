@@ -5,7 +5,7 @@
         <input type="text" placeholder="Search..."  [(ngModel)]="searchWord" (keyup.enter)="getPackagesByWord()">
         <i class="fa-solid fa-magnifying-glass" (click)="getPackagesByWord()"></i>
       </div>
-      <select name="" id="" class="select">
+      <select name="" id="" class="select" (change)="onCategoryChange($event)">
         <option value="">
           Select Category
         </option>
@@ -15,7 +15,7 @@
       </select>
 
 
-      <select name="" id="order" class="select" (change)="onOrderChange($event)">
+      <select name="" id="o" class="select" (change)="onOrderChange($event)">
         <option value="timesSold">Sort by popularity</option>
         <option value="price-low-high">Sort by price: low to high</option>
         <option value="price-high-low">Sort by price: high to low</option>
@@ -30,8 +30,8 @@
         <app-loading></app-loading>
       </div>
 
-      <div class="product-grid">
-        <div class="product-card" routerLink="/detail/{{package.id}}" *ngFor="let package of packages.packages.results">
+      <div class="product-grid" >
+        <div class="product-card" routerLink="/detail/{{package.id}}" *ngFor="let package of packages?.packages?.results">
           <div class="categories">
             <span class="category-badge"  *ngFor="let catPackage of package.categories" [routerLink]="['/packages', { category: catPackage.id }]">{{ catPackage.name }}</span>
           </div>
@@ -58,129 +58,3 @@
 
 
 
-<!--
-
-<div class="component">
-  <div class="search-container">
-    <div class="search-bar">
-      <input 
-        type="text" 
-        [(ngModel)]="searchWord" 
-        placeholder="Buscar por palabra..."
-        class="search-input" />
-      <button 
-        class="search-button" 
-        (click)="getPackagesByWord()" 
-        [disabled]="!searchWord.trim()">
-        Buscar
-      </button>
-    </div>
-  </div>
-
-
-
-<div class="container" >
-
-
-  <button class="filter-button" (click)="toggleFilterMenu()" >
-    Filter
-  </button>
-
-<div class="info-container">
-
-  
-
-  <div class="category-container" [class.active]="isFilterMenuOpen && isSmallScreen" >
-    <div class="header">
-      <i class="fa-solid fa-x" (click)="toggleFilterMenu()"></i>
-      <h5>Categorias</h5>
-    </div>
-    <div class="categories" *ngFor="let category of categories">
-      <button 
-      (click)="getPackagesByCategory(category.id) ; toggleFilterMenu()" 
-      [class.active]="filters.categoryId === category.id">
-      {{ category.name }}
-      </button>
-    </div>
-    <div class="filters">
-      <label for="minPrice">Min. Price:</label>
-      <input 
-        type="number" 
-        [(ngModel)]="minPrice" 
-        id="minPrice" 
-        class="filter-input" />
-  
-      <label for="maxPrice">Max Price:</label>
-      <input 
-        type="number" 
-        [(ngModel)]="maxPrice" 
-        id="maxPrice" 
-        class="filter-input" />
-  
-      <label for="orderBy">Order by:</label>
-      <select 
-        [(ngModel)]="orderBy" 
-        id="orderBy" 
-        class="filter-select">
-        <option value="price">Precio</option>
-        <option value="name">Nombre</option>
-        <option value="timesSold">Times Sold</option>
-      </select>
-  
-      <label for="lir">Order:</label>
-      <select 
-        [(ngModel)]="lir" 
-        id="lir" 
-        class="filter-select">
-        <option value="asc">Ascendant</option>
-        <option value="desc">Descending</option>
-      </select>
-  
-      <button 
-        class="apply-filters-button" 
-        (click)="applyFilters()">
-        Apply Filters
-      </button>
-
-      <button 
-        class="apply-filters-button" 
-        (click)="quitFilters()"
-        *ngIf="filters.isActiveCat || filters.isActiveWord">
-        Remove Filters
-      </button>
-    </div>
-  </div>
-
-  <div class="loader-container" *ngIf="isLoading">
-    <app-loading></app-loading>
-  </div>
-
-  <div class="packages-container" *ngIf="!isLoading">
-    <div class="product-grid">
-      <div class="product-card" routerLink="/detail/{{package.id}}" *ngFor="let package of packages.packages.results"  >
-        <div class="img-container">
-          <img [src]="package.previewImage" alt="{{ package.name }}" class="product-image" />
-        </div>
-        <div class="product-info-container">
-          <div class="name-price-container">
-            <h4 class="product-name">{{ package.name }}</h4>
-            <p class="product-price">{{ package.price | currency }}</p>
-          </div>
-        
-          <button class="add-to-cart-button" (click)="addToCart(package.id); $event.stopPropagation()">
-            <i class="fa-solid fa-cart-shopping"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-</div>
-
-<div class="pagination-controls">
-  <button class="prev-button" (click)="prevPage()" [disabled]="!packages.packages.prev">Previous</button>
-  <button class="next-button" (click)="nextPage()" [disabled]="!packages?.packages.next">Next</button>
-</div>
-
-</div>-->

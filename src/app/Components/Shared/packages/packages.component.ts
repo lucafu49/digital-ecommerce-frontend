@@ -115,6 +115,20 @@ export class PackagesComponent implements OnInit {
     })
   }
 
+  onCategoryChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const selectedCategoryId = target.value;
+  
+    if (selectedCategoryId) {
+      this.getPackagesByCategory(selectedCategoryId);
+    } else {
+      // Si no hay categoría seleccionada, mostrar todos los paquetes
+      this.filters.isActiveCat = false;
+      this.fetchPackages();
+    }
+  }
+  
+
   getPackagesByCategory(pickedCat: string){
 
     if(this.searchWord !== ''){
@@ -183,7 +197,7 @@ export class PackagesComponent implements OnInit {
   
 
   getCategories(){
-    this.dService.getPopularCategories().subscribe({
+    this.dService.getCategories().subscribe({
       next: (data) =>{
         this.categories = data.categories;
       },
