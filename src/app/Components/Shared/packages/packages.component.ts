@@ -72,12 +72,18 @@ export class PackagesComponent implements OnInit {
       this.getCategories();
 
       this.route.params.subscribe((params) => {
-        const categoryId = params['category']; // Obtiene el ID de la categoría
+        const categoryId = params['category'];
+        const keyword = params['keyword']; // Obtiene el ID de la categoría
         if (categoryId) {
           this.filters.categoryId = categoryId;
           this.filters.isActiveCat = true;
           this.filters.isActiveWord = false;
           this.getPackagesByCategory(categoryId); // Llama a los paquetes de la categoría
+        }else if (keyword) {
+          this.searchWord = keyword;
+          this.filters.isActiveWord = true;
+          this.filters.isActiveCat = false; // No hay categoría
+          this.getPackagesByWord(); // Llama al backend por palabra clave
         } else {
           this.getPackages(); // Llama al método general si no hay categoría
         }

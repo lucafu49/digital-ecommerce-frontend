@@ -3,12 +3,13 @@ import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, Inject, OnInit, P
 import { Category } from '../../../Interfaces/category';
 import { DataService } from '../../../Services/data.service';
 import { LoadingComponent } from '../loading/loading.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, LoadingComponent,RouterLink],
+  imports: [CommonModule, LoadingComponent,RouterLink,FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit{
     lir : string = "desc";
     page : number = 1;
     isLoading : boolean = true;
+    searchTerm : string = '';
 
     breakpoints: Record<number, { slidesPerView: number }> = {
       480: {
@@ -38,13 +40,27 @@ export class HomeComponent implements OnInit{
     };
 
 
-    constructor(private dService : DataService,    private cdr: ChangeDetectorRef,
+    constructor(private dService : DataService, private router: Router,    private cdr: ChangeDetectorRef,
         @Inject(PLATFORM_ID) private platformId: Object){}
 
     ngOnInit(): void {
 
       this.getPackages();
       this.getPopularCategories();
+    }
+
+    search(): void {
+      if (this.searchTerm.trim()) {
+        this.router.navigate(['/packages', { keyword: this.searchTerm.trim() }]);
+      }
+    }
+
+    onCategoryChange(event: Event):void{
+      const target = event.target as HTMLSelectElement; // Convertimos el target al tipo HTMLSelectElement
+      const selectedCategoryId = target.value; // Obtenemos el valor seleccionado
+      if (selectedCategoryId) {
+        this.router.navigate(['/packages', { category: selectedCategoryId }]);
+      }
     }
 
     async getPackages(){
@@ -69,7 +85,7 @@ export class HomeComponent implements OnInit{
         } else {
         }
   
-      this.isLoading = true;
+      this.isLoading = false;
 
     }
 
