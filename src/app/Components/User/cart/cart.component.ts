@@ -4,11 +4,12 @@ import { AddCartRequest } from '../../../Interfaces/add-cart-request';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from '../../Shared/loading/loading.component';
 import { ToastrService } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule,LoadingComponent],
+  imports: [CommonModule,LoadingComponent,FormsModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
@@ -90,4 +91,18 @@ export class CartComponent implements OnInit {
       }
     });
   }
+
+  updateQuantity(item: any, change: number): void {
+    const newQuantity = item.quantity + change;
+    if (newQuantity > 0) {
+      item.quantity = newQuantity;
+      this.updateSubtotal(item);
+    }
+  }
+  
+  updateSubtotal(item: any): void {
+    item.subtotal = item.quantity * item.price;
+    this.calculateTotalPrice();
+  }
+  
 }

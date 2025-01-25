@@ -1,37 +1,25 @@
 <div class="wrapper">
-  <h1 class="title">My cart</h1>
-<div class="cart-grid">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of cartItems; let i = index" [ngClass]="{'short-row': i === 0}">
-          <td data-cell="id">{{item.id}}</td>
-          <td data-cell="name">{{ item.name }}</td>
-          <td data-cell="price">{{ item.price | currency }}</td>
-          <td data-cell="actions">
-            <button (click)="removeItemFromCart(item.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <!-- Mostrar mensaje si el carrito está vacío -->
-    <div *ngIf="cartItems.length === 0" class="empty-cart">
-      The cart is empty
+  <div class="container">
+    <h1>My Cart</h1>
+    <div class="cart-container">
+      <div class="cart">
+        <!-- Ítems del carrito -->
+        <div class="product" *ngFor="let item of cartItems">
+          <div class="cart-item-details">
+            <h2 class="item-name">{{ item.name }}</h2>
+            <p class="item-price">{{ item.price | currency }}</p>
+          </div>
+          <button class="delete-btn" (click)="removeItemFromCart(item.id)">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Resumen de compra -->
+      <div class="total">
+        <h3>Total: {{ totalPrice | currency }}</h3>
+        <button class="checkout-btn" (click)="createPayment()">Proceed to checkout</button>
+      </div>
     </div>
   </div>
-  <div *ngIf="cartItems.length > 0" class="total-price">
-    <h2>Total Price: {{ totalPrice | currency }}</h2>
-  </div>
-
-  <button     *ngIf="cartItems.length > 0" 
-    (click)="createPayment()" 
-    class="pay-button">Pay</button>
 </div>
