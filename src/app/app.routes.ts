@@ -25,7 +25,7 @@ export const routes: Routes = [
     {path: 'packages/:category', component: PackagesComponent},
     {path: 'packages/:word', component: PackagesComponent},
     {path: 'detail/:id', component: PackageDetailComponent},
-    {path: 'success', component: SuccessComponent,canActivate:[authGuard]},
+    {path: 'success', component: SuccessComponent},
     {path: 'cancel', component: CancelComponent,canActivate:[authGuard]},
 
     {path: 'cart', component: CartComponent, canActivate:[authGuard]},

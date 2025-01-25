@@ -1,5 +1,5 @@
 .admin-wrapper {
-    background-color: var(--bg-color);
+    background-color: var(--main-bg);
     min-height: 100vh;
     margin-top: 40px;
     padding: 20px;
@@ -11,8 +11,9 @@
   .admin-container {
     width: 100%;
     max-width: 1200px;
-    background-color: white;
+    background-color: var(--bg);
     border-radius: 10px;
+    margin-top: 30px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
@@ -23,7 +24,7 @@
   
   .filter-toggle-button {
     display: none;
-    background-color: var(--primary-color);
+    background-color: var(--primary);
     color: white;
     border: none;
     padding: 10px;
@@ -33,12 +34,12 @@
   }
   
   .filter-toggle-button:hover {
-    background-color: var(--primary-color-hover);
+    background-color: var(--primary-hover);
   }
   
   .admin-title {
     font-size: 1.8rem;
-    color: var(--title-color);
+    color: var(--text);
     text-align: center;
     margin-bottom: 20px;
   }
@@ -52,12 +53,12 @@
   .filter-container select,
   .filter-container input {
     padding: 0.5rem;
-    border: 1px solid var(--secondary-color);
+    border: 1px solid var(--text);
     border-radius: 5px;
   }
   
   .search-button {
-    background-color: var(--primary-color);
+    background-color: var(--primary);
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -83,8 +84,8 @@
   }
 
   .update-button {
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--primary);
+    color: var(--bg);
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -199,7 +200,7 @@
   .toggle-button {
     background: none;
     border: none;
-    color: var(--primary-color);
+    color: var(--text);
     cursor: pointer;
     text-decoration: underline;
     font-size: 0.9rem;
@@ -207,14 +208,14 @@
   }
   
   .admin-table thead {
-    background-color: var(--primary-color);
+    background-color: var(--primary);
     color: white;
   }
   
   .admin-table th,
   .admin-table td {
     padding: 10px;
-    border: 1px solid var(--secondary-color);
+    border: 1px solid var(--text);
   }
   
   .package-image {
@@ -227,10 +228,10 @@
   .textarea-field {
     width: 100%;
     padding: 8px;
-    border: 1px solid var(--secondary-color);
+    border: 1px solid var(--text);
     border-radius: 5px;
     font-size: 1rem;
-    background-color: var(--bg-color);
+    background-color: var(--bg);
     margin-top: 10px;
   }
   
@@ -243,7 +244,7 @@
   .edit-button,
   .save-button,
   .cancel-button {
-    background-color: var(--primary-color);
+    background-color: var(--primary);
     color: white;
     border: none;
     padding: 8px 15px;
@@ -256,15 +257,15 @@
   
   .edit-button:hover,
   .save-button:hover {
-    background-color: var(--primary-color-hover);
+    background-color: var(--primary-hover);
   }
   
   .cancel-button {
-    background-color: var(--error-color);
+    background-color: red;
   }
   
   .cancel-button:hover {
-    background-color: #e04343;
+    background-color: var(--primary-hover);
   }
 
   .edit-form{

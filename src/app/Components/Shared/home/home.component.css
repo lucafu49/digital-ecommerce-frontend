@@ -177,7 +177,12 @@
 @media (max-width: 425px) {
 
   .search{
-    padding: 10px 5px;
+    padding: 10px 0px;
+    height: 20px;
+  }
+
+  .search i{
+    margin-right: 10px;
   }
 
   .product-grid {
