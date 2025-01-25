@@ -3,15 +3,17 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding-top: 80px;
+  padding: 80px 0;
+  background-color: var(--main-bg);
 }
 .category-grid table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  background-color: red;
+  background-color: var(--bg);
   border: 1px solid var(--border-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }
 
 .category-grid th,
@@ -19,7 +21,7 @@
   border: 1px solid var(--border-color);
   padding: 10px;
   text-align: left;
-  color: var(--text-color);
+  color: var(--text);
 }
 
 .category-grid th {
@@ -34,15 +36,15 @@
   padding: 6px 8px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  background-color: white;
-  color: var(--text-color);
+  background-color: var(--main-bg);
+  color: black;
   font-size: 14px;
   line-height: 1.4;
 }
 
 /* Estilo para que no cambie el tamaño */
 .edit-input:focus {
-  outline: 2px solid var(--primary-color);
+  outline: 2px solid var(--primary);
 }
 
 /* Botones */
@@ -57,23 +59,23 @@
 }
 
 .action-button.edit {
-  background-color: var(--primary-color);
+  background-color: var(--primary);
   color: white;
 }
 
 .action-button.delete {
-  background-color: var(--error-color);
-  color: var(--white);
+  background-color: var(--primary);
+  color: white;
 }
 
 .action-button.save {
-  background-color: var(--primary-color-hover);
-  color: var(--white);
+  background-color: var(--primary-hover);
+  color: white;
 }
 
 .action-button.cancel {
-  background-color: var(--border-color);
-  color: var(--text-muted);
+  background-color: var(--main-bg);
+  color: black;
 }
 
 .action-button:hover {
@@ -84,7 +86,7 @@
 .create-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: var(--primary-color);
+  background-color: var(--primary);
   color: white;
   border: none;
   cursor: pointer;
@@ -93,14 +95,14 @@
 }
 
 .create-button:hover {
-  background-color: var(--primary-color-hover);
+  background-color: var(--primary-hover);
 }
 
 /* Formulario de creación */
 .create-form {
   margin-top: 20px;
   padding: 10px;
-  background-color: var(--white);
+  background-color: var(--bg);
   border: 1px solid var(--border-color);
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

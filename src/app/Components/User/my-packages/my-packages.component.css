@@ -1,5 +1,5 @@
 .grid-wrapper {
-    background-color: var(--bg-color);
+    background-color: var(--main-bg);
     min-height: 100vh;
     padding: 20px;
     display: flex;
@@ -11,7 +11,7 @@
   .grid-container {
     width: 100%;
     max-width: 1200px;
-    background-color: white;
+    background-color: var(--bg);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -35,7 +35,7 @@
   }
   
   .grid-item {
-    background-color: var(--secondary-color);
+    background-color: var(--primary);
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -49,7 +49,7 @@
   
   .package-name {
     font-size: 1.5rem;
-    color: var(--bg-color);
+    color: var(--bg);
     margin-bottom: 10px;
     text-align: center;
   }
@@ -60,7 +60,7 @@
   
   .section-title {
     font-size: 1.1rem;
-    color: var(--bg-color);
+    color: var(--bg);
     margin-bottom: 10px;
   }
   
@@ -81,13 +81,13 @@
   }
   
   .file-link {
-    color: var(--bg-color);
+    color: var(--bg);
     text-decoration: none;
     transition: color 0.3s ease;
   }
   
   .file-link:hover {
-    color: var(--primary-color-hover);
+    color: var(--text);
     text-decoration: underline;
   }
   
@@ -98,17 +98,13 @@
   }
   
   .category-item {
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--bg);
+    color: var(--primary);
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 0.9rem;
   }
   
-  /* --- Media Queries Responsivos --- */
-  
-  /* Pantallas pequeñas (tablets y móviles grandes) */
-/* --- Centrado en dispositivos móviles --- */
 @media (max-width: 768px) {
     .grid {
       grid-template-columns: 1fr; /* Una sola columna */

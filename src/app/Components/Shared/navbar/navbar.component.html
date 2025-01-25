@@ -29,7 +29,7 @@
       <li *ngIf="isAdmin">
         <a href="javascript:void(0)">Admin +</a>
         <ul>
-          <li><a routerLink="/edit-packages" (click)="closeMenu()">Manage Packages</a></li>
+          <li><a routerLink="/edit-packages" (click)="closeMenu(); checkAdmin()">Manage Packages</a></li>
           <li><a routerLink="/admin/category" (click)="closeMenu()">Manage Categories</a></li>
         </ul>
       </li>

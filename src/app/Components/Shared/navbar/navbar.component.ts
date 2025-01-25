@@ -6,6 +6,7 @@ import { DataService } from '../../../Services/data.service';
 import { error } from 'node:console';
 import { AuthService } from '../../../Services/auth.service';
 import { first } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +22,7 @@ export class NavbarComponent implements OnInit{
   isLoggedIn: boolean = false;
   categories : Category[] = [];
   message : string = '';
-  
+  toastr= inject(ToastrService);
 
 
   constructor(
@@ -83,9 +84,19 @@ logout() {
 }
 
 closeMenu() {
+
   const menuBar = document.getElementById('menu-bar') as HTMLInputElement;
   if (menuBar) {
     menuBar.checked = false;
+  }
+}
+
+checkAdmin():boolean{
+  if(this.authService.isUserAdmin()) {
+    return true;
+  } else{
+    this.toastr.warning('Admin privileges are required to access this section.');
+    return false;
   }
 }
 

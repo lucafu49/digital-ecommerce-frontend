@@ -1,6 +1,6 @@
 .wrapper{
   margin-top: 60px;
-  padding-top: 60px;
+  padding: 60px 0;
   background-color: var(--main-bg);
   display: flex;
   justify-content: center;

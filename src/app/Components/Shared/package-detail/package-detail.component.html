@@ -1,36 +1,31 @@
 <div class="wrapper">
   <div class="container">
-
     <div class="loader-container" *ngIf="isLoading">
       <app-loading></app-loading>
     </div>
 
-    <div class="img-container" *ngIf="!isLoading">
-      <img [src]="packageData?.previewImage" alt="{{ packageData?.name }}"
-           class="product-image">
-    </div>
-    <div class="package-container">
-      
-      <div class="category-container" *ngIf="!isLoading">
-        <div class="category-item" *ngFor="let category of packageData.categories">
-          {{category.name}}
-        </div>
+    <div class="main">
+
+
+      <div class="img-container" *ngIf="!isLoading">
+        <img [src]="packageData?.previewImage" alt="{{ packageData?.name }}" class="product-image">
       </div>
 
-      <h5>{{packageData.name}}</h5>
-
-      <span class="price">{{packageData.price | currency}}</span>
-
-      <span class="sourcefile">Number of files: {{packageData.sourceFiles.length}}</span>
+      <div class="name-price">
+        <h5>{{packageData.name}}</h5>
+        <span class="price">{{packageData.price | currency}}</span>
+        <span class="sourcefile">Number of files: {{packageData.sourceFiles.length}}</span>
+      </div>
       
-      <p class="description">
-        {{packageData.description}}
-      </p>
-      
-      <button class="add-button" (click)="addToCart(packageData.id)" *ngIf="!isLoading">
-        <i class="fa-solid fa-cart-shopping"></i> Add to cart
-      </button>
+
+
 
     </div>
+
+    <div class="details">
+      <button>Add to cart</button>
+      <p>{{packageData.description}}</p>
+    </div>
+
   </div>
 </div>

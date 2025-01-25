@@ -242,8 +242,7 @@
   }
   
   .edit-button,
-  .save-button,
-  .cancel-button {
+  .save-button{
     background-color: var(--primary);
     color: white;
     border: none;
@@ -260,13 +259,7 @@
     background-color: var(--primary-hover);
   }
   
-  .cancel-button {
-    background-color: red;
-  }
-  
-  .cancel-button:hover {
-    background-color: var(--primary-hover);
-  }
+
 
   .edit-form{
     margin-bottom: 10px;
@@ -288,7 +281,7 @@
     margin: 0 5px;
     padding: 10px 20px;
     border: none;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -296,7 +289,7 @@
   }
   
   .pagination-controls button:hover {
-    background-color: var(--secondary-color-hover);
+    background-color: var(--primary-hover);
   }
   
   .pagination-controls button:disabled {
@@ -333,7 +326,7 @@
 }
 .files-list a{
   text-decoration: none;
-  color: black;
+  color: var(--text);
   list-style: none;
 }
 
@@ -360,7 +353,7 @@
   top: 0; /* Alínea al inicio del alto de la pantalla */
   left: 0; /* Alinea al borde izquierdo */
   width: 100%; /* Ocupa todo el ancho de la pantalla */
-  background-color: white; /* Fondo blanco para que sea visible */
+  background-color: var(--bg); /* Fondo blanco para que sea visible */
   z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
   padding: 10px; /* Espaciado interno */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
@@ -375,8 +368,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  background-color: var(--secondary-color);
-  border-bottom: 1px solid var(--secondary-color-hover);
+  background-color: var(--primary);
+  border-bottom: 1px solid var(--primary-hover);
 }
 
 .filter-container .header h5 {
@@ -421,7 +414,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: white;
+    background-color: var(--bg);
     z-index: 1000; /* Asegura que esté por encima de otros elementos */
     display: flex;
     flex-direction: column;
@@ -431,6 +424,12 @@
     gap: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
+
+  .search{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  } 
 
   th {
     display: none;

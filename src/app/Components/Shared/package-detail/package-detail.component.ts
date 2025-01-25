@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, inject, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Inject, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Package } from '../../../Interfaces/package';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { DataService } from '../../../Services/data.service';
@@ -8,11 +8,12 @@ import { AddCartRequest } from '../../../Interfaces/add-cart-request';
 import { LoadingComponent } from '../loading/loading.component';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../Services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-package-detail',
   standalone: true,
-  imports: [CommonModule,RouterLink,LoadingComponent],
+  imports: [CommonModule,RouterLink,LoadingComponent,FormsModule],
   templateUrl: './package-detail.component.html',
   styleUrl: './package-detail.component.css'
 })
@@ -25,11 +26,14 @@ export class PackageDetailComponent implements OnInit, AfterViewInit {
   isExpandable = false;
   isExpanded = false;
 
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private cService : ClientService, private auth:AuthService) {}
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute, private cService : ClientService, private auth:AuthService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    this.packageId = this.route.snapshot.paramMap.get('id') || '';
-    this.fetchPackageDetails();
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.packageId = this.route.snapshot.paramMap.get('id') || '';
+      this.fetchPackageDetails();
+    }
   }
 
   ngAfterViewInit(): void {
