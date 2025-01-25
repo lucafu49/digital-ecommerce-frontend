@@ -1,16 +1,24 @@
 <footer class="footer">
-    <div class="footer-container">
-      <!-- Nombre de la página -->
-      <h3 class="footer-title">Nombre de la Página</h3>
-  
-      <!-- Links de navegación -->
-      <ul class="footer-links">
-        <li>
-          <a routerLink="/edit-packages" class="footer-link">Inicio</a>
-        </li>
-        <li>
-          <a routerLink="/user/mypackages" class="footer-link">Mis Contenidos</a>
-        </li>
+  <div class="footer-container">
+    <!-- Columna de Informaciones -->
+    <div class="footer-column">
+      <h3>PRODUCTS</h3>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a routerLink="/packages">All the products</a></li>
+        <li><a routerLink="/allcategories">All the categories</a></li>
       </ul>
     </div>
-  </footer>
+
+    <!-- Columna de Partners -->
+    <div class="footer-column">
+      <h3>USER</h3>
+      <ul>
+        <li><a routerLink="/login">Login</a></li>
+        <li><a routerLink="/register">Register</a></li>
+      </ul>
+    </div>
+
+    
+  </div>
+</footer>

@@ -1,39 +1,78 @@
-.footer {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 20px 15px;
-    text-align: center;
-    margin-top: 8rem;
-  }
+footer.footer {
+  background-color: var(--primary); /* Color púrpura del fondo */
+  color: white;
+  padding: 20px 5%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  font-family: Arial, sans-serif;
   
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+  margin: 10px;
+}
+
+.footer-column h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  display: inline-block;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 8px;
+}
+
+.footer-column ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-column ul li a:hover {
+  color: var(--text); /* Color de hover para enlaces */
+  text-decoration: underline;
+}
+
+.footer-icon {
+  text-align: center;
+}
+
+.footer-icon img {
+  width: 100px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.footer-icon p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+/* Responsivo para pantallas más pequeñas */
+@media (max-width: 768px) {
   .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
     flex-direction: column;
     align-items: center;
   }
-  
-  .footer-title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+
+  .footer-column {
+    text-align: center;
   }
-  
-  .footer-links {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    gap: 20px;
-  }
-  
-  .footer-link {
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-  }
-  
-  .footer-link:hover {
-    color: var(--primary-color-hover);
-  }
-  
+}
