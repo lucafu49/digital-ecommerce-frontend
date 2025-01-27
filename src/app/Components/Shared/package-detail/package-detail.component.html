@@ -6,26 +6,29 @@
 
     <div class="main">
 
-
-      <div class="img-container" *ngIf="!isLoading">
-        <img [src]="packageData?.previewImage" alt="{{ packageData?.name }}" class="product-image">
+      <div class="categories">
+        <span *ngFor="let category of packageData.categories" class="category-badge" [routerLink]="['/packages', { category: category.id }]">
+          {{ category.name }}
+        </span>
       </div>
+      <div class="img-container" *ngIf="!isLoading">
+        <!-- Categorías sobre la imagen -->
 
-      <div class="name-price">
-        <h5>{{packageData.name}}</h5>
-        <span class="price">{{packageData.price | currency}}</span>
-        <span class="sourcefile">Number of files: {{packageData.sourceFiles.length}}</span>
+        
+        <img [src]="packageData?.previewImage" alt="{{ packageData?.name }}" class="product-image" />
       </div>
       
 
-
-
+      <div class="name-price">
+        <h5>{{ packageData.name }}</h5>
+        <span class="price">{{ packageData.price | currency }}</span>
+      </div>
     </div>
 
     <div class="details">
-      <button>Add to cart</button>
-      <p>{{packageData.description}}</p>
+      <button (click)="addToCart(packageData.id)">Add to cart</button>
+      <span class="sourcefile">Number of files: {{ packageData.sourceFiles.length }}</span>
+      <p>{{ packageData.description }}</p>
     </div>
-
   </div>
 </div>

@@ -1,7 +1,9 @@
 .categories-container {
     margin-top: 50px;
+    margin-bottom: 90px;
     padding: 4rem;
     background-color: var(--bg);
+    height: 80vh;
   }
   
   .categories-title {

@@ -23,24 +23,36 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-.search{
+.search {
+  display: flex;
+  align-items: center; /* Alinea el input y el icono verticalmente */
   background-color: var(--primary-hover);
-  padding: 10px 30px;
+  padding: 10px 15px; /* Ajusta el padding para que sea consistente */
   border-radius: 10px;
+  gap: 10px; /* Espacio entre el input y el icono */
 }
-.search input{
+
+.search input {
+  flex: 1; /* Hace que el input tome todo el espacio disponible */
   background: none;
   border: none;
   color: var(--bg);
+  font-size: 14px;
 }
-.search input::placeholder{
+
+.search input::placeholder {
   color: var(--bg);
+  font-size: 14px;
 }
-.search input:focus{
+
+.search input:focus {
   outline: none;
 }
-.search i{
+
+.search i {
   color: var(--bg);
+  font-size: 18px; /* Tamaño del icono */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el icono */
 }
 .select{
   background-color: var(--primary-hover);
