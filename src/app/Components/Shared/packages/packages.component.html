@@ -30,7 +30,7 @@
         <app-loading></app-loading>
       </div>
 
-      <div class="product-grid" >
+      <div class="product-grid">
         <div class="product-card" routerLink="/detail/{{package.id}}" *ngFor="let package of packages?.packages?.results">
           <div class="categories">
             <span class="category-badge"  *ngFor="let catPackage of package.categories" [routerLink]="['/packages', { category: catPackage.id }]">{{ catPackage.name }}</span>

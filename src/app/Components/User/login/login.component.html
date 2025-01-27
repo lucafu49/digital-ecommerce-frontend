@@ -7,7 +7,7 @@
         <input
           type="text"
           formControlName="email"
-          placeholder="Correo electrónico"
+          placeholder="Email"
           class="form-input"
         />
         <i class="fa-regular fa-envelope icon"></i>
@@ -24,9 +24,10 @@
       <div class="input-group">
         <input
           type="{{ showPassword ? 'text' : 'password' }}"
-          placeholder="Contraseña"
+          placeholder="Password"
           formControlName="password"
           class="form-input"
+          (keyup.enter)="onSubmit()"
         />
         <i
           class="fa-solid fa-eye-slash icon toggle-password"
