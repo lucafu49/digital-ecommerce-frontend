@@ -18,6 +18,7 @@ export class CartComponent implements OnInit {
   totalPrice: number = 0; 
   message: string = ''; // Mensaje de error o confirmación´
   toastr= inject(ToastrService);
+  isLoading : boolean = true;
 
   constructor(private cService: ClientService) {}
 
@@ -32,8 +33,10 @@ export class CartComponent implements OnInit {
         this.cartItems = data.packages || [];
         this.calculateTotalPrice();
         console.log('Carrito:', this.cartItems);
+        this.isLoading = false;
       },
       error: (error) => {
+        this.isLoading = false;
         this.message = 'Error al obtener los elementos del carrito.';
         console.error('Error:', error);
       }

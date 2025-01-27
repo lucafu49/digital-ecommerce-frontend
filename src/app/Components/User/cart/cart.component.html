@@ -1,10 +1,20 @@
 <div class="wrapper">
   <div class="container">
     <h1>My Cart</h1>
-    <div class="cart-container">
+
+    <div class="loader-container" *ngIf="isLoading">
+      <app-loading></app-loading>
+    </div>
+
+    <div class="cart-container" *ngIf="!isLoading">
       <div class="cart">
+
+        <div class="empty-cart-message" *ngIf="!isLoading && cartItems.length === 0">
+          <p>Your cart is empty. Start adding some items!</p>
+        </div>
+
         <!-- Ítems del carrito -->
-        <div class="product" *ngFor="let item of cartItems">
+        <div class="product" *ngFor="let item of cartItems" >
           <div class="cart-item-details">
             <h2 class="item-name">{{ item.name }}</h2>
             <p class="item-price">{{ item.price | currency }}</p>
